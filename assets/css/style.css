@@ -853,7 +853,7 @@ label {
   left: 0;
   top: 0;
   bottom: -1px;
-  width: 30%;
+  width: 32%;
   background: var(--theme-color2);
   z-index: -1;
 }
@@ -894,7 +894,7 @@ label {
 
 .header-top-social span{
   color: var(--color-white);
-  font-weight: 500;
+  font-weight: 700;
 }
 
 .header-top-social a {

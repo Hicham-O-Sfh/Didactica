@@ -1,0 +1,33 @@
+Concurents:
+https://www.germarok.ma/
+https://www.centreprivilege.com/allemand-a1-b1-b2-c1/
+https://www.glssprachenzentrum.ma/
+https://studyingermany.ma/
+https://academieallemande.ma/
+
+Template:
+https://live.themewild.com/eduka/index.html
+file:///C:/Users/hosaffih/Downloads/Templates/eduka/live.themewild.com/eduka/index.html
+
+1. Site vitrine basique (Simple à réaliser)
+✅Accueil (présentation de l'école, photos, valeurs).
+✅Services (traduction, cours, préparation aux examens).
+✅À propos (histoire, équipe).
+✅Contact (adresse, numéro de téléphone, email).
+✅Formulaire de contact simple (nom, email, message).
+✅Section pour les horaires des cours/examens.
+✅Intégration de Google Maps pour la localisation.
+
+2. Site vitrine avec interaction (Moyennement complexe)
+✅Fonctionnalités supplémentaires :
+✅Formulaire d’inscription à une newsletter pour informer des promotions/cours.
+✅Formulaire de prise de rendez-vous pour des conseils personnalisés ou une visite.
+✅Code promotionnel : Générer un code unique après le remplissage du formulaire d’inscription ou prise de rendez-vous, à fournir lors de l’inscription physique.
+✅Section témoignages : Recueillir et afficher les avis d’étudiants.
+
+3. Site avec gestion avancée des prospects (Plus complexe mais faisable avec ton expertise)
+✅Fonctionnalités avancées :
+✅Base de données pour stocker les prospects (nom, email, numéro de téléphone, intérêt).
+✅Envoi automatique d’un email/SMS après l’inscription (confirmation + code promo).
+✅Tableau de bord admin : Pour la directrice, permettant de visualiser les demandes et prospects.
+✅Chat en direct (via WhatsApp ou autre outil intégré).
