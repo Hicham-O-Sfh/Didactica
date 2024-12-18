@@ -32,18 +32,6 @@ Version         : 1.0
         });
     });
 
-
-    // navbar Search
-    if ($('.search-box-outer').length) {
-        $('.search-box-outer').on('click', function () {
-            $('body').addClass('search-active');
-        });
-        $('.close-search').on('click', function () {
-            $('body').removeClass('search-active');
-        });
-    }
-
-
     // wow init
     new WOW().init();
 
