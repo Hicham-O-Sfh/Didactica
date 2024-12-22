@@ -1571,10 +1571,10 @@ label {
 
 .hero-single .hero-content .hero-title {
   color: var(--color-white);
-  font-size: 72px;
+  font-size: 50px;
   font-weight: 800;
   margin: 20px 0;
-  text-transform: capitalize;
+  text-transform: none;
 }
 
 .hero-single .hero-content .hero-title span{
@@ -1585,7 +1585,7 @@ label {
   display: inline-block;
   color: var(--theme-color2);
   font-size: 25px;
-  letter-spacing: 6px;
+  letter-spacing: 3px;
   font-weight: 800;
   position: relative;
   text-transform: uppercase;
@@ -1671,7 +1671,7 @@ label {
 @media all and (max-width: 1199px) {
 
   .hero-single .hero-content .hero-title {
-    font-size: 37px;
+    font-size: 27px;
   }
 
   .hero-slider.owl-theme .owl-nav .owl-prev,
@@ -1694,7 +1694,7 @@ label {
 @media all and (max-width: 991px) {
 
   .hero-single .hero-content .hero-title {
-    font-size: 50px;
+    font-size: 40px;
   }
 
   .hero-single .hero-img {
