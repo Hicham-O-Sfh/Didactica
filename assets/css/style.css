@@ -2287,13 +2287,14 @@ label {
 
 .feature-content h4 {
   color: var(--color-dark);
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 600;
   margin-bottom: 10px;
 }
 
 .feature-content p{
   color: var(--color-dark);
+  font-size: 14px;
 }
 
 @media all and (max-width: 1199px) {
