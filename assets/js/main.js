@@ -185,17 +185,6 @@ Version         : 1.0
     $(".preloader").fadeOut("slow");
   });
 
-  // fun fact counter
-  $(".counter").countTo();
-  $(".counter-box").appear(
-    function () {
-      $(".counter").countTo();
-    },
-    {
-      accY: -100,
-    }
-  );
-
   // magnific popup init
   $(".popup-gallery").magnificPopup({
     delegate: ".popup-img",
