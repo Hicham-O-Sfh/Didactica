@@ -632,7 +632,7 @@ label {
 ======================*/
 
 .site-heading {
-  margin-bottom: 50px;
+  margin-bottom: 20px;
   position: relative;
   z-index: 1;
 }
@@ -4313,7 +4313,7 @@ label {
 
 .pricing-item {
   position: relative;
-  padding: 20px 40px;
+  padding: 10px 25px;
   text-align: center;
   border-radius: 50px 50px 50px 0;
   background: var(--color-white);
@@ -4340,11 +4340,11 @@ label {
   position: relative;
   border-radius: 50%;
   color: var(--color-white);
-  font-size: 70px;
+  font-size: 55px;
 }
 
 .pricing-icon img {
-  width: 60px;
+  width: 80px;
   filter: brightness(0) invert(1);
 }
 
@@ -4367,6 +4367,12 @@ label {
   margin-bottom: 20px;
   color: var(--theme-color2);
   font-size: 30px;
+}
+
+@media (min-width: 320px) and (max-width: 1199px) {
+  .pricing-header-content h4 {
+    font-size: 23px;
+  }
 }
 
 .pricing-duration {
@@ -4392,15 +4398,6 @@ label {
   padding-left: 25px;
 }
 
-.pricing-feature ul li::before {
-  content: "\f560";
-  position: absolute;
-  font-family: "Font Awesome 6 Pro";
-  color: var(--theme-color);
-  left: 0;
-  top: 0;
-}
-
 .pricing-feature .theme-btn {
   width: 100%;
 }
@@ -4419,6 +4416,12 @@ label {
 
 .pricing-item.active ul li {
   color: var(--color-white);
+}
+
+@media (min-width: 320px) and (max-width: 1199px) {
+  .pricing-item.active ul li {
+    font-size: 14px;
+  }
 }
 
 .pricing-item.active ul li::before {
