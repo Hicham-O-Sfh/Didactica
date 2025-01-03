@@ -23,62 +23,62 @@ Table of contents
 12. Navbar css
 13. Mega menu
 14. Multi level dropdown menu
-15. Search popup css 
-16. Main section css 
-17. Hero css 
+15. Search popup css
+16. Main section css
+17. Hero css
 18. Play btn
-19. About css 
+19. About css
 20. Course css
-21. Course single css 
-22. Feature css 
-23. Portfolio css 
+21. Course single css
+22. Feature css
+23. Portfolio css
 24. Portfolio single
-25. Gallery css 
-26. Choose css 
+25. Gallery css
+26. Choose css
 27. Testimonial css
-28. Counter css 
-29. Cta css 
-30. Event css 
-31. Event single css 
-32. Enroll css 
-33. Skill css 
-34. Department css 
+28. Counter css
+29. Cta css
+30. Event css
+31. Event single css
+32. Enroll css
+33. Skill css
+34. Department css
 35. Department single
-36. Partner css 
-37. Blog css 
+36. Partner css
+37. Blog css
 38. Blog single css
 39. Widget sidebar css
-40. Contact us css 
-41. Team css 
-42. Team single css 
-43. Video css 
-44. Pricing css 
-45. Faq css 
+40. Contact us css
+41. Team css
+42. Team single css
+43. Video css
+44. Pricing css
+45. Faq css
 46. Breadcrumb css
-47. Pagination css 
-48. Auth css 
-49. Coming soon css 
-50. Error css 
-51. Terms/privacy css 
+47. Pagination css
+48. Auth css
+49. Coming soon css
+50. Error css
+51. Terms/privacy css
 52. How Apply
-53. Application css 
-54. Campus tour css 
-55. Campus life css 
-56. Notice board css 
-57. Student Activity css 
-58. Facility css 
+53. Application css
+54. Campus tour css
+55. Campus life css
+56. Notice board css
+57. Student Activity css
+58. Facility css
 59. Facility single
-60. Research css 
+60. Research css
 61. Research single
-62. Club css 
+62. Club css
 63. Club single
 64. Tuition fee css
-65. Alumni css 
-66. Scholarship css 
-67. Fund css 
-68. Athletic css 
-69. Health care css 
-70. Footer css 
+65. Alumni css
+66. Scholarship css
+67. Fund css
+68. Athletic css
+69. Health care css
+70. Footer css
 71. Home 2
 72. Home 3
 
@@ -760,6 +760,10 @@ label {
   color: var(--color-white);
 }
 
+.whatsapp-btn-bg {
+  background: #25d366 !important;
+}
+
 /*====================
 9. Container
 ======================*/
@@ -1367,7 +1371,7 @@ label {
 }
 
 /*====================
-15. Search popup css 
+15. Search popup css
 ======================*/
 
 .search-popup {
@@ -1486,7 +1490,7 @@ label {
 }
 
 /*====================
-16. Main section css 
+16. Main section css
 ======================*/
 
 .main {
@@ -1494,7 +1498,7 @@ label {
 }
 
 /*====================
-17. Hero css 
+17. Hero css
 ======================*/
 
 .hero-section {
@@ -1728,7 +1732,7 @@ label {
 }
 
 /*====================
-19. About css 
+19. About css
 ======================*/
 
 .about-area {
@@ -1908,7 +1912,7 @@ label {
 }
 
 /*====================
-20. Course css 
+20. Course css
 ======================*/
 
 .course-area {
@@ -2082,7 +2086,7 @@ label {
 }
 
 /*====================
-21. Course single css 
+21. Course single css
 ======================*/
 
 .course-details-img {
@@ -2171,7 +2175,7 @@ label {
 }
 
 /*====================
-22. Feature css 
+22. Feature css
 ======================*/
 
 .feature-area {
@@ -2255,7 +2259,7 @@ label {
 }
 
 /* ========================
-23. Portfolio css 
+23. Portfolio css
 =========================== */
 
 .portfolio-area {
@@ -2398,7 +2402,7 @@ label {
 }
 
 /* ========================
-25. Gallery css 
+25. Gallery css
 =========================== */
 
 .gallery-item {
@@ -2472,7 +2476,7 @@ label {
 }
 
 /*====================
-26. Choose css 
+26. Choose css
 ======================*/
 
 .choose-area {
@@ -2592,7 +2596,7 @@ label {
 }
 
 /*====================
-27. Testimonial css 
+27. Testimonial css
 ======================*/
 
 .testimonial-area {
@@ -2709,7 +2713,7 @@ label {
 }
 
 /*====================
-28. Counter css 
+28. Counter css
 ======================*/
 
 .counter-area {
@@ -2804,7 +2808,7 @@ label {
 }
 
 /*====================
-29. Cta css 
+29. Cta css
 ======================*/
 
 .cta-area {
@@ -2869,7 +2873,7 @@ label {
 }
 
 /* ===================
-30. Event css 
+30. Event css
 ====================== */
 
 .event-item {
@@ -3008,7 +3012,7 @@ label {
 }
 
 /* ===================
-31. Event single css 
+31. Event single css
 ====================== */
 
 .event-details img {
@@ -3061,7 +3065,7 @@ label {
 }
 
 /*====================
-32. Enroll css 
+32. Enroll css
 ======================*/
 
 .enroll-area {
@@ -3143,7 +3147,7 @@ label {
 }
 
 /* ===================
-33. Skill css 
+33. Skill css
 ====================== */
 
 .progress-box {
@@ -3178,7 +3182,7 @@ label {
 }
 
 /* ===================
-34. Department css 
+34. Department css
 ====================== */
 
 .department-area {
@@ -3360,7 +3364,7 @@ label {
 }
 
 /*====================
-36. Partner css 
+36. Partner css
 ======================*/
 
 .partner-area {
@@ -3368,7 +3372,7 @@ label {
 }
 
 /*====================
-37. Blog css 
+37. Blog css
 ======================*/
 
 .blog-area {
@@ -3898,12 +3902,13 @@ label {
 }
 
 /*===================
-40. Contact us css 
+40. Contact us css
 =====================*/
 
 .contact-wrapper {
   position: relative;
-  background: var(--color-white);
+  background: url(../img/contact/background-whatsapp.jpg) repeat center center;
+  background-size: contain;
   border-radius: 20px;
   box-shadow: var(--box-shadow);
   z-index: 1;
@@ -3925,6 +3930,12 @@ label {
   border-radius: 20px 0 0 20px;
   clip-path: polygon(100% 0, 20% 50%, 100% 100%, 0 100%, 0 0);
   z-index: -1;
+}
+
+@media screen and (max-width: 990px) {
+  .contact-img img {
+    display: none !important;
+  }
 }
 
 .contact-img img {
@@ -3969,10 +3980,6 @@ label {
 .contact-map iframe {
   width: 100%;
   height: 450px;
-}
-
-.contact-content {
-  margin-bottom: 50px;
 }
 
 .contact-info {
@@ -4038,14 +4045,8 @@ label {
   font-size: 16px;
 }
 
-@media all and (max-width: 768px) {
-  .contact-content {
-    margin-bottom: 50px;
-  }
-}
-
 /*===================
-41. Team css 
+41. Team css
 =====================*/
 
 .team-area {
@@ -4186,7 +4187,7 @@ label {
 }
 
 /* ===================
-42. Team single css 
+42. Team single css
 ====================== */
 
 .team-single-img img {
@@ -4250,7 +4251,7 @@ label {
 }
 
 /*====================
-43. Video css 
+43. Video css
 ======================*/
 
 .video-content {
@@ -4305,7 +4306,7 @@ label {
 }
 
 /*===================
-44. Pricing css 
+44. Pricing css
 =====================*/
 
 .pricing-area {
@@ -4442,7 +4443,7 @@ label {
 }
 
 /*====================
-45. Faq css 
+45. Faq css
 ======================*/
 
 .faq-area .accordion-item {
@@ -4594,7 +4595,7 @@ label {
 }
 
 /*====================
-47. Pagination css 
+47. Pagination css
 ======================*/
 
 .pagination {
@@ -4624,7 +4625,7 @@ label {
 }
 
 /*====================
-48. Auth css 
+48. Auth css
 ======================*/
 
 .login-form {
@@ -4790,7 +4791,7 @@ label {
 }
 
 /*====================
-49. Coming soon css 
+49. Coming soon css
 ======================*/
 
 .coming-soon {
@@ -4904,7 +4905,7 @@ label {
 }
 
 /*====================
-50. Error css 
+50. Error css
 ======================*/
 
 .error-wrapper {
@@ -4942,7 +4943,7 @@ label {
 }
 
 /*====================
-51. Terms/privacy css 
+51. Terms/privacy css
 ====================== */
 
 .terms-content:not(:last-child) {
@@ -5044,7 +5045,7 @@ label {
 }
 
 /*====================
-53. Application css 
+53. Application css
 ======================*/
 
 .application {
@@ -5108,7 +5109,7 @@ label {
 }
 
 /*====================
-54. Campus tour css 
+54. Campus tour css
 ======================*/
 
 .campus-tour {
@@ -5172,7 +5173,7 @@ label {
 }
 
 /*====================
-55. Campus life css 
+55. Campus life css
 ======================*/
 
 .campus-life {
@@ -5235,7 +5236,7 @@ label {
 }
 
 /*====================
-56. Notice board css 
+56. Notice board css
 ======================*/
 
 .notice-board {
@@ -5271,7 +5272,7 @@ label {
 }
 
 /*====================
-57. Student Activity css 
+57. Student Activity css
 ======================*/
 
 .activity {
@@ -5334,7 +5335,7 @@ label {
 }
 
 /*====================
-58. Facility css 
+58. Facility css
 ======================*/
 
 .facility-area {
@@ -5428,7 +5429,7 @@ label {
 }
 
 /*====================
-60. Research css 
+60. Research css
 ======================*/
 
 .research-area {
@@ -5523,7 +5524,7 @@ label {
 }
 
 /*====================
-62. Club css 
+62. Club css
 ======================*/
 
 .club-area {
@@ -5618,7 +5619,7 @@ label {
 }
 
 /*====================
-64. Tuition fee css 
+64. Tuition fee css
 ======================*/
 
 .tuition-fee {
@@ -5626,7 +5627,7 @@ label {
 }
 
 /*====================
-65. Alumni css 
+65. Alumni css
 ======================*/
 
 .alumni {
@@ -5690,7 +5691,7 @@ label {
 }
 
 /*====================
-66. Scholarship css 
+66. Scholarship css
 ======================*/
 
 .scholarship {
@@ -5733,7 +5734,7 @@ label {
 }
 
 /*====================
-67. Fund css 
+67. Fund css
 ======================*/
 
 .fund-area {
@@ -5779,7 +5780,7 @@ label {
 }
 
 /*====================
-68. Athletic css 
+68. Athletic css
 ======================*/
 
 .athletic {
@@ -5791,7 +5792,7 @@ label {
 }
 
 /*====================
-69. Health care css 
+69. Health care css
 ======================*/
 
 .health-care {
@@ -5812,7 +5813,7 @@ label {
 }
 
 /*====================
-70. Footer css 
+70. Footer css
 ======================*/
 
 .footer-area {
