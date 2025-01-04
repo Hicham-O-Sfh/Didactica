@@ -3186,6 +3186,8 @@ label {
 ====================== */
 
 .department-area {
+  background: url(../img/department/01.jpg) no-repeat center center;
+  background-size: cover;
   position: relative;
 }
 
