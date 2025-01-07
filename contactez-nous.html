@@ -52,7 +52,7 @@
     <!-- WhatsApp -->
     <meta
       property="og:whatsapp"
-      content="https://api.whatsapp.com/send?phone=+212671721510"
+      content="https://api.whatsapp.com/send?phone=212671721510"
     />
 
     <!-- Google Map -->
@@ -126,7 +126,7 @@
           "https://www.facebook.com/DeutschinOujda",
           "https://www.instagram.com/didactica_oujda",
           "https://youtube.com/@utekiefer",
-          "https://api.whatsapp.com/send?phone=+212671721510"
+          "https://api.whatsapp.com/send?phone=212671721510"
         ]
       }
     </script>
@@ -168,7 +168,7 @@
                   <i class="fab fa-youtube"></i>
                 </a>
                 <a
-                  href="https://api.whatsapp.com/send?phone=+212671721510"
+                  href="https://api.whatsapp.com/send?phone=212671721510"
                   target="_blank"
                 >
                   <i class="fab fa-whatsapp"></i>
@@ -232,16 +232,18 @@
                   <a class="nav-link" href="index.html"> Accueil </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href=""> Tarifs/Prix </a>
+                  <a class="nav-link" href="tarifs-et-prix.html">
+                    Tarifs/Prix
+                  </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href=""> Services </a>
+                  <a class="nav-link" href="faq.html"> FAQs </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href=""> À propos </a>
+                  <a class="nav-link" href="a-propos.html"> À propos </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active" href="contact.html">
+                  <a class="nav-link active" href="contactez-nous.html">
                     Contactez-nous
                   </a>
                 </li>
@@ -313,7 +315,7 @@
                         cols="30"
                         rows="3"
                         class="form-control"
-                        placeholder="Pourquoi voulez-vous apprendre l'allemand ?"
+                        placeholder="Votre message ici..."
                       ></textarea>
                     </div>
                     <button
@@ -425,10 +427,10 @@
       </div>
       <div class="footer-widget">
         <div class="container">
-          <div class="row footer-widget-wrapper pt-100 pb-70">
+          <div class="row footer-widget-wrapper pt-100 pb-80">
             <div class="col-md-6 col-lg-4">
               <div class="footer-widget-box about-us">
-                <a href="#" class="footer-logo">
+                <a href="index.html" class="footer-logo">
                   <img src="assets/img/logo/logo.png" alt="" />
                 </a>
                 <p class="mb-5">
@@ -467,38 +469,42 @@
                 <h4 class="footer-widget-title">Liens utiles</h4>
                 <ul class="footer-list">
                   <li>
-                    <a href="#"> <i class="fas fa-caret-right"></i>FAQs</a>
+                    <a href="faq.html">
+                      <i class="fas fa-caret-right"></i>FAQs
+                    </a>
                   </li>
                   <li>
-                    <a href="#">
+                    <a href="a-propos.html">
+                      <i class="fas fa-caret-right"></i>À propos
+                    </a>
+                  </li>
+                  <li>
+                    <a href="tarifs-et-prix.html">
                       <i class="fas fa-caret-right"></i>Tarifs & Prix
                     </a>
                   </li>
                   <li>
-                    <a href="#">
-                      <i class="fas fa-caret-right"></i>Témoignages
+                    <a href="contactez-nous.html">
+                      <i class="fas fa-caret-right"></i>Contactez-nous
                     </a>
-                  </li>
-                  <li>
-                    <a href="#"><i class="fas fa-caret-right"></i>Événements</a>
-                  </li>
-                  <li>
-                    <a href="#"><i class="fas fa-caret-right"></i>À propos</a>
                   </li>
                 </ul>
               </div>
             </div>
             <div class="col-md-6 col-lg-3">
               <div class="footer-widget-box list">
-                <h4 class="footer-widget-title">Contactez-nous</h4>
+                <h4 class="footer-widget-title">Message direct !</h4>
                 <div class="footer-newsletter">
                   <div class="subscribe-form">
                     <input
+                      id="whatsapp-message"
                       type="text"
                       class="form-control"
-                      placeholder="Votre question !"
+                      placeholder="Question/Demande ?!"
+                      required
                     />
                     <button
+                      id="send-footer-whatsapp-message"
                       class="theme-btn theme-btn2 whatsapp-btn-bg text-transform-none"
                     >
                       Envoyer par WhatsApp <i class="far fa-paper-plane"></i>
@@ -546,7 +552,7 @@
                   </li>
                   <li>
                     <a
-                      href="https://api.whatsapp.com/send?phone=+212671721510"
+                      href="https://api.whatsapp.com/send?phone=212671721510"
                       target="_blank"
                     >
                       <i class="fab fa-whatsapp"></i>
