@@ -303,4 +303,18 @@ Version         : 1.0
   // copywrite date
   let date = new Date().getFullYear();
   $("#date").html(date);
+
+  // WhatsApp Button
+  $("#whatsapp-button").click(function () {
+    if (!$("#nomComplet").get(0).reportValidity()) {
+      return;
+    }
+    const nomComplet = $("#nomComplet").val();
+    const numPhone = $("#numPhone").val();
+    const message = $("#message").val();
+    const messageWhatsApp = `Bonjour, je m'appelle ${nomComplet}.\nVoici mon numéro de téléphone pour m'appeler concernant mon inscription: ${numPhone}.\nJe veux apprendre l'allemand: ${message}.`;
+    const encodedMessage = encodeURIComponent(messageWhatsApp);
+    const whatsappURL = "https://wa.me/212666201740";
+    window.open(`${whatsappURL}?text=${encodedMessage}`, "_blank");
+  });
 })(jQuery);
