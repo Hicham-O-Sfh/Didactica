@@ -1809,6 +1809,11 @@ label {
   margin-bottom: 25px;
 }
 
+.blog-details > p.mb-10 {
+  line-height: 2;
+  text-align: justify;
+}
+
 .about-item-icon {
   width: 80px;
   height: 80px;
@@ -3582,7 +3587,6 @@ label {
   background: var(--color-white);
   border-radius: 50px 50px 50px 0;
   box-shadow: var(--box-shadow);
-  margin: 50px 0;
   padding: 20px;
 }
 
