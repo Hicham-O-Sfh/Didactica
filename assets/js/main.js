@@ -49,8 +49,31 @@ Version         : 1.0
   }
 
   $("#send-whatsapp-form").click(function () {
-    if (this.form.reportValidity()) {
-      alert("ok !");
+    const form = this.closest("form");
+    if (form.reportValidity()) {
+      // Get form values
+      const nomComplet = $("#nom-complet").val();
+      const dateDeNaissance = $("#date-de-naissance").val();
+      const cin = $("#cin").val();
+      const specialite = $("#specialite").val();
+      const objectif = $("#objectif").val();
+      const niveau = $('input[name="niveau"]:checked').val();
+      const message = $("#message").val();
+
+      // Construct the WhatsApp message
+      const whatsappMessage = `*_Formulaire d'inscription._*\n\n*Nom complet:* ${nomComplet}\n*Date de naissance:* ${dateDeNaissance}\n*CIN:* ${cin}\n*Spécialité:* ${specialite}\n*Objectif:* ${objectif}\n*Niveau de langue souhaité:* ${niveau}\n\n${message}`;
+
+      // Encode the message
+      const encodedMessage = encodeURIComponent(whatsappMessage);
+
+      // WhatsApp number
+      const whatsappNumber = "+212666201740";
+
+      // Construct the WhatsApp URL
+      const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+      // Open WhatsApp URL
+      window.open(whatsappURL, "_blank");
     }
   });
 

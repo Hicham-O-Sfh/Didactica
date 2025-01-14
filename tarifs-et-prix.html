@@ -55,7 +55,10 @@
     <link rel="preload" href="assets/js/main.js" as="script" />
 
     <!-- SEO Friendly URLs -->
-    <link rel="canonical" href="https://www.didactica-oujda.ma/tarifs" />
+    <link
+      rel="canonical"
+      href="https://www.didactica-oujda.ma/tarifs-et-prix.html"
+    />
 
     <!-- Performance Optimizations -->
     <link rel="dns-prefetch" href="//fonts.googleapis.com" />
@@ -201,7 +204,7 @@
     </header>
     <!-- header area end -->
 
-    <!-- popup search -->
+    <!-- sign in popup #generic -->
     <div class="search-popup">
       <button class="close-search">
         <span class="far fa-times"></span>
@@ -209,7 +212,7 @@
       <form>
         <div class="row">
           <div class="col-md-6 mb-2">
-            <label for="nom-complet">Nom complet*:</label>
+            <label for="nom-complet">Nom complet*</label>
             <input
               id="nom-complet"
               class="form-control"
@@ -219,16 +222,17 @@
             />
           </div>
           <div class="col-md-6 mb-2">
-            <label for="date-de-naissance">Date de naissance*:</label>
+            <label for="date-de-naissance">Date de naissance*</label>
             <input
               id="date-de-naissance"
               class="form-control"
               type="date"
+              value="2000-01-01"
               required
             />
           </div>
           <div class="col-md-6 mb-2">
-            <label for="cin">CIN:</label>
+            <label for="cin">CIN</label>
             <input
               id="cin"
               class="form-control"
@@ -238,7 +242,7 @@
             />
           </div>
           <div class="col-md-6 mb-2">
-            <label for="specialite">Spécialité:</label>
+            <label for="specialite">Spécialité</label>
             <select class="form-select" id="specialite">
               <option value selected disabled>
                 Votre spécialité (optionnel)
@@ -254,22 +258,22 @@
             </select>
           </div>
           <div class="col-md-12 mb-3">
-            <label for="objectif">Votre objectif en Allemagne*:</label>
+            <label for="objectif">Votre objectif en Allemagne*</label>
             <select class="form-select" id="objectif" required>
               <option value selected disabled>Votre objectif</option>
               <option value="Ausbildung">
                 Formation Professionnelle (Ausbildung)
               </option>
-              <option value="École/Université">
+              <option value="Studium">
                 École/Université (Studium)
               </option>
-              <option value="Ingénierie">Travail (Arbeit)</option>
+              <option value="Arbeit">Travail (Arbeit)</option>
               <option value="Autre">Autre</option>
             </select>
           </div>
           <div class="col-md-12 mb-3">
             <label for="specialite" class="d-block">
-              Votre objectif en niveau de langue:
+              Votre objectif en niveau de langue*
             </label>
             <div class="form-check form-check-inline">
               <input
@@ -339,7 +343,7 @@
             </div>
           </div>
           <div class="col-md-12 mb-5">
-            <label for="message">Message/Remarque/Question ?</label>
+            <label for="message">Message/Remarque/Question</label>
             <textarea
               class="form-control"
               id="message"
@@ -361,7 +365,7 @@
         </div>
       </form>
     </div>
-    <!-- popup search end -->
+    <!-- sign in popup end -->
 
     <main class="main">
       <!-- counter area -->
