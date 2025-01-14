@@ -18,6 +18,11 @@ file:///C:/Users/hosaffih/Downloads/Templates/eduka/live.themewild.com/eduka/ind
 ✅Section pour les horaires des cours/examens.
 ✅Intégration de Google Maps pour la localisation.
 
+inscription :
+nom complet, date de naissance, numéro CIN, spécialité
+niveau souhaité, ausbildung/studium/arbeit/autre
+message 
+
 2. Site vitrine avec interaction (Moyennement complexe)
 ✅Fonctionnalités supplémentaires :
 ✅Formulaire d’inscription à une newsletter pour informer des promotions/cours.
