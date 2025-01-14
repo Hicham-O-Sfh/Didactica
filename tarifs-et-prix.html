@@ -145,6 +145,12 @@
               <img src="assets/img/logo/logo.png" alt="logo" />
             </a>
             <div class="mobile-menu-right">
+              <div class="nav-right-btn">
+                <button type="button" class="theme-btn search-box-outer">
+                  <i class="fal fa-pencil"></i>
+                  <span>S'inscrire maintenant !</span>
+                </button>
+              </div>
               <button
                 class="navbar-toggler"
                 type="button"
@@ -153,9 +159,9 @@
                 aria-expanded="false"
                 aria-label="Toggle navigation"
               >
-                <span class="navbar-toggler-mobile-icon"
-                  ><i class="far fa-bars"></i
-                ></span>
+                <span class="navbar-toggler-mobile-icon">
+                  <i class="far fa-bars"></i>
+                </span>
               </button>
             </div>
             <div class="collapse navbar-collapse" id="main_nav">
@@ -182,10 +188,10 @@
               </ul>
               <div class="nav-right">
                 <div class="nav-right-btn mt-2">
-                  <a href="" class="theme-btn">
-                    <span class="fal fa-pencil"></span>
-                    S'inscrire maintenant !
-                  </a>
+                  <button type="button" class="theme-btn search-box-outer">
+                    <i class="fal fa-pencil"></i>
+                    <span>S'inscrire maintenant !</span>
+                  </button>
                 </div>
               </div>
             </div>
@@ -195,9 +201,171 @@
     </header>
     <!-- header area end -->
 
+    <!-- popup search -->
+    <div class="search-popup">
+      <button class="close-search">
+        <span class="far fa-times"></span>
+      </button>
+      <form>
+        <div class="row">
+          <div class="col-md-6 mb-2">
+            <label for="nom-complet">Nom complet*:</label>
+            <input
+              id="nom-complet"
+              class="form-control"
+              type="text"
+              placeholder="Nom & Prénom"
+              required
+            />
+          </div>
+          <div class="col-md-6 mb-2">
+            <label for="date-de-naissance">Date de naissance*:</label>
+            <input
+              id="date-de-naissance"
+              class="form-control"
+              type="date"
+              required
+            />
+          </div>
+          <div class="col-md-6 mb-2">
+            <label for="cin">CIN:</label>
+            <input
+              id="cin"
+              class="form-control"
+              type="text"
+              maxlength="10"
+              placeholder="A123456"
+            />
+          </div>
+          <div class="col-md-6 mb-2">
+            <label for="specialite">Spécialité:</label>
+            <select class="form-select" id="specialite">
+              <option value selected disabled>
+                Votre spécialité (optionnel)
+              </option>
+              <option value="Médecine">Médecine</option>
+              <option value="Infirmier/Infirmière">Infirmier/Infirmière</option>
+              <option value="Ingénierie">Ingénierie</option>
+              <option value="Économie">Économie</option>
+              <option value="Marketing">Marketing</option>
+              <option value="Design">Design</option>
+              <option value="Gestion & Management">Gestion & Management</option>
+              <option value="Autre">Autre</option>
+            </select>
+          </div>
+          <div class="col-md-12 mb-3">
+            <label for="objectif">Votre objectif en Allemagne*:</label>
+            <select class="form-select" id="objectif" required>
+              <option value selected disabled>Votre objectif</option>
+              <option value="Ausbildung">
+                Formation Professionnelle (Ausbildung)
+              </option>
+              <option value="École/Université">
+                École/Université (Studium)
+              </option>
+              <option value="Ingénierie">Travail (Arbeit)</option>
+              <option value="Autre">Autre</option>
+            </select>
+          </div>
+          <div class="col-md-12 mb-3">
+            <label for="specialite" class="d-block">
+              Votre objectif en niveau de langue:
+            </label>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                name="niveau"
+                type="radio"
+                value="A1"
+                id="A1"
+                required
+              />
+              <label class="form-check-label" for="A1">A1</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                name="niveau"
+                type="radio"
+                value="A2"
+                id="A2"
+                required
+              />
+              <label class="form-check-label" for="A2">A2</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                name="niveau"
+                type="radio"
+                value="B1"
+                id="B1"
+                required
+              />
+              <label class="form-check-label" for="B1">B1</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                name="niveau"
+                type="radio"
+                value="B2"
+                id="B2"
+                required
+              />
+              <label class="form-check-label" for="B2">B2</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                name="niveau"
+                type="radio"
+                value="C1"
+                id="C1"
+                required
+              />
+              <label class="form-check-label" for="C1">C1</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                name="niveau"
+                type="radio"
+                value="C2"
+                id="C2"
+                required
+              />
+              <label class="form-check-label" for="C2">C2</label>
+            </div>
+          </div>
+          <div class="col-md-12 mb-5">
+            <label for="message">Message/Remarque/Question ?</label>
+            <textarea
+              class="form-control"
+              id="message"
+              cols="30"
+              rows="5"
+              placeholder="(Optionnel)"
+            ></textarea>
+          </div>
+          <div class="col-md-12 text-center">
+            <button
+              type="button"
+              id="send-whatsapp-form"
+              class="theme-btn theme-btn2 whatsapp-btn-bg text-transform-none"
+            >
+              S'inscrire maintenant
+              <i class="far fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!-- popup search end -->
+
     <main class="main">
       <!-- counter area -->
-      <div class="counter-area pt-60 pb-60">
+      <div class="counter-area pt-60 pb-60 d-none d-md-block">
         <div class="container">
           <div class="row">
             <div class="col-lg-3 col-sm-6">

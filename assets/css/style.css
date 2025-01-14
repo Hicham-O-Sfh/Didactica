@@ -1001,7 +1001,7 @@ label {
     margin-right: 15px;
   }
 
-  .navbar .nav-right-btn {
+  .navbar .nav-right-btn span {
     display: none;
   }
 }
@@ -1171,6 +1171,20 @@ label {
 }
 
 /* mobile menu */
+@media (max-width: 375px) {
+  .navbar-brand img {
+    width: 200px !important;
+  }
+
+  .search-box-outer {
+    padding: 6px;
+  }
+
+  .navbar-toggler-mobile-icon {
+    font-size: 15px;
+  }
+}
+
 .mobile-menu-right {
   display: none;
 }
@@ -1375,6 +1389,9 @@ label {
 ======================*/
 
 .search-popup {
+  overflow: auto !important;
+  background: url(../img/contact/background-whatsapp.jpg) repeat center center;
+  background-size: contain;
   position: fixed;
   left: 0;
   top: 0;
@@ -1383,7 +1400,6 @@ label {
   z-index: 99999;
   margin-top: -540px;
   transform: translateY(-100%);
-  background-color: rgba(0, 0, 0, 0.8);
   transition: all 1500ms cubic-bezier(0.86, 0, 0.07, 1);
   transition-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
 }
@@ -1427,31 +1443,30 @@ label {
 .search-active .search-popup .close-search {
   visibility: visible;
   opacity: 1;
-  top: 50%;
+  top: 30%;
   transition-delay: 1500ms;
 }
 
 .search-popup form {
   position: absolute;
   max-width: 700px;
-  top: 50%;
+  top: 20%;
   left: 15px;
   right: 15px;
   margin: -35px auto 0;
   transform: scaleX(0);
   transform-origin: center;
-  transition: all 300ms ease;
+  transition: all 400ms ease;
 }
 
 .search-active .search-popup form {
   transform: scaleX(1);
-  transition-delay: 1200ms;
+  transition-delay: 1000ms;
 }
 
 .search-popup .form-group {
   position: relative;
   margin: 0px;
-  overflow: hidden;
 }
 
 .search-popup .form-group input[type="text"],
@@ -1487,6 +1502,11 @@ label {
 .search-popup .form-group button:hover {
   background: var(--theme-color);
   color: var(--color-white);
+}
+
+.form-check-label {
+  color: black;
+  font-weight: 600;
 }
 
 /*====================

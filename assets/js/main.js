@@ -38,6 +38,22 @@ Version         : 1.0
     });
   });
 
+  // navbar Search
+  if ($(".search-box-outer").length) {
+    $(".search-box-outer").on("click", function () {
+      $("body").addClass("search-active");
+    });
+    $(".close-search").on("click", function () {
+      $("body").removeClass("search-active");
+    });
+  }
+
+  $("#send-whatsapp-form").click(function () {
+    if (this.form.reportValidity()) {
+      alert("ok !");
+    }
+  });
+
   // wow init
   new WOW().init();
 
