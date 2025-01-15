@@ -39,14 +39,20 @@ Version         : 1.0
   });
 
   // navbar Search
-  if ($(".trigger-sign-in-form-btn").length) {
-    $(".trigger-sign-in-form-btn").on("click", function () {
-      $("body").addClass("search-active");
-    });
-    $(".close-search").on("click", function () {
-      $("body").removeClass("search-active");
-    });
-  }
+  $(".trigger-sign-in-form-btn").on("click", function () {
+    $("#message").val("");
+    $("body").addClass("search-active");
+  });
+
+  $(".choose-pack-btn").click(function () {
+    const pack = $(this).data("pack");
+    $("#message").val("Pack: " + pack);
+    $("body").addClass("search-active");
+  });
+
+  $(".close-search").on("click", function () {
+    $("body").removeClass("search-active");
+  });
 
   $("#send-whatsapp-form").click(function () {
     const form = this.closest("form");
