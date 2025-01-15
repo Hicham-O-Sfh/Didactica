@@ -39,8 +39,8 @@ Version         : 1.0
   });
 
   // navbar Search
-  if ($(".search-box-outer").length) {
-    $(".search-box-outer").on("click", function () {
+  if ($(".trigger-sign-in-form-btn").length) {
+    $(".trigger-sign-in-form-btn").on("click", function () {
       $("body").addClass("search-active");
     });
     $(".close-search").on("click", function () {
