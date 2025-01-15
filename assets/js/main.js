@@ -61,7 +61,7 @@ Version         : 1.0
       const nomComplet = $("#nom-complet").val();
       const dateDeNaissance = $("#date-de-naissance").val();
       const cin = $("#cin").val();
-      const specialite = $("#specialite").val();
+      const specialite = $("#specialite").val() ?? "";
       const objectif = $("#objectif").val();
       const niveau = $('input[name="niveau"]:checked').val();
       const message = $("#message").val();
@@ -357,7 +357,7 @@ Version         : 1.0
     const nomComplet = $("#nomComplet").val();
     const numPhone = $("#numPhone").val();
     const message = $("#message").val();
-    const messageWhatsApp = `Bonjour, je suis ${nomComplet}.\nVoici mon numéro de téléphone pour m'appeler concernant ma demande/inscription: ${numPhone}.\n\n${message}.`;
+    const messageWhatsApp = `Bonjour, je suis ${nomComplet}.\nVoici mon numéro de téléphone pour m'appeler concernant ma demande/inscription: ${numPhone} \n\n${message}`;
     const encodedMessage = encodeURIComponent(messageWhatsApp);
     const whatsappURL = "https://wa.me/212666201740";
     window.open(`${whatsappURL}?text=${encodedMessage}`, "_blank");
