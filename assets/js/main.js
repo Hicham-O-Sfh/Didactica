@@ -372,4 +372,12 @@ Version         : 1.0
     const whatsappURL = "https://wa.me/212666201740";
     window.open(`${whatsappURL}?text=${encodedMessage}`, "_blank");
   });
+
+  $("#other-questions-link").click(function (e) {
+    e.preventDefault();
+    $("#send-footer-whatsapp-message")
+      .get(0)
+      .scrollIntoView({ behavior: "smooth", block: "start" });
+    $("#whatsapp-message").focus();
+  });
 })(jQuery);
