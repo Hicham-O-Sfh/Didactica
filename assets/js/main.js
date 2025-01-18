@@ -1,1 +1,288 @@
-(function(_0x47cc12,_0xfade86){const _0x310bd3=_0x3d0e,_0x49b81d=_0x47cc12();while(!![]){try{const _0x15ca8b=parseInt(_0x310bd3(0x135))/0x1+-parseInt(_0x310bd3(0x143))/0x2*(parseInt(_0x310bd3(0x161))/0x3)+parseInt(_0x310bd3(0x132))/0x4+parseInt(_0x310bd3(0x188))/0x5*(-parseInt(_0x310bd3(0x150))/0x6)+-parseInt(_0x310bd3(0x15c))/0x7+parseInt(_0x310bd3(0x16a))/0x8+parseInt(_0x310bd3(0x163))/0x9*(parseInt(_0x310bd3(0x165))/0xa);if(_0x15ca8b===_0xfade86)break;else _0x49b81d['push'](_0x49b81d['shift']());}catch(_0x4a3098){_0x49b81d['push'](_0x49b81d['shift']());}}}(_0x2dfa,0x28d68),function(_0x22f909){'use strict';const _0x35b3ce=_0x3d0e;_0x22f909(document)['on']('ready',function(){const _0x36b05b=_0x3d0e;_0x22f909(_0x36b05b(0x17f))[_0x36b05b(0x176)](function(){const _0x3252e0=_0x36b05b;_0x22f909(this)[_0x3252e0(0x13c)](_0x3252e0(0x160),_0x3252e0(0x13f)+_0x22f909(this)[_0x3252e0(0x167)](_0x3252e0(0x18a))+')');});}),_0x22f909(_0x35b3ce(0x168))['on']('click',function(){const _0x2ed8b0=_0x35b3ce;_0x22f909(_0x2ed8b0(0x15d))['val'](''),_0x22f909(_0x2ed8b0(0x179))[_0x2ed8b0(0x17a)]('search-active');}),_0x22f909(_0x35b3ce(0x157))['click'](function(){const _0x50ad1e=_0x35b3ce,_0x110847=_0x22f909(this)[_0x50ad1e(0x17e)]('pack');_0x22f909(_0x50ad1e(0x15d))[_0x50ad1e(0x156)](_0x50ad1e(0x17b)+_0x110847),_0x22f909(_0x50ad1e(0x179))[_0x50ad1e(0x17a)](_0x50ad1e(0x137));}),_0x22f909(_0x35b3ce(0x189))['on'](_0x35b3ce(0x173),function(){const _0x2cd013=_0x35b3ce;_0x22f909(_0x2cd013(0x179))['removeClass']('search-active');}),_0x22f909(_0x35b3ce(0x17d))[_0x35b3ce(0x173)](function(){const _0x23326a=_0x35b3ce,_0x388306=this[_0x23326a(0x142)]('form');if(_0x388306['reportValidity']()){const _0x3a8e86=_0x22f909(_0x23326a(0x149))[_0x23326a(0x156)](),_0x1cf2b1=_0x22f909(_0x23326a(0x182))[_0x23326a(0x156)](),_0x27750c=_0x22f909(_0x23326a(0x148))[_0x23326a(0x156)](),_0x485829=_0x22f909(_0x23326a(0x16f))[_0x23326a(0x156)]()??'',_0x48e9c4=_0x22f909(_0x23326a(0x16e))[_0x23326a(0x156)](),_0x321cd4=_0x22f909('input[name=\x22niveau\x22]:checked')[_0x23326a(0x156)](),_0x53489b=_0x22f909(_0x23326a(0x15d))[_0x23326a(0x156)](),_0x7e91a=_0x23326a(0x171)+_0x3a8e86+'\x0a*Date\x20de\x20naissance:*\x20'+_0x1cf2b1+_0x23326a(0x140)+_0x27750c+_0x23326a(0x159)+_0x485829+_0x23326a(0x13a)+_0x48e9c4+'\x0a*Niveau\x20de\x20langue\x20souhaité:*\x20'+_0x321cd4+'\x0a\x0a'+_0x53489b,_0x29633c=encodeURIComponent(_0x7e91a),_0x2df294='+212666201740',_0x402da4=_0x23326a(0x17c)+_0x2df294+_0x23326a(0x144)+_0x29633c;window['open'](_0x402da4,_0x23326a(0x134));}}),new WOW()[_0x35b3ce(0x133)](),_0x22f909(_0x35b3ce(0x14d))[_0x35b3ce(0x164)]({'loop':!![],'nav':!![],'dots':![],'margin':0x0,'autoplay':!![],'autoplayHoverPause':!![],'autoplayTimeout':0x1388,'items':0x1,'navText':[_0x35b3ce(0x16b),'<i\x20class=\x27far\x20fa-long-arrow-right\x27></i>'],'onInitialized':function(_0x3b0ee7){const _0xe37ed8=_0x35b3ce;var _0x21710b=_0x22f909(_0xe37ed8(0x138))['eq'](_0x3b0ee7[_0xe37ed8(0x15e)]['index'])['find'](_0xe37ed8(0x187));_0x2d21b1(_0x21710b);},'onChanged':function(_0x245e70){const _0x1c986c=_0x35b3ce;var _0x27c45b=_0x22f909(_0x1c986c(0x138))['eq'](_0x245e70[_0x1c986c(0x15e)][_0x1c986c(0x162)])[_0x1c986c(0x174)](_0x1c986c(0x187));_0x2d21b1(_0x27c45b);}});function _0x2d21b1(_0x11ee29){const _0x13c72a=_0x35b3ce;var _0x67fe7c=_0x13c72a(0x155);_0x11ee29[_0x13c72a(0x176)](function(){const _0x4ad3c0=_0x13c72a;var _0x502ad7=_0x22f909(this),_0x1000f1=_0x502ad7[_0x4ad3c0(0x17e)](_0x4ad3c0(0x172)),_0x5527c9=_0x502ad7[_0x4ad3c0(0x17e)](_0x4ad3c0(0x139)),_0x1bf42c=_0x4ad3c0(0x185)+_0x502ad7[_0x4ad3c0(0x17e)](_0x4ad3c0(0x16c));_0x502ad7[_0x4ad3c0(0x13c)]({'animation-delay':_0x1000f1,'-webkit-animation-delay':_0x1000f1,'animation-duration':_0x5527c9,'-webkit-animation-duration':_0x5527c9}),_0x502ad7['addClass'](_0x1bf42c)[_0x4ad3c0(0x15a)](_0x67fe7c,function(){_0x502ad7['removeClass'](_0x1bf42c);});});}_0x22f909(_0x35b3ce(0x183))[_0x35b3ce(0x164)]({'loop':!![],'margin':0xa,'nav':![],'dots':!![],'autoplay':!![],'responsive':{0x0:{'items':0x1},0x258:{'items':0x2},0x3e8:{'items':0x4}}}),_0x22f909('.event-slider')[_0x35b3ce(0x164)]({'loop':!![],'margin':0x19,'nav':!![],'dots':!![],'autoplay':![],'navText':[_0x35b3ce(0x184),_0x35b3ce(0x158)],'responsive':{0x0:{'items':0x1},0x258:{'items':0x2},0x3e8:{'items':0x3}}}),_0x22f909(_0x35b3ce(0x14c))[_0x35b3ce(0x164)]({'loop':!![],'margin':0x19,'nav':!![],'dots':!![],'autoplay':![],'navText':[_0x35b3ce(0x184),'<i\x20class=\x27far\x20fa-angle-right\x27></i>'],'responsive':{0x0:{'items':0x1},0x258:{'items':0x2},0x3e8:{'items':0x4}}}),_0x22f909('.partner-slider')[_0x35b3ce(0x164)]({'loop':!![],'margin':0x46,'nav':![],'dots':![],'autoplay':!![],'responsive':{0x0:{'items':0x2},0x258:{'items':0x3},0x3e8:{'items':0x5}}}),_0x22f909(window)['on']('load',function(){const _0x2f7d6e=_0x35b3ce;_0x22f909(_0x2f7d6e(0x141))[_0x2f7d6e(0x178)](_0x2f7d6e(0x16d));}),_0x22f909(window)['on'](_0x35b3ce(0x14b),function(){const _0x31353f=_0x35b3ce;document[_0x31353f(0x179)][_0x31353f(0x154)]>0x64||document[_0x31353f(0x13d)][_0x31353f(0x154)]>0x64?_0x22f909(_0x31353f(0x181))[_0x31353f(0x17a)]('active'):_0x22f909('#scroll-top')[_0x31353f(0x166)](_0x31353f(0x145));}),_0x22f909('#scroll-top')['on']('click',function(){const _0x424bdb=_0x35b3ce;return _0x22f909(_0x424bdb(0x153))[_0x424bdb(0x15f)]({'scrollTop':0x0},0x5dc),![];}),_0x22f909(window)['on'](_0x35b3ce(0x14b),function(){const _0x5144f9=_0x35b3ce;_0x22f909(this)['scrollTop']()>0x32?_0x22f909(_0x5144f9(0x151))[_0x5144f9(0x17a)](_0x5144f9(0x13e)):_0x22f909(_0x5144f9(0x151))[_0x5144f9(0x166)](_0x5144f9(0x13e));});let _0xdd9ff4=new Date()[_0x35b3ce(0x147)]();_0x22f909('#date')[_0x35b3ce(0x177)](_0xdd9ff4),_0x22f909('#whatsapp-button')[_0x35b3ce(0x173)](function(){const _0x41751f=_0x35b3ce;if(!_0x22f909(_0x41751f(0x175))['get'](0x0)[_0x41751f(0x146)]())return;const _0x5c1460=_0x22f909(_0x41751f(0x175))[_0x41751f(0x156)](),_0x54bae1=_0x22f909(_0x41751f(0x186))[_0x41751f(0x156)](),_0x3a83cb=_0x22f909(_0x41751f(0x15d))[_0x41751f(0x156)](),_0x4d8961='Bonjour,\x20je\x20suis\x20'+_0x5c1460+_0x41751f(0x180)+_0x54bae1+_0x41751f(0x13b)+_0x3a83cb,_0x4789b2=encodeURIComponent(_0x4d8961),_0x50a0ab=_0x41751f(0x152);window[_0x41751f(0x14e)](_0x50a0ab+_0x41751f(0x144)+_0x4789b2,_0x41751f(0x134));}),_0x22f909(_0x35b3ce(0x15b))[_0x35b3ce(0x173)](function(){const _0x4fc6d6=_0x35b3ce;if(!_0x22f909(_0x4fc6d6(0x170))['get'](0x0)[_0x4fc6d6(0x146)]())return;const _0x1785e4=_0x22f909(_0x4fc6d6(0x170))[_0x4fc6d6(0x156)](),_0x3faf88=encodeURIComponent(_0x1785e4),_0x2c1a04='https://wa.me/212666201740';window[_0x4fc6d6(0x14e)](_0x2c1a04+_0x4fc6d6(0x144)+_0x3faf88,'_blank');}),_0x22f909('#other-questions-link')[_0x35b3ce(0x173)](function(_0x400856){const _0x504c0c=_0x35b3ce;_0x400856[_0x504c0c(0x14a)](),_0x22f909(_0x504c0c(0x15b))[_0x504c0c(0x169)](0x0)[_0x504c0c(0x136)]({'behavior':'smooth','block':'start'}),_0x22f909(_0x504c0c(0x170))[_0x504c0c(0x14f)]();});}(jQuery));function _0x3d0e(_0x5435f6,_0x2aa392){const _0x2dfaf6=_0x2dfa();return _0x3d0e=function(_0x3d0e05,_0x887242){_0x3d0e05=_0x3d0e05-0x132;let _0x2e7428=_0x2dfaf6[_0x3d0e05];return _0x2e7428;},_0x3d0e(_0x5435f6,_0x2aa392);}function _0x2dfa(){const _0x114189=['delay','click','find','#nomComplet','each','html','fadeOut','body','addClass','Pack:\x20','https://wa.me/','#send-whatsapp-form','data','[data-background]','.\x0aVoici\x20mon\x20numéro\x20de\x20téléphone\x20pour\x20m\x27appeler\x20concernant\x20ma\x20demande/inscription:\x20','#scroll-top','#date-de-naissance','.testimonial-slider','<i\x20class=\x27far\x20fa-angle-left\x27></i>','animated\x20','#numPhone','[data-animation]','5EIOwvR','.close-search','data-background','1027856epYEHS','init','_blank','138407hbgxTJ','scrollIntoView','search-active','.owl-item','duration','\x0a*Objectif:*\x20','\x20\x0a\x0a','css','documentElement','fixed-top','url(','\x0a*CIN:*\x20','.preloader','closest','160BpdMpt','?text=','active','reportValidity','getFullYear','#cin','#nom-complet','preventDefault','scroll','.department-slider','.hero-slider','open','focus','1426338SHCZkf','.navbar','https://wa.me/212666201740','html,\x20body','scrollTop','webkitAnimationEnd\x20mozAnimationEnd\x20MSAnimationEnd\x20oanimationend\x20animationend','val','.choose-pack-btn','<i\x20class=\x27far\x20fa-angle-right\x27></i>','\x0a*Spécialité:*\x20','one','#send-footer-whatsapp-message','1053171WNEOPP','#message','item','animate','background-image','4803AERvto','index','630YcgshT','owlCarousel','850LSGLoT','removeClass','attr','.trigger-sign-in-form-btn','get','2257656GqmRzi','<i\x20class=\x27far\x20fa-long-arrow-left\x27></i>','animation','slow','#objectif','#specialite','#whatsapp-message','*_Formulaire\x20d\x27inscription._*\x0a\x0a*Nom\x20complet:*\x20'];_0x2dfa=function(){return _0x114189;};return _0x2dfa();}
+(function ($) {
+    "use strict";
+  
+    // multi level dropdown menu
+    $(".dropdown-menu a.dropdown-toggle").on("click", function (e) {
+      if (!$(this).next().hasClass("show")) {
+        $(this)
+          .parents(".dropdown-menu")
+          .first()
+          .find(".show")
+          .removeClass("show");
+      }
+      var $subMenu = $(this).next(".dropdown-menu");
+      $subMenu.toggleClass("show");
+  
+      $(this)
+        .parents("li.nav-item.dropdown.show")
+        .on("hidden.bs.dropdown", function (e) {
+          $(".dropdown-submenu .show").removeClass("show");
+        });
+      return false;
+    });
+  
+    // data-background
+    $(document).on("ready", function () {
+      $("[data-background]").each(function () {
+        $(this).css(
+          "background-image",
+          "url(" + $(this).attr("data-background") + ")"
+        );
+      });
+    });
+  
+    // navbar Search
+    $(".trigger-sign-in-form-btn").on("click", function () {
+      $("#message").val("");
+      $("body").addClass("search-active");
+    });
+  
+    $(".choose-pack-btn").click(function () {
+      const pack = $(this).data("pack");
+      $("#message").val("Pack: " + pack);
+      $("body").addClass("search-active");
+    });
+  
+    $(".close-search").on("click", function () {
+      $("body").removeClass("search-active");
+    });
+  
+    $("#send-whatsapp-form").click(function () {
+      const form = this.closest("form");
+      if (form.reportValidity()) {
+        // Get form values
+        const nomComplet = $("#nom-complet").val();
+        const dateDeNaissance = $("#date-de-naissance").val();
+        const cin = $("#cin").val();
+        const specialite = $("#specialite").val() ?? "";
+        const objectif = $("#objectif").val();
+        const niveau = $('input[name="niveau"]:checked').val();
+        const message = $("#message").val();
+  
+        // Construct the WhatsApp message
+        const whatsappMessage = `*_Formulaire d'inscription._*\n\n*Nom complet:* ${nomComplet}\n*Date de naissance:* ${dateDeNaissance}\n*CIN:* ${cin}\n*Spécialité:* ${specialite}\n*Objectif:* ${objectif}\n*Niveau de langue souhaité:* ${niveau}\n\n${message}`;
+  
+        // Encode the message
+        const encodedMessage = encodeURIComponent(whatsappMessage);
+  
+        // WhatsApp number
+        const whatsappNumber = "+212666201740";
+  
+        // Construct the WhatsApp URL
+        const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+  
+        // Open WhatsApp URL
+        window.open(whatsappURL, "_blank");
+      }
+    });
+  
+    // wow init
+    new WOW().init();
+  
+    // hero slider
+    $(".hero-slider").owlCarousel({
+      loop: true,
+      nav: true,
+      dots: false,
+      margin: 0,
+      autoplay: true,
+      autoplayHoverPause: true,
+      autoplayTimeout: 5000,
+      items: 1,
+      navText: [
+        "<i class='far fa-long-arrow-left'></i>",
+        "<i class='far fa-long-arrow-right'></i>",
+      ],
+  
+      onInitialized: function (event) {
+        var $firstAnimatingElements = $(".owl-item")
+          .eq(event.item.index)
+          .find("[data-animation]");
+        doAnimations($firstAnimatingElements);
+      },
+  
+      onChanged: function (event) {
+        var $firstAnimatingElements = $(".owl-item")
+          .eq(event.item.index)
+          .find("[data-animation]");
+        doAnimations($firstAnimatingElements);
+      },
+    });
+  
+    //hero slider do animations
+    function doAnimations(elements) {
+      var animationEndEvents =
+        "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend";
+      elements.each(function () {
+        var $this = $(this);
+        var $animationDelay = $this.data("delay");
+        var $animationDuration = $this.data("duration");
+        var $animationType = "animated " + $this.data("animation");
+        $this.css({
+          "animation-delay": $animationDelay,
+          "-webkit-animation-delay": $animationDelay,
+          "animation-duration": $animationDuration,
+          "-webkit-animation-duration": $animationDuration,
+        });
+        $this.addClass($animationType).one(animationEndEvents, function () {
+          $this.removeClass($animationType);
+        });
+      });
+    }
+  
+    // testimonial-slider
+    $(".testimonial-slider").owlCarousel({
+      loop: true,
+      margin: 10,
+      nav: false,
+      dots: true,
+      autoplay: true,
+      responsive: {
+        0: {
+          items: 1,
+        },
+        600: {
+          items: 2,
+        },
+        1000: {
+          items: 4,
+        },
+      },
+    });
+  
+    // event-slider
+    $(".event-slider").owlCarousel({
+      loop: true,
+      margin: 25,
+      nav: true,
+      dots: true,
+      autoplay: false,
+      navText: [
+        "<i class='far fa-angle-left'></i>",
+        "<i class='far fa-angle-right'></i>",
+      ],
+      responsive: {
+        0: {
+          items: 1,
+        },
+        600: {
+          items: 2,
+        },
+        1000: {
+          items: 3,
+        },
+      },
+    });
+  
+    // department-slider
+    $(".department-slider").owlCarousel({
+      loop: true,
+      margin: 25,
+      nav: true,
+      dots: true,
+      autoplay: false,
+      navText: [
+        "<i class='far fa-angle-left'></i>",
+        "<i class='far fa-angle-right'></i>",
+      ],
+      responsive: {
+        0: {
+          items: 1,
+        },
+        600: {
+          items: 2,
+        },
+        1000: {
+          items: 4,
+        },
+      },
+    });
+  
+    // partner-slider
+    $(".partner-slider").owlCarousel({
+      loop: true,
+      margin: 70,
+      nav: false,
+      dots: false,
+      autoplay: true,
+      responsive: {
+        0: {
+          items: 2,
+        },
+        600: {
+          items: 3,
+        },
+        1000: {
+          items: 5,
+        },
+      },
+    });
+  
+    // preloader
+    $(window).on("load", function () {
+      $(".preloader").fadeOut("slow");
+    });
+  
+    // scroll to top
+    $(window).on("scroll", function () {
+      if (
+        document.body.scrollTop > 100 ||
+        document.documentElement.scrollTop > 100
+      ) {
+        $("#scroll-top").addClass("active");
+      } else {
+        $("#scroll-top").removeClass("active");
+      }
+    });
+  
+    $("#scroll-top").on("click", function () {
+      $("html, body").animate({ scrollTop: 0 }, 1500);
+      return false;
+    });
+  
+    // navbar fixed top
+    $(window).on("scroll", function () {
+      if ($(this).scrollTop() > 50) {
+        $(".navbar").addClass("fixed-top");
+      } else {
+        $(".navbar").removeClass("fixed-top");
+      }
+    });
+  
+    // copywrite date
+    let date = new Date().getFullYear();
+    $("#date").html(date);
+  
+    // WhatsApp Buttons
+    $("#whatsapp-button").click(function () {
+      if (!$("#nomComplet").get(0).reportValidity()) {
+        return;
+      }
+      const nomComplet = $("#nomComplet").val();
+      const numPhone = $("#numPhone").val();
+      const message = $("#quick-message").val();
+      const messageWhatsApp = `Bonjour, je suis ${nomComplet}.\nVoici mon numéro de téléphone pour m'appeler concernant ma demande/inscription: ${numPhone} \n\n${message}`;
+      const encodedMessage = encodeURIComponent(messageWhatsApp);
+      const whatsappURL = "https://wa.me/212666201740";
+      window.open(`${whatsappURL}?text=${encodedMessage}`, "_blank");
+    });
+  
+    $("#send-footer-whatsapp-message").click(function () {
+      if (!$("#whatsapp-message").get(0).reportValidity()) {
+        return;
+      }
+      const messageWhatsApp = $("#whatsapp-message").val();
+      const encodedMessage = encodeURIComponent(messageWhatsApp);
+      const whatsappURL = "https://wa.me/212666201740";
+      window.open(`${whatsappURL}?text=${encodedMessage}`, "_blank");
+    });
+  
+    $("#other-questions-link").click(function (e) {
+      e.preventDefault();
+      $("#send-footer-whatsapp-message")
+        .get(0)
+        .scrollIntoView({ behavior: "smooth", block: "start" });
+      $("#whatsapp-message").focus();
+    });
+  })(jQuery);
+  
