@@ -108,12 +108,13 @@ en 200, et une seule URL de base est utilisée dans tout le repo.
 > partout l'ancien fixe `+212536703333` et l'ancien mobile WhatsApp `+212671721510` (HTML et
 > `main.js` compris). La question « fixe ou mobile » de cette fiche est donc close.
 > Autres correctifs appliqués : `addressRegion` valait `Maroc` (un pays, pas une région) → `Oriental`
-> + `addressCountry: MA` ; `openingHours` passé en tableau ; `additionalType` redondant supprimé ;
-> `telephone`/`address`/`openingHours` retirés du `ContactPage` de `contactez-nous.html` (propriétés
-> invalides sur une `CreativeWork`) et déplacés dans `mainEntity`.
-> Enrichissements : `@type: ["School", "LocalBusiness"]` (le type `LanguageSchool` évoqué plus bas
-> **n'existe pas** dans schema.org ; `LocalBusiness` est ce qui rend `priceRange` valide),
-> `@id` commun aux 3 pages, `priceRange`, `areaServed`, `hasMap`, `image`.
+>
+> - `addressCountry: MA` ; `openingHours` passé en tableau ; `additionalType` redondant supprimé ;
+>   `telephone`/`address`/`openingHours` retirés du `ContactPage` de `contactez-nous.html` (propriétés
+>   invalides sur une `CreativeWork`) et déplacés dans `mainEntity`.
+>   Enrichissements : `@type: ["School", "LocalBusiness"]` (le type `LanguageSchool` évoqué plus bas
+>   **n'existe pas** dans schema.org ; `LocalBusiness` est ce qui rend `priceRange` valide),
+>   `@id` commun aux 3 pages, `priceRange`, `areaServed`, `hasMap`, `image`.
 >
 > **Reste à faire :** `geo` (coordonnées GPS) et `foundingDate` non renseignés — je n'avais pas la
 > donnée et je ne l'ai pas inventée. À récupérer depuis la fiche Google Business (`SEO-06`).
@@ -225,12 +226,12 @@ site, l'aperçu de lien compte réellement.
 > ✅ **Fait le 16/08/2026** — commits `7e607be` (bascule light→regular), `1d8336f` (purge)
 > et `723179c` (preload).
 >
-> | Mesure                          | Avant    | Après      |
-> | ------------------------------- | -------- | ---------- |
-> | `assets/fonts/`                 | 13,4 Mo  | **870 Ko** |
-> | Fichiers de police              | 22       | **3**      |
-> | `all-fontawesome.min.css` brut  | 512 Ko   | **187 Ko** |
-> | …**gzippé** (poids transféré)   | 99,9 Ko  | **42,2 Ko**|
+> | Mesure                         | Avant   | Après       |
+> | ------------------------------ | ------- | ----------- |
+> | `assets/fonts/`                | 13,4 Mo | **870 Ko**  |
+> | Fichiers de police             | 22      | **3**       |
+> | `all-fontawesome.min.css` brut | 512 Ko  | **187 Ko**  |
+> | …**gzippé** (poids transféré)  | 99,9 Ko | **42,2 Ko** |
 >
 > **Corrections aux chiffres de cette fiche :** il y avait **11** fichiers `.ttf` et non 15 ;
 > `assets/fonts/` pesait 13,4 Mo et non 14 Mo ; le CSS 512 Ko et non 400 Ko.
@@ -410,6 +411,54 @@ seule** (`assets/img/footer/01.jpg`). Aucune version WebP. Sept fichiers dépass
 
 ### 🔴 PERF-04 — Activer le chargement différé des images ⏱️ 30 min
 
+> ✅ **Fait le 16/08/2026.**
+>
+> | Mesure — `index.html`, 1280 × 800     | Avant       | Après      |
+> | ------------------------------------- | ----------- | ---------- |
+> | Requêtes d'images au chargement       | 43          | **8**      |
+> | Poids d'images au chargement          | 1 194 Ko    | **711 Ko** |
+> | Requêtes totales au chargement        | 61          | **33**     |
+>
+> **Correction au décompte de cette fiche : 90 balises `<img>` et non 68.** Le chiffre datait de
+> l'état initial, avant la page `404.html` (`SEO-03`). Réparties ainsi : **82** en `loading="lazy"`,
+> **8** laissées prioritaires, et `decoding="async"` sur les 90.
+>
+> Les 8 prioritaires sont le logo du header des 6 pages (seule image du viewport initial partout),
+> `contact/01.webp` en tête de `contactez-nous.html`, et l'illustration de `404.html` qui portait
+> déjà ses attributs depuis `SEO-03`.
+>
+> **Ajout hors énoncé, mais c'est là qu'était le vrai gain LCP.** Les images réellement en haut de
+> page ne sont pas des `<img>` mais des **fonds CSS** (`slider-1.webp` sur l'accueil,
+> `breadcrumb/01.webp` sur « À propos »), déclarés en style inline : ils ne peuvent pas porter
+> `fetchpriority`, et le navigateur ne les découvre qu'après le calcul des styles. Un
+> `<link rel="preload" as="image" fetchpriority="high">` a donc été ajouté sur ces deux pages.
+> Mesuré : `breadcrumb/01.webp` part désormais à **24 ms**.
+>
+> **Owl Carousel a été vérifié** (c'était le risque principal) : il clone les slides, et les clones
+> héritent du `loading="lazy"`. Contrôle après défilement complet de l'accueil — **0 image vide
+> hors carrousel, 0 sur un slide actif** ; les seules non chargées sont des clones hors écran dont
+> l'URL est déjà en cache. Les 49 sources d'images des 6 pages répondent toutes en 200.
+>
+> **Limite de la mesure, à assumer.** Le pane de prévisualisation ne composite pas d'images : le
+> lazy loading ne s'y déclenche donc jamais, même pour une image dans le viewport. Les chiffres
+> ci-dessus comparent deux fois le **même** état (avant / après, mêmes conditions) et sont donc
+> valides, mais un vrai navigateur visible chargera en plus les 2 à 4 images proches du viewport —
+> soit ~10 à 12 requêtes au lieu de 8. Le critère reste largement tenu.
+>
+> **Reste à faire — c'est désormais le poste dominant.** Sur les 8 requêtes restantes, **7 sont des
+> fonds CSS** (696 des 711 Ko) que `loading="lazy"` ne peut pas atteindre :
+> `testimonial/bg.webp` (180 Ko), `counter/01.webp` (145 Ko), `slider-1` + `slider-2` (192 Ko),
+> `department/01.webp` (79 Ko), `cta/01.webp` (70 Ko), `background-whatsapp.webp` (32 Ko). Ils se
+> téléchargent tous au chargement quelle que soit la position de défilement. Les différer demande
+> soit du JS, soit `ARCH-01` — à traiter avec `PERF-07`.
+>
+> **Trouvaille au passage, à verser à `PERF-02`.** Trois fonds CSS ont des sélecteurs qui ne
+> correspondent à **aucune** page : `.home-3 .footer-area` → `footer/01.webp` (218 Ko, le plus gros
+> fichier du dépôt), `.enroll-area` → `enroll/01.webp` (86 Ko), `.choose-area::before` →
+> `shape/01.webp` (28 Ko). Le navigateur ne les demande jamais, mais ces **332 Ko** sont versionnés
+> et déployés pour rien. La détection d'orphelines de `PERF-02` les a manqués : elle cherche le
+> chemin dans le CSS, or le chemin y est bien — c'est le sélecteur qui est mort.
+
 **Problème.** Les **68 balises `<img>`** du site sont dépourvues de `loading="lazy"`. Toutes les
 images se téléchargent au chargement initial, y compris celles situées trois écrans plus bas.
 
@@ -471,24 +520,24 @@ rendu typographique est inchangé.
 **Problème.** Le site charge sur chaque page l'intégralité de bibliothèques dont il n'exploite
 qu'une fraction. État mesuré le 16/08/2026, **après** `PERF-01` :
 
-| Fichier                   | Brut       | **Gzippé** | Soupçon                                          |
-| ------------------------- | ---------- | ---------- | ------------------------------------------------ |
+| Fichier                   | Brut       | **Gzippé** | Soupçon                                              |
+| ------------------------- | ---------- | ---------- | ---------------------------------------------------- |
 | `bootstrap.min.css`       | 227 Ko     | 30,3 Ko    | grille + navbar utilisées, le reste probablement pas |
-| `all-fontawesome.min.css` | 187 Ko     | 42,2 Ko    | **4733 icônes déclarées, 37 utilisées**          |
-| `style.css`               | 65 Ko      | 12,7 Ko    | thème d'origine, sections supprimées non purgées |
-| `animate.min.css`         | 44 Ko      | 3,9 Ko     | seules les animations pilotées par WOW.js servent |
-| `jquery-3.7.1.min.js`     | 85 Ko      | 29,7 Ko    | requis par Owl Carousel — voir `ARCH-03`         |
-| `bootstrap.bundle.min.js` | 79 Ko      | 23,2 Ko    | seul le `collapse` du menu mobile semble utilisé |
-| `owl.carousel.min.js`     | 43 Ko      | 11,2 Ko    | un seul carrousel sur le site                    |
-| `modernizr.min.js`        | 11 Ko      | 4,4 Ko     | voir `PERF-05`, aucune détection appelée         |
-| **Total**                 | **765 Ko** | **165 Ko** |                                                  |
+| `all-fontawesome.min.css` | 187 Ko     | 42,2 Ko    | **4733 icônes déclarées, 37 utilisées**              |
+| `style.css`               | 65 Ko      | 12,7 Ko    | thème d'origine, sections supprimées non purgées     |
+| `animate.min.css`         | 44 Ko      | 3,9 Ko     | seules les animations pilotées par WOW.js servent    |
+| `jquery-3.7.1.min.js`     | 85 Ko      | 29,7 Ko    | requis par Owl Carousel — voir `ARCH-03`             |
+| `bootstrap.bundle.min.js` | 79 Ko      | 23,2 Ko    | seul le `collapse` du menu mobile semble utilisé     |
+| `owl.carousel.min.js`     | 43 Ko      | 11,2 Ko    | un seul carrousel sur le site                        |
+| `modernizr.min.js`        | 11 Ko      | 4,4 Ko     | voir `PERF-05`, aucune détection appelée             |
+| **Total**                 | **765 Ko** | **165 Ko** |                                                      |
 
 `PERF-05` ne traite que les dépendances **entièrement** mortes. Cette fiche vise l'étage
 au-dessus : le code mort **à l'intérieur** des fichiers conservés.
 
 **Étapes.**
 
-1. Relever la couverture réelle avec l'onglet *Coverage* de Chrome DevTools, sur les 6 pages,
+1. Relever la couverture réelle avec l'onglet _Coverage_ de Chrome DevTools, sur les 6 pages,
    en interagissant (menu mobile, carrousel, modale d'inscription, défilement complet).
 2. CSS : passer PurgeCSS en lui donnant les 6 `.html` **et** `main.js` comme sources.
 3. JS : décider bibliothèque par bibliothèque. Bootstrap n'est peut-être utilisé que pour le
@@ -500,7 +549,7 @@ au-dessus : le code mort **à l'intérieur** des fichiers conservés.
 
 - **Classes ajoutées dynamiquement.** `main.js` injecte des icônes, WOW.js pose `animated` et les
   classes `animate__*` au défilement, Owl Carousel génère toute sa structure au runtime. Un
-  PurgeCSS naïf les supprimera. Il faut une *safelist*, et retester en interaction réelle.
+  PurgeCSS naïf les supprimera. Il faut une _safelist_, et retester en interaction réelle.
 - **Ordre des opérations.** À faire idéalement **après `ARCH-01`** : avec un build, l'élagage est
   rejoué à chaque modification et ne peut plus se désynchroniser du code. Fait à la main
   aujourd'hui, le résultat se périme dès qu'une icône ou une classe est ajoutée.
