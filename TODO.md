@@ -334,6 +334,52 @@ La liste exacte figure en **Annexe A**.
 
 ### 🔴 PERF-03 — Optimiser et convertir les images restantes ⏱️ 2 h — **gain ~3 Mo**
 
+> ✅ **Fait le 16/08/2026** — commits `986d331` (conversion) et `158e362` (bascule + dimensions).
+>
+> | Mesure                              | Avant   | Après      |
+> | ----------------------------------- | ------- | ---------- |
+> | Poids des images **servies**        | 3,9 Mo  | **1,8 Mo** |
+> | Images > 150 Ko                     | 8       | **3**      |
+> | Balises `<img>` sans `width/height` | 90 / 90 | **0 / 90** |
+>
+> **La qualité a été mesurée, pas choisie au jugé — et le résultat contredit la consigne
+> initiale.** En q92, la conversion produisait des fichiers **plus lourds** que les JPEG
+> d'origine (+18 %) : ces sources sont déjà compressées avec perte, et q92 demande à WebP d'en
+> préserver fidèlement jusqu'aux artefacts.
+>
+> | Qualité | Poids (6 photos) | SSIM  |
+> | ------- | ---------------- | ----- |
+> | q92     | **+18 %**        | 0,991 |
+> | q85     | −19 %            | 0,982 |
+> | **q80** | **−34 %**        | 0,977 |
+> | q75     | −47 %            | 0,969 |
+>
+> D'où deux régimes : **photos en q80** (SSIM ≥ 0,977, écart non perceptible), **graphiques en
+> q92** (logos, formes, icônes — bords nets, et le gain y atteignait déjà 50 à 94 %).
+>
+> **Redimensionnements décidés d'après la taille d'affichage relevée en navigateur**, marge ×2
+> pour les écrans haute densité. Le cas le plus flagrant : `dialog-punkt-deutsch-logo.png`,
+> 761 px de large pour un affichage à 80 px — 149 Ko devenus 8 Ko.
+>
+> **Deux fichiers gardent leur format**, à dessein : `og/share-1200x630.jpg` (WhatsApp et Facebook
+> traitent le JPEG de façon fiable pour les aperçus, le WebP non) et
+> `partner/goethe-institut-logo.png` (PNG à palette de 12 Ko, dont le WebP pesait 25 Ko avec perte
+> **comme** sans perte).
+>
+> **Écart assumé sur l'étape 2 : pas de `<picture>` avec repli JPEG.** Le WebP est supporté par
+> tous les navigateurs ciblés depuis 2020, et 50 blocs `<picture>` écrits à la main seraient jetés
+> lors de `ARCH-01`, où `<Image />` les régénère automatiquement.
+>
+> **Critère « aucune image > 150 Ko » : non atteint sur 3 fichiers** — `footer/01.webp` (218 Ko),
+> `breadcrumb/01.webp` (181 Ko) et `testimonial/bg.webp` (180 Ko). Ce sont les fonds pleine
+> largeur, déjà ramenés de 1920 à 1600 px. Descendre sous 150 Ko imposerait 1280 px, visiblement
+> mou sur un écran de bureau. Je n'ai pas dégradé davantage sans arbitrage.
+>
+> **Reste à faire.** `assets/img/` pèse toujours 9,3 Mo sur le disque : les originaux convertis
+> sont conservés, conformément à ta consigne, et recensés dans [toDelete.md](toDelete.md).
+> Le critère « total sous 2 Mo » sera atteint mécaniquement à leur suppression. Par ailleurs, des
+> fonds réellement adaptatifs (`srcset` / `image-set()`) demandent un build : voir `ARCH-01`.
+
 **Problème.** Les images restantes sont des JPEG bruts non optimisés, jusqu'à **437 Ko pour une
 seule** (`assets/img/footer/01.jpg`). Aucune version WebP. Sept fichiers dépassent 250 Ko :
 
