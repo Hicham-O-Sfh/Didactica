@@ -475,6 +475,52 @@ images se téléchargent au chargement initial, y compris celles situées trois 
 
 ### 🟠 PERF-05 — Retirer les dépendances mortes ⏱️ 30 min
 
+> ✅ **Fait le 16/08/2026.** Les trois constats de la fiche se sont vérifiés — mais aucun n'a été
+> pris pour argent comptant.
+>
+> | Supprimé                    | Brut       | Gzippé     |
+> | --------------------------- | ---------- | ---------- |
+> | `magnific-popup.min.css`    | 5,1 Ko     | 1,5 Ko     |
+> | `modernizr.min.js`          | 10,8 Ko    | 4,4 Ko     |
+> | **Total, sur chaque page**  | **15,9 Ko** | **5,9 Ko** |
+>
+> Plus **2 requêtes HTTP en moins par page**, soit 12 sur l'ensemble du site — sur une connexion
+> mobile, la latence par requête compte souvent davantage que les kilo-octets.
+>
+> **Magnific Popup** : le CSS était chargé sur les 6 pages, mais **son JavaScript ne l'était même
+> pas**. Vérifié plus finement qu'une recherche de `magnificPopup` : ses 31 classes ont été
+> croisées avec toutes les classes du HTML **et** avec celles injectées dynamiquement par
+> `main.js` (`addClass`, `toggleClass`…). **0 sur 31 utilisée.**
+>
+> **Modernizr** : c'est le point que la fiche demandait de vérifier avant suppression, et elle avait
+> raison de le demander — il s'agit d'un **Modernizr 2.8.3 qui pose 43 classes sur `<html>`**
+> (`flexbox`, `csstransforms`, `svg`, `no-touch`…). Ces 43 classes ont été croisées avec les
+> sélecteurs de **tous** les fichiers CSS du projet : une seule correspondance réelle,
+> `.no-js .owl-carousel` dans le CSS d'Owl. Or **`<html lang="fr">` ne porte aucune classe** : la
+> règle ne s'appliquait donc ni avant ni après. Aucun changement de comportement, confirmé en
+> navigateur (`document.documentElement.className` est vide et les 5 carrousels s'initialisent).
+>
+> **Le bloc `data-background` de `main.js`** : les deux motifs de mort sont confirmés
+> expérimentalement. Zéro élément `[data-background]` dans tout le repo ; et sur une page de test
+> isolée en jQuery 3.7.1, `$(document).on("ready", fn)` **ne s'exécute pas** au chargement là où
+> `$(fn)` s'exécute.
+>
+> **Précision à apporter à la fiche** : ce n'est pas la *syntaxe* qui a été supprimée en jQuery 3.0
+> — `"ready"` reste un nom d'événement valide et le gestionnaire se déclenche si on émet
+> l'événement à la main. Ce que jQuery 3.0 a supprimé, c'est le **déclenchement automatique** de cet
+> événement au DOM ready. Le gestionnaire était donc bien mort, mais parce que plus rien ne
+> l'appelle, pas parce qu'il serait invalide.
+>
+> **Non-régression vérifiée sur les 6 pages** : zéro requête en échec, zéro erreur console, jQuery /
+> Bootstrap / WOW présents, les 5 carrousels de l'accueil initialisés, la modale d'inscription qui
+> s'ouvre et se ferme, les boutons « choisir un pack » qui remplissent bien le message, et
+> l'accordéon de la FAQ fonctionnel.
+>
+> **Remarque annexe, à verser à `PERF-07`.** Le CSS d'Owl référence
+> `url(assets/css/owl.video.play.html)` — un fichier **HTML** utilisé comme image, reliquat du
+> thème. La règle ne s'applique jamais (aucune vidéo Owl sur le site), donc le fichier n'est jamais
+> demandé, mais il traîne dans `assets/css/`. À traiter avec l'élagage d'Owl.
+
 **Problème.** Des ressources sont chargées sur chaque page sans jamais servir :
 
 - `assets/css/magnific-popup.min.css` — **zéro** occurrence de `magnificPopup` ou de la moindre

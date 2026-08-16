@@ -21,16 +21,6 @@
     return false;
   });
 
-  // data-background
-  $(document).on("ready", function () {
-    $("[data-background]").each(function () {
-      $(this).css(
-        "background-image",
-        "url(" + $(this).attr("data-background") + ")"
-      );
-    });
-  });
-
   // navbar Search
   $(".trigger-sign-in-form-btn").on("click", function () {
     $("#message").val("");
