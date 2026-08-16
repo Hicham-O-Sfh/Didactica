@@ -66,7 +66,7 @@
       const encodedMessage = encodeURIComponent(whatsappMessage);
 
       // WhatsApp number
-      const whatsappNumber = "+212671721510";
+      const whatsappNumber = "+212666201740";
 
       // Construct the WhatsApp URL
       const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
@@ -263,7 +263,7 @@
     const message = $("#quick-message").val();
     const messageWhatsApp = `Bonjour, je suis ${nomComplet}.\nVoici mon numéro de téléphone pour m'appeler concernant ma demande/inscription: ${numPhone} \n\n${message}`;
     const encodedMessage = encodeURIComponent(messageWhatsApp);
-    const whatsappURL = "https://wa.me/212671721510";
+    const whatsappURL = "https://wa.me/212666201740";
     window.open(`${whatsappURL}?text=${encodedMessage}`, "_blank");
   });
 
@@ -273,7 +273,7 @@
     }
     const messageWhatsApp = $("#whatsapp-message").val();
     const encodedMessage = encodeURIComponent(messageWhatsApp);
-    const whatsappURL = "https://wa.me/212671721510";
+    const whatsappURL = "https://wa.me/212666201740";
     window.open(`${whatsappURL}?text=${encodedMessage}`, "_blank");
   });
 
