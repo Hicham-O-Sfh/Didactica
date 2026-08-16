@@ -6,12 +6,12 @@ dans une session Claude Code séparée, sans relire tout le document.
 
 **Convention** : cocher la case et ajouter le hash du commit une fois la tâche terminée.
 
-| Légende | Signification |
-|---|---|
-| 🔴 | Critique — bloque le SEO ou expose un risque |
-| 🟠 | Important — gain élevé |
-| 🟡 | Confort — à faire quand le reste est fait |
-| ⏱️ | Effort estimé pour une session |
+| Légende | Signification                                |
+| ------- | -------------------------------------------- |
+| 🔴      | Critique — bloque le SEO ou expose un risque |
+| 🟠      | Important — gain élevé                       |
+| 🟡      | Confort — à faire quand le reste est fait    |
+| ⏱️      | Effort estimé pour une session               |
 
 ---
 
@@ -64,6 +64,19 @@ La migration (Phase 3) vient après, une fois le terrain déblayé — il serait
 
 ### 🔴 SEO-01 — Aligner les URL canoniques sur l'URL réellement en ligne ⏱️ 30 min
 
+> ✅ **Fait le 16/08/2026** — commit `bf86b17`.
+> URL de base retenue : `https://www.didactica-oujda.ma` (décision assumée, domaine pas encore
+> acquis — voir « Reste à faire » ci-dessous). Les 5 pages plus `404.html` utilisent désormais
+> une forme littérale unique : un seul « Replace in Files » suffira le jour de l'achat.
+> **Le fichier `CNAME` n'a volontairement pas été créé** : le poser avant que le DNS ne résolve
+> couperait immédiatement le site actuellement servi sur `hicham-o-sfh.github.io/Didactica/`.
+>
+> **Reste à faire (le jour de l'achat du domaine) :**
+>
+> 1. VSCode → Rechercher dans les fichiers : `https://www.didactica-oujda.ma` → nouvelle URL.
+> 2. Créer `CNAME` à la racine contenant le domaine (sans `https://`, sans barre finale).
+> 3. Configurer le DNS chez le registrar, puis cocher « Enforce HTTPS » dans Settings → Pages.
+
 **Problème.** Les balises `<link rel="canonical">` et `og:url` des 5 pages pointent vers
 `https://www.didactica-oujda.ma`, un domaine **qui n'est pas encore acheté**. Si le site est
 actuellement servi depuis `https://hicham-o-sfh.github.io/Didactica/`, on déclare à Google que la
@@ -74,6 +87,7 @@ peuvent être désindexées ou jamais indexées. C'est le point le plus grave du
 champ `url` du JSON-LD).
 
 **Étapes.**
+
 1. Vérifier d'abord l'URL réelle de publication (Settings → Pages du dépôt GitHub) et si le domaine
    `didactica-oujda.ma` est déjà réservé. **Cette vérification conditionne tout le reste.**
 2. Si le domaine n'est pas acquis : remplacer toutes les URL absolues par l'URL GitHub Pages.
@@ -89,6 +103,21 @@ en 200, et une seule URL de base est utilisée dans tout le repo.
 
 ### 🔴 SEO-02 — Corriger la clé `sameAs` dupliquée dans le JSON-LD ⏱️ 15 min
 
+> ✅ **Fait le 16/08/2026** — commits `bf86b17` (JSON-LD) et `93213c3` (numéro unique).
+> `sameAs` dupliqué supprimé. **Décision client : un numéro unique, `+212666201740`**, qui remplace
+> partout l'ancien fixe `+212536703333` et l'ancien mobile WhatsApp `+212671721510` (HTML et
+> `main.js` compris). La question « fixe ou mobile » de cette fiche est donc close.
+> Autres correctifs appliqués : `addressRegion` valait `Maroc` (un pays, pas une région) → `Oriental`
+> + `addressCountry: MA` ; `openingHours` passé en tableau ; `additionalType` redondant supprimé ;
+> `telephone`/`address`/`openingHours` retirés du `ContactPage` de `contactez-nous.html` (propriétés
+> invalides sur une `CreativeWork`) et déplacés dans `mainEntity`.
+> Enrichissements : `@type: ["School", "LocalBusiness"]` (le type `LanguageSchool` évoqué plus bas
+> **n'existe pas** dans schema.org ; `LocalBusiness` est ce qui rend `priceRange` valide),
+> `@id` commun aux 3 pages, `priceRange`, `areaServed`, `hasMap`, `image`.
+>
+> **Reste à faire :** `geo` (coordonnées GPS) et `foundingDate` non renseignés — je n'avais pas la
+> donnée et je ne l'ai pas inventée. À récupérer depuis la fiche Google Business (`SEO-06`).
+
 **Problème.** Dans `index.html`, l'objet JSON-LD `School` contient **deux fois** la clé `"sameAs"`
 (vers la ligne 42 et la ligne 57), avec un contenu identique. En JSON, une clé dupliquée est
 invalide : les parsers ne gardent que la dernière. Le bloc peut être rejeté par Google.
@@ -101,6 +130,7 @@ déclarés proprement (`telephone` pour le fixe, un second `ContactPoint` pour l
 **Fichiers.** `index.html` (bloc `<script type="application/ld+json">`), et vérifier les 4 autres pages.
 
 **Étapes.**
+
 1. Supprimer la seconde occurrence de `sameAs`.
 2. Clarifier avec le client quel numéro est le numéro principal, et refléter la décision dans le JSON-LD.
 3. Valider le bloc sur <https://validator.schema.org/> et dans le test des résultats enrichis de Google.
@@ -113,6 +143,18 @@ déclarés proprement (`telephone` pour le fixe, un second `ContactPoint` pour l
 
 ### 🔴 SEO-03 — Créer `robots.txt`, `sitemap.xml` et une page `404.html` ⏱️ 45 min
 
+> ✅ **Fait le 16/08/2026** — commit `17d9f5a`.
+> Les trois fichiers sont créés à la racine. `404.html` reprend le header et le footer existants,
+> réutilise `assets/img/error/01.png` et porte `robots: noindex, follow`.
+> Le formulaire d'inscription (popup `.search-popup`) n'y a **pas** été dupliqué : le bouton
+> « S'inscrire maintenant ! » y est un simple lien vers `contactez-nous.html`. Cela évite une 6ᵉ
+> copie du formulaire collectant le CIN, donc un 6ᵉ endroit à reprendre pour `LEG-01`.
+>
+> **Reste à faire :** soumettre le sitemap dans Google Search Console (`SEO-06`).
+> ⚠️ Un `robots.txt` n'est lu qu'à la racine d'un domaine : tant que le site est servi depuis une
+> GitHub Pages « projet » (`hicham-o-sfh.github.io/Didactica/`), le fichier est ignoré par les
+> moteurs. Il deviendra effectif avec le domaine personnalisé.
+
 **Problème.** Aucun des trois n'existe. Pour un site dont tout l'effort porte sur le référencement,
 c'est un angle mort : Google n'a aucune carte du site, et une URL erronée renvoie la 404 générique
 de GitHub Pages, sans navigation ni image de marque.
@@ -120,6 +162,7 @@ de GitHub Pages, sans navigation ni image de marque.
 **Fichiers à créer.** `robots.txt`, `sitemap.xml`, `404.html` (à la racine).
 
 **Étapes.**
+
 1. `robots.txt` : autoriser tout, et déclarer `Sitemap: <URL_DE_BASE>/sitemap.xml` — en utilisant
    l'URL de base fixée en `SEO-01`.
 2. `sitemap.xml` : les 5 pages, avec `<lastmod>` et des `<priority>` cohérentes
@@ -136,6 +179,20 @@ et une URL inexistante affiche la page 404 personnalisée.
 
 ### 🟠 SEO-04 — Rendre les URL d'images des balises Open Graph absolues ⏱️ 15 min
 
+> ✅ **Fait le 16/08/2026** — commit `3ec8a8b`.
+> `og:image` et `twitter:image` en URL absolue sur les 5 pages, avec `og:image:width/height/alt`,
+> `og:site_name` et `og:locale`. Les balises Twitter Card existaient déjà partout.
+> Image de partage créée : `assets/img/og/share-1200x630.jpg` (1200 × 630, 106 Ko), composée avec
+> ffmpeg à partir de `slider-1.jpg` et du logo sur bandeau clair — l'ancien `logo.png` faisait
+> 457 × 112, très en dessous du minimum exigé par Facebook et WhatsApp.
+> Supprimées car **hors spécification Open Graph** (donc ignorées) : `og:instagram`, `og:facebook`,
+> `og:whatsapp`, `og:map`, `og:email`, `og:phone`, ainsi que le bloc `og:video` qui déclarait une
+> chaîne YouTube en `video/mp4`.
+>
+> **Reste à faire :** l'image de partage est fonctionnelle mais générée automatiquement — une vraie
+> création graphique (accroche + « Oujda ») serait plus vendeuse. Tester ensuite dans le débogueur
+> de partage Facebook, une fois le site en ligne sur son domaine.
+
 **Problème.** `<meta property="og:image" content="assets/img/logo/logo.png">` utilise un chemin
 **relatif**. Les réseaux sociaux (Facebook, WhatsApp, LinkedIn) exigent une URL absolue : l'aperçu
 de partage s'affiche donc sans image. Sachant que WhatsApp est le canal principal de conversion du
@@ -144,6 +201,7 @@ site, l'aperçu de lien compte réellement.
 **Fichiers.** Les 5 `.html`.
 
 **Étapes.**
+
 1. Passer `og:image` en URL absolue.
 2. Fournir une vraie image de partage (1200 × 630 px) plutôt que le logo, qui s'affichera mal recadré.
 3. Ajouter les balises `twitter:card` (`summary_large_image`), `twitter:title`, `twitter:description`,
@@ -167,13 +225,13 @@ site, l'aperçu de lien compte réellement.
 **Problème.** `assets/fonts/` pèse **14 Mo** : le kit Font Awesome complet, chaque famille en `.ttf`
 **et** `.woff2`. Or l'analyse du HTML montre que seules 4 familles sont utilisées :
 
-| Famille | Occurrences | Verdict |
-|---|---|---|
-| solid (`fas`, `fa-solid`) | 127 | **garder** |
-| regular (`far`, `fa-regular`) | 103 | **garder** |
-| brands (`fab`, `fa-brands`) | 47 | **garder** |
-| light (`fal`) | 7 | garder, ou convertir (voir étape 4) |
-| thin, duotone, sharp (×4), v4compatibility | **0** | **supprimer** |
+| Famille                                    | Occurrences | Verdict                             |
+| ------------------------------------------ | ----------- | ----------------------------------- |
+| solid (`fas`, `fa-solid`)                  | 127         | **garder**                          |
+| regular (`far`, `fa-regular`)              | 103         | **garder**                          |
+| brands (`fab`, `fa-brands`)                | 47          | **garder**                          |
+| light (`fal`)                              | 7           | garder, ou convertir (voir étape 4) |
+| thin, duotone, sharp (×4), v4compatibility | **0**       | **supprimer**                       |
 
 Les fichiers `.ttf` sont intégralement inutiles : aucun navigateur ciblé ne les demande, le `.woff2`
 est systématiquement servi en premier par le `@font-face`.
@@ -183,6 +241,7 @@ est systématiquement servi en premier par le `@font-face`.
 **Fichiers.** `assets/fonts/*`, `assets/css/all-fontawesome.min.css`.
 
 **Étapes.**
+
 1. Supprimer les 15 fichiers `.ttf`.
 2. Supprimer `fa-duotone-900.woff2`, `fa-sharp-*.woff2` (4 fichiers), `fa-thin-100.woff2`,
    `fa-v4compatibility.woff2`.
@@ -209,6 +268,7 @@ Autant de fichiers versionnés, clonés et déployés pour rien.
 La liste exacte figure en **Annexe A**.
 
 **Étapes.**
+
 1. Reprendre la liste de l'Annexe A.
 2. **Re-vérifier avant suppression** : la détection s'appuie sur une recherche textuelle des chemins.
    Contrôler qu'aucune image n'est appelée via une construction dynamique en JS ou une règle CSS
@@ -236,6 +296,7 @@ seule** (`assets/img/footer/01.jpg`). Aucune version WebP. Sept fichiers dépass
 ```
 
 **Étapes.**
+
 1. Redimensionner : aucune image d'arrière-plan n'a besoin de dépasser 1920 px de large, aucune
    vignette 800 px.
 2. Convertir en **WebP** (qualité 80) avec conservation du JPEG en repli via `<picture>`.
@@ -255,6 +316,7 @@ seule** (`assets/img/footer/01.jpg`). Aucune version WebP. Sept fichiers dépass
 images se téléchargent au chargement initial, y compris celles situées trois écrans plus bas.
 
 **Étapes.**
+
 1. Ajouter `loading="lazy"` et `decoding="async"` à toutes les `<img>`…
 2. …**sauf** celles visibles immédiatement (logo du header, première image du slider) : les charger
    en différé dégraderait le LCP. Leur mettre au contraire `fetchpriority="high"`.
@@ -294,6 +356,7 @@ rendu** et impose une résolution DNS + connexion vers un domaine tiers avant le
 affiché. C'est incohérent avec des polices Font Awesome déjà servies en local.
 
 **Étapes.**
+
 1. Télécharger les graisses réellement utilisées (l'import en demande 6 par famille, soit 12 —
    le site en utilise vraisemblablement 3 ou 4).
 2. Les placer dans `assets/fonts/`, déclarer les `@font-face` avec `font-display: swap`.
@@ -309,19 +372,30 @@ rendu typographique est inchangé.
 
 ### 🟠 CLEAN-01 — Centraliser le numéro de téléphone et les informations de contact ⏱️ 1 h
 
+> ⚠️ **Mise à jour du 16/08/2026** (commit `93213c3`). Le site n'a plus qu'un seul numéro, `+212666201740` (voir
+> `SEO-02`) : la divergence fixe / mobile a disparu. En revanche **la dispersion reste entière** —
+> le numéro est toujours codé en dur 3 fois dans `main.js` et une vingtaine de fois dans les 6
+> pages HTML. La centralisation décrite ci-dessous est donc toujours à faire, à ceci près qu'il n'y
+> a plus qu'une valeur à centraliser.
+>
+> Détail relevé au passage : `main.js:69` construit `https://wa.me/+212666201740` (avec le `+`)
+> alors que les lignes 266 et 276 utilisent `https://wa.me/212666201740` (sans). Les deux formes
+> fonctionnent, mais l'incohérence disparaîtra d'elle-même à la centralisation.
+
 **Problème.** Le numéro WhatsApp `+212671721510` est codé en dur **4 fois** dans `main.js`
 (lignes ~72, ~232, ~243, et l'URL `wa.me`), et se répète dans les 5 pages HTML ainsi que dans le
 JSON-LD. Le commit `dcfbbc9 update phone number` illustre exactement le coût de cette dispersion.
 S'y ajoute la divergence relevée en `SEO-02` entre le fixe et le mobile.
 
 **Étapes (avant migration Astro).**
+
 1. Créer en tête de `main.js` un objet de configuration unique :
    `const CONTACT = { whatsapp: "212671721510", tel: "+212536703333", email: "…" };`
 2. Remplacer les occurrences en dur par des références à cet objet.
 3. Factoriser les trois gestionnaires WhatsApp (`#send-whatsapp-form`, `#whatsapp-button`,
    `#send-footer-whatsapp-message`) : ils font tous la même chose — valider, construire un message,
    encoder, ouvrir `wa.me`. Une seule fonction `ouvrirWhatsApp(message)` suffit.
-4. *(Après `ARCH-01`, cette configuration migrera vers `src/config.ts` et couvrira aussi le HTML.)*
+4. _(Après `ARCH-01`, cette configuration migrera vers `src/config.ts` et couvrira aussi le HTML.)_
 
 **Terminé quand.** Changer de numéro ne demande de modifier qu'un seul endroit dans le JavaScript.
 
@@ -333,6 +407,7 @@ S'y ajoute la divergence relevée en `SEO-02` entre le fixe et le mobile.
 projet, et il est vide. `.gitignore` deviendra nécessaire dès la Phase 3 (`node_modules/`, `dist/`).
 
 **Étapes.**
+
 1. `README.md` : ce qu'est le projet, comment le prévisualiser en local, comment il est déployé,
    où modifier les informations de contact.
 2. `.gitignore` : `node_modules/`, `dist/`, `.DS_Store`, `Thumbs.db`, `.env`, `.astro/`.
@@ -353,7 +428,7 @@ attendu par les audits Lighthouse et les vieux navigateurs.
 
 ---
 
-### 🟡 CLEAN-04 — Renoncer à l'obfuscation du JavaScript ⏱️ 10 min — *décision*
+### 🟡 CLEAN-04 — Renoncer à l'obfuscation du JavaScript ⏱️ 10 min — _décision_
 
 **Constat.** L'historique montre deux commits d'obfuscation (`c1f0bd1`, `eb447bb`), mais
 `assets/js/main.js` est aujourd'hui **en clair** dans la branche `master` — c'est donc cette version
@@ -384,6 +459,7 @@ proportionnel. C'est la dette qui coûtera le plus cher dans la durée.
 **Approche.** Voir la section « Décision d'architecture » ci-dessus pour la justification SEO.
 
 **Étapes.**
+
 1. `npm create astro@latest` dans un dossier de travail, template minimal, sans framework UI.
 2. Créer `src/layouts/Base.astro` : `<head>` (meta, JSON-LD paramétré), header, `<slot />`, footer.
 3. Extraire `src/components/Header.astro` et `Footer.astro` depuis le HTML existant.
@@ -393,8 +469,7 @@ proportionnel. C'est la dette qui coûtera le plus cher dans la durée.
 6. Basculer les images sur le composant `<Image />` d'Astro : WebP, `srcset`, dimensions et
    lazy-loading deviennent automatiques.
 7. Intégrer `@astrojs/sitemap` — la tâche `SEO-03` devient auto-maintenue.
-8. **Conserver les URL à l'identique** (`/a-propos.html`, etc.) ou mettre en place des redirections
-   301. Changer les URL sans redirection réinitialiserait le référencement acquis. Point de
+8. **Conserver les URL à l'identique** (`/a-propos.html`, etc.) ou mettre en place des redirections 301. Changer les URL sans redirection réinitialiserait le référencement acquis. Point de
    vigilance majeur de cette migration.
 9. Configurer `site` et `base` dans `astro.config.mjs` conformément à `SEO-01`.
 
@@ -408,6 +483,7 @@ les mêmes URL, et modifier le pied de page ne demande plus qu'une seule éditio
 **Prérequis.** `ARCH-01`.
 
 **Étapes.**
+
 1. Créer `.github/workflows/deploy.yml` : build Astro puis publication sur GitHub Pages
    (`actions/deploy-pages`).
 2. Basculer la source Pages du dépôt de « branche » vers « GitHub Actions ».
@@ -417,12 +493,13 @@ les mêmes URL, et modifier le pied de page ne demande plus qu'une seule éditio
 
 ---
 
-### 🟡 ARCH-03 — Réduire la dépendance à jQuery ⏱️ 3 h — *optionnel*
+### 🟡 ARCH-03 — Réduire la dépendance à jQuery ⏱️ 3 h — _optionnel_
 
 **Constat.** `main.js` ne fait que du DOM très simple : classes, gestionnaires de clic, défilement.
 jQuery (~87 Ko) n'y est indispensable que pour Owl Carousel, qui en dépend.
 
 **Étapes.**
+
 1. Réécrire `main.js` en JavaScript natif.
 2. Remplacer Owl Carousel par une alternative sans dépendance (Swiper, ou un carrousel CSS
    `scroll-snap` — largement suffisant pour ces usages).
@@ -440,6 +517,7 @@ effort/bénéfice y est nettement moins bon que sur les images et les polices.
 **Prérequis.** `SEO-02`.
 
 **Étapes.**
+
 1. Ajouter un JSON-LD `FAQPage` sur `faq.html` — c'est ce qui permet l'affichage des questions
    dépliables directement dans les résultats Google. Fort impact sur le taux de clic, peu d'effort.
 2. Ajouter un JSON-LD `BreadcrumbList` sur les pages internes.
@@ -457,6 +535,7 @@ sans erreur.
 visibilité sur les requêtes, l'indexation ou les erreurs de crawl — on travaille à l'aveugle.
 
 **Étapes.**
+
 1. Vérifier la propriété (balise meta ou fichier HTML à la racine).
 2. Soumettre le sitemap de `SEO-03`.
 3. Créer / revendiquer la fiche **Google Business Profile** de l'école. Pour une école de langues
@@ -476,6 +555,7 @@ visibilité sur les requêtes, l'indexation ou les erreurs de crawl — on trava
 boutons WhatsApp — donc impossible de mesurer la conversion réelle du site.
 
 **Étapes.**
+
 1. Choisir un outil sans cookies (Plausible, Umami, ou Cloudflare Web Analytics — gratuit) pour
    éviter le bandeau de consentement qu'imposerait Google Analytics.
 2. Suivre en événements les clics sur les boutons WhatsApp : c'est **la** métrique qui compte ici.
@@ -484,7 +564,7 @@ boutons WhatsApp — donc impossible de mesurer la conversion réelle du site.
 
 ---
 
-### 🟡 SEO-08 — Envisager une version allemande ou arabe ⏱️ à évaluer — *décision*
+### 🟡 SEO-08 — Envisager une version allemande ou arabe ⏱️ à évaluer — _décision_
 
 **Constat.** Toutes les pages déclarent `lang="fr"`, sans aucune balise `hreflang`. Pour une école
 d'allemand au Maroc, une version arabe (voire allemande) pourrait ouvrir un tout autre volume de
@@ -509,6 +589,7 @@ des données à caractère personnel s'applique, et le CIN est une donnée d'ide
 **Fichiers.** `index.html` et les autres pages portant le formulaire, plus une nouvelle page.
 
 **Étapes.**
+
 1. Créer `politique-de-confidentialite.html` : quelles données sont collectées, pourquoi, comment
    (transmission via WhatsApp), combien de temps elles sont conservées, comment exercer ses droits.
    La lier depuis le pied de page des 5 pages.
@@ -538,6 +619,7 @@ conséquences concrètes :
   Facebook) — précisément par où arrive une partie du trafic.
 
 **Étapes.**
+
 1. Doubler l'envoi WhatsApp d'une soumission vers un service de formulaire (Formspree, Web3Forms,
    ou Netlify Forms) qui envoie le dossier par email — un filet de sécurité, sans backend à maintenir.
 2. Remplacer `window.open()` par un vrai lien `<a href="wa.me/…" target="_blank">` dont l'attribut
@@ -558,6 +640,7 @@ finalise pas dans WhatsApp.
 acquis. Reste à vérifier le reste.
 
 **Étapes.**
+
 1. Contraste des couleurs : la palette (`--theme-color: #116e63`, `--body-text-color: #757f95`)
    doit être vérifiée au ratio 4.5:1. Le gris du corps de texte est un point d'attention.
 2. Navigation au clavier : formulaires, menu déroulant, fenêtre modale d'inscription (la modale
@@ -710,19 +793,19 @@ assets/fonts/fa-light-300.woff2      (7 usages — convertibles, voir PERF-01 é
 
 Référence pour mesurer les progrès.
 
-| Indicateur | Valeur |
-|---|---|
-| Poids total du dépôt | 45 Mo |
-| `assets/fonts/` | 14 Mo |
-| `assets/img/` | 8 Mo |
-| `assets/css/` | 880 Ko |
-| `assets/js/` | 244 Ko |
-| Images totales / inutilisées | 114 / **65** |
-| Balises `<img>` sans `loading="lazy"` | **68 / 68** |
-| Balises `<img>` sans `alt` | 0 / 68 ✅ |
-| Liens `target="_blank"` sans `rel` | 20 / 20 |
-| Pages HTML | 5 (5 121 lignes au total) |
-| `robots.txt` / `sitemap.xml` / `404.html` | absents |
+| Indicateur                                | Valeur                                      |
+| ----------------------------------------- | ------------------------------------------- |
+| Poids total du dépôt                      | 45 Mo                                       |
+| `assets/fonts/`                           | 14 Mo                                       |
+| `assets/img/`                             | 8 Mo                                        |
+| `assets/css/`                             | 880 Ko                                      |
+| `assets/js/`                              | 244 Ko                                      |
+| Images totales / inutilisées              | 114 / **65**                                |
+| Balises `<img>` sans `loading="lazy"`     | **68 / 68**                                 |
+| Balises `<img>` sans `alt`                | 0 / 68 ✅                                   |
+| Liens `target="_blank"` sans `rel`        | 20 / 20                                     |
+| Pages HTML                                | 5 (5 121 lignes au total)                   |
+| `robots.txt` / `sitemap.xml` / `404.html` | absents                                     |
 | Empreinte du pied de page sur les 5 pages | identique (`d58410e9`) — duplication totale |
 
 **Cible après Phases 0-2 : dépôt sous 8 Mo**, soit une réduction de plus de 80 %.
