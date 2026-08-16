@@ -73,31 +73,48 @@
     <meta name="theme-color" content="#ffffff" />
 
     <!-- Structured Data JSON-LD -->
+    <!-- Même entité que la page d'accueil (@id identique) : la cohérence du nom,
+         de l'adresse et du téléphone entre les pages est ce qui porte le
+         référencement local. -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "EducationalOrganization",
+        "@type": ["School", "LocalBusiness"],
+        "@id": "https://www.didactica-oujda.ma/#ecole",
         "name": "Didactica",
-        "url": "https://www.didactica-oujda.ma/a-propos.html",
-        "logo": "https://www.didactica-oujda.ma/assets/img/logo/logo.png",
         "description": "Centre de langue à Oujda offrant des cours d'allemand, services de traduction certifiée, et immersion culturelle.",
+        "url": "https://www.didactica-oujda.ma/",
+        "logo": "https://www.didactica-oujda.ma/assets/img/logo/logo.png",
+        "image": "https://www.didactica-oujda.ma/assets/img/og/share-1200x630.jpg",
+        "telephone": "+212666201740",
+        "email": "Didactica.Oujda@gmail.com",
+        "priceRange": "925 - 1850 MAD",
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "Bd. Mohammed VI",
           "addressLocality": "Oujda",
+          "addressRegion": "Oriental",
+          "postalCode": "60000",
           "addressCountry": "MA"
         },
-        "openingHours": "Mo-Fr 08:00-12:00,14:00-18:00",
+        "hasMap": "https://maps.app.goo.gl/vHGdnAmiuv7Yh5GHA",
+        "areaServed": {
+          "@type": "City",
+          "name": "Oujda"
+        },
+        "openingHours": ["Mo-Fr 08:00-12:00", "Mo-Fr 14:00-18:00"],
         "contactPoint": {
           "@type": "ContactPoint",
-          "telephone": "+212536703333",
-          "contactType": "customer service"
+          "telephone": "+212666201740",
+          "contactType": "customer service",
+          "areaServed": "MA",
+          "availableLanguage": "French",
+          "url": "https://wa.me/212666201740"
         },
         "sameAs": [
           "https://www.facebook.com/DeutschinOujda",
           "https://www.instagram.com/didactica_oujda",
-          "https://youtube.com/@utekiefer",
-          "https://api.whatsapp.com/send?phone=+212671721510"
+          "https://youtube.com/@utekiefer"
         ]
       }
     </script>

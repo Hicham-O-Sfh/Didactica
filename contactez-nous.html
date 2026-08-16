@@ -108,6 +108,10 @@
     <meta name="theme-color" content="#ffffff" />
 
     <!-- JSON-LD for structured data -->
+    <!-- telephone, address et openingHours ne sont pas des propriétés valides de
+         ContactPage (qui est une CreativeWork) : elles décrivent l'école, pas la
+         page. Elles sont donc portées par mainEntity, la fiche de l'école, dont
+         le @id est le même que sur les autres pages. -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -115,22 +119,45 @@
         "name": "Contact - Didactica",
         "url": "https://www.didactica-oujda.ma/contactez-nous.html",
         "description": "Contactez-nous pour obtenir plus d'informations sur nos cours d'allemand, nos services de traduction et préparation aux examens.",
-        "telephone": "+212536703333",
-        "email": "Didactica.Oujda@gmail.com",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Bd. Mohammed VI",
-          "addressLocality": "Oujda",
-          "addressRegion": "Maroc",
-          "postalCode": "60000"
-        },
-        "openingHours": "Mo-Fr 08:00-12:00, 14:00-18:00",
-        "sameAs": [
-          "https://www.facebook.com/DeutschinOujda",
-          "https://www.instagram.com/didactica_oujda",
-          "https://youtube.com/@utekiefer",
-          "https://api.whatsapp.com/send?phone=212671721510"
-        ]
+        "inLanguage": "fr",
+        "mainEntity": {
+          "@type": ["School", "LocalBusiness"],
+          "@id": "https://www.didactica-oujda.ma/#ecole",
+          "name": "Didactica",
+          "url": "https://www.didactica-oujda.ma/",
+          "logo": "https://www.didactica-oujda.ma/assets/img/logo/logo.png",
+          "image": "https://www.didactica-oujda.ma/assets/img/og/share-1200x630.jpg",
+          "telephone": "+212666201740",
+          "email": "Didactica.Oujda@gmail.com",
+          "priceRange": "925 - 1850 MAD",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Bd. Mohammed VI",
+            "addressLocality": "Oujda",
+            "addressRegion": "Oriental",
+            "postalCode": "60000",
+            "addressCountry": "MA"
+          },
+          "hasMap": "https://maps.app.goo.gl/vHGdnAmiuv7Yh5GHA",
+          "areaServed": {
+            "@type": "City",
+            "name": "Oujda"
+          },
+          "openingHours": ["Mo-Fr 08:00-12:00", "Mo-Fr 14:00-18:00"],
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+212666201740",
+            "contactType": "customer service",
+            "areaServed": "MA",
+            "availableLanguage": "French",
+            "url": "https://wa.me/212666201740"
+          },
+          "sameAs": [
+            "https://www.facebook.com/DeutschinOujda",
+            "https://www.instagram.com/didactica_oujda",
+            "https://youtube.com/@utekiefer"
+          ]
+        }
       }
     </script>
   </head>
