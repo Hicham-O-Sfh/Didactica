@@ -222,6 +222,43 @@ site, l'aperçu de lien compte réellement.
 
 ### 🔴 PERF-01 — Purger les polices Font Awesome inutilisées ⏱️ 1 h — **gain ~13 Mo**
 
+> ✅ **Fait le 16/08/2026** — commits `7e607be` (bascule light→regular), `1d8336f` (purge)
+> et `723179c` (preload).
+>
+> | Mesure                          | Avant    | Après      |
+> | ------------------------------- | -------- | ---------- |
+> | `assets/fonts/`                 | 13,4 Mo  | **870 Ko** |
+> | Fichiers de police              | 22       | **3**      |
+> | `all-fontawesome.min.css` brut  | 512 Ko   | **187 Ko** |
+> | …**gzippé** (poids transféré)   | 99,9 Ko  | **42,2 Ko**|
+>
+> **Corrections aux chiffres de cette fiche :** il y avait **11** fichiers `.ttf` et non 15 ;
+> `assets/fonts/` pesait 13,4 Mo et non 14 Mo ; le CSS 512 Ko et non 400 Ko.
+>
+> **La fiche avait raison sur un point où je me suis trompé d'abord** : il existe bien des règles
+> de glyphes propres à une famille. Le duotone utilise des sélecteurs `.fa-duotone.fa-x:after`
+> pour sa seconde couche de couleur — **330 Ko d'un seul tenant**, soit 64 % du fichier, pour une
+> famille utilisée zéro fois. C'est là qu'est venu l'essentiel du gain CSS. En revanche les
+> règles `.fa-nom:before{content:"\f…"}` sont bien communes à toutes les familles.
+>
+> **Bascule `fal` → `far` (étape 4) : faite, et vérifiée plutôt qu'arbitrée à l'œil.** La table
+> `cmap` de `fa-regular-400.ttf` a été lue directement : les 4 codepoints concernés (`U+F34E`,
+> `U+F590`, `U+F5A0`, `U+F2A0`) y sont présents. Seul effet visible : un trait un peu plus épais.
+>
+> **Écart assumé sur l'étape 5** : `fa-brands-400` est préchargée en plus de solid et regular.
+> Elle ne pèse que 116 Ko et sert la barre sociale en haut de chaque page — l'omettre garantissait
+> quatre icônes invisibles au chargement, `font-display` valant `block`.
+>
+> **Vérification (étape 6)** : les 6 pages chargées en navigateur, chaque icône mesurée au canvas
+> pour détecter un repli sur la police système. **0 icône cassée sur 122 vérifications**, et seules
+> les 3 polices conservées sont demandées.
+>
+> **Reste à faire — décision à prendre.** Le CSS conserve les **4733** définitions d'icônes alors
+> que le site en utilise **37**. Les élaguer ferait passer le fichier de 42,2 à ~10 Ko gzippés,
+> mais figerait le jeu d'icônes : en ajouter une plus tard imposerait de régénérer le fichier
+> depuis le kit Font Awesome. À arbitrer — voir aussi `ARCH-01`, où un build rendrait l'opération
+> automatique et donc sans risque.
+
 **Problème.** `assets/fonts/` pèse **14 Mo** : le kit Font Awesome complet, chaque famille en `.ttf`
 **et** `.woff2`. Or l'analyse du HTML montre que seules 4 familles sont utilisées :
 
@@ -260,6 +297,21 @@ est systématiquement servi en premier par le `@font-face`.
 ---
 
 ### 🟠 PERF-02 — Supprimer les 65 images inutilisées ⏱️ 45 min — **gain ~4,1 Mo**
+
+> 📋 **Inventaire fait le 16/08/2026, suppression volontairement reportée.**
+> Décision d'Hicham : les images orphelines sont **recensées, pas supprimées**. La liste vit
+> dans [toDelete.md](toDelete.md), régénérable à tout moment.
+>
+> Détection refaite de zéro plutôt que reprise de l'Annexe A : **64 images orphelines** et non 65,
+> pour **3,9 Mo**. L'écart est `assets/img/error/01.png`, désormais utilisée par la page 404
+> créée en `SEO-03` — ce qui illustre pourquoi la liste doit être régénérée avant toute
+> suppression, et non recopiée.
+>
+> Contrôle effectué sur le point de vigilance de l'étape 2 : le site ne construit **aucun** chemin
+> d'image dynamiquement. Le seul mécanisme de ce type, `data-background`, est du code mort
+> (`PERF-05`) et plus aucun attribut de ce nom n'existe dans le HTML.
+>
+> **Reste à faire** : régénérer `toDelete.md`, puis supprimer — quand tu le décideras.
 
 **Problème.** 65 des 114 images du repo ne sont référencées **nulle part** dans le HTML, le CSS ou
 le JS. Ce sont des reliquats du thème d'origine : blog, portfolio, recherche, campus, alumni…
@@ -365,6 +417,51 @@ affiché. C'est incohérent avec des polices Font Awesome déjà servies en loca
 
 **Terminé quand.** Aucune requête sortante vers `fonts.googleapis.com` ou `fonts.gstatic.com` et le
 rendu typographique est inchangé.
+
+---
+
+### 🟠 PERF-07 — Élaguer le CSS et le JS non utilisés (code et bibliothèques) ⏱️ 4 h
+
+**Problème.** Le site charge sur chaque page l'intégralité de bibliothèques dont il n'exploite
+qu'une fraction. État mesuré le 16/08/2026, **après** `PERF-01` :
+
+| Fichier                   | Brut       | **Gzippé** | Soupçon                                          |
+| ------------------------- | ---------- | ---------- | ------------------------------------------------ |
+| `bootstrap.min.css`       | 227 Ko     | 30,3 Ko    | grille + navbar utilisées, le reste probablement pas |
+| `all-fontawesome.min.css` | 187 Ko     | 42,2 Ko    | **4733 icônes déclarées, 37 utilisées**          |
+| `style.css`               | 65 Ko      | 12,7 Ko    | thème d'origine, sections supprimées non purgées |
+| `animate.min.css`         | 44 Ko      | 3,9 Ko     | seules les animations pilotées par WOW.js servent |
+| `jquery-3.7.1.min.js`     | 85 Ko      | 29,7 Ko    | requis par Owl Carousel — voir `ARCH-03`         |
+| `bootstrap.bundle.min.js` | 79 Ko      | 23,2 Ko    | seul le `collapse` du menu mobile semble utilisé |
+| `owl.carousel.min.js`     | 43 Ko      | 11,2 Ko    | un seul carrousel sur le site                    |
+| `modernizr.min.js`        | 11 Ko      | 4,4 Ko     | voir `PERF-05`, aucune détection appelée         |
+| **Total**                 | **765 Ko** | **165 Ko** |                                                  |
+
+`PERF-05` ne traite que les dépendances **entièrement** mortes. Cette fiche vise l'étage
+au-dessus : le code mort **à l'intérieur** des fichiers conservés.
+
+**Étapes.**
+
+1. Relever la couverture réelle avec l'onglet *Coverage* de Chrome DevTools, sur les 6 pages,
+   en interagissant (menu mobile, carrousel, modale d'inscription, défilement complet).
+2. CSS : passer PurgeCSS en lui donnant les 6 `.html` **et** `main.js` comme sources.
+3. JS : décider bibliothèque par bibliothèque. Bootstrap n'est peut-être utilisé que pour le
+   `collapse` du menu — auquel cas 20 lignes de JS natif remplacent 79 Ko.
+4. Font Awesome : ne conserver que les 37 icônes réellement utilisées (~10 Ko gzippés au lieu
+   de 42,2). Décision déjà posée en `PERF-01`.
+
+**Pièges à ne pas manquer.**
+
+- **Classes ajoutées dynamiquement.** `main.js` injecte des icônes, WOW.js pose `animated` et les
+  classes `animate__*` au défilement, Owl Carousel génère toute sa structure au runtime. Un
+  PurgeCSS naïf les supprimera. Il faut une *safelist*, et retester en interaction réelle.
+- **Ordre des opérations.** À faire idéalement **après `ARCH-01`** : avec un build, l'élagage est
+  rejoué à chaque modification et ne peut plus se désynchroniser du code. Fait à la main
+  aujourd'hui, le résultat se périme dès qu'une icône ou une classe est ajoutée.
+
+**Terminé quand.** Le poids gzippé de `assets/css/` + `assets/js/` est réduit d'au moins moitié,
+et les 6 pages sont vérifiées en interaction (menu mobile, carrousel, modale, animations) sans
+régression visuelle.
 
 ---
 
@@ -680,6 +777,10 @@ SEO-05…08, A11Y-01                                (Phase 4 : SEO avancé)
 ---
 
 ## Annexe A — Images inutilisées (65 fichiers, ~4,1 Mo)
+
+> ⚠️ **Annexe périmée, conservée pour mémoire.** La liste à jour est [toDelete.md](toDelete.md),
+> régénérée le 16/08/2026 : **64 fichiers, 3,9 Mo**. `assets/img/error/01.png` en est sortie,
+> la page 404 l'utilise désormais. Ne pas travailler à partir de la liste ci-dessous.
 
 Détectées par recherche du chemin exact dans l'ensemble du HTML, du CSS et du JS.
 **À re-vérifier avant suppression.** Voir `PERF-02`.
