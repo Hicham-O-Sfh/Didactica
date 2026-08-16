@@ -7,13 +7,13 @@ Généré le 16/08/2026. Voir `PERF-02` dans [TODO.md](TODO.md).
 
 ## Résumé
 
-| Indicateur | Valeur |
-| --- | --- |
-| Images dans `assets/img/` | 151 |
-| Référencées | 51 |
-| **Non référencées** | **100** |
-| Poids récupérable | **7.5 Mo** |
-| Poids de `assets/img/` après | 1.8 Mo |
+| Indicateur                   | Valeur     |
+| ---------------------------- | ---------- |
+| Images dans `assets/img/`    | 151        |
+| Référencées                  | 51         |
+| **Non référencées**          | **100**    |
+| Poids récupérable            | **7.5 Mo** |
+| Poids de `assets/img/` après | 1.8 Mo     |
 
 ## Méthode
 
