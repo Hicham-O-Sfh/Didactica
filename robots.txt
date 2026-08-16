@@ -1,0 +1,12 @@
+# robots.txt — Didactica
+# https://www.didactica-oujda.ma
+#
+# Note d'exploitation : un robots.txt n'est lu par les moteurs qu'à la racine
+# d'un domaine. Tant que le site est servi depuis une GitHub Pages « projet »
+# (https://hicham-o-sfh.github.io/Didactica/), ce fichier n'est donc pas pris en
+# compte. Il deviendra effectif dès la mise en service du domaine personnalisé.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://www.didactica-oujda.ma/sitemap.xml
