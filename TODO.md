@@ -543,6 +543,53 @@ images se téléchargent au chargement initial, y compris celles situées trois 
 
 ### 🟡 PERF-06 — Héberger les polices Google en local ⏱️ 45 min
 
+> ✅ **Fait le 17/08/2026.** La fiche visait un `@import` bloquant ; le diagnostic a révélé bien
+> pire, et a changé la nature de la tâche.
+>
+> **L'URL de l'`@import` était cassée.** Elle contenait `&amp;` au lieu de `&` — un échappement
+> HTML dans un fichier CSS. Google Fonts recevait donc un paramètre nommé `amp;family` et
+> l'ignorait. Vérifié en interrogeant directement l'API : la réponse ne contenait **que
+> Yantramanav**. Conséquences, mesurées en navigateur :
+>
+> 1. **Roboto n'a jamais été chargé.** `--body-font: "Roboto", sans-serif` retombait sur la police
+>    système. Sur Windows c'était Arial, sur Android Roboto, sur iOS Helvetica — le corps de texte
+>    n'avait donc pas la même allure d'une plateforme à l'autre.
+> 2. **`display=swap` était ignoré lui aussi**, `font-display` valant donc `auto` : Yantramanav
+>    bloquait l'affichage du texte jusqu'à 3 s. L'inverse de ce que la fiche supposait acquis.
+> 3. Le CSS demande `font-weight` **600** et **800**, or **Yantramanav ne possède ni l'un ni
+>    l'autre** (100, 300, 400, 500, 700, 900 seulement). Le navigateur retombait sur 700 et 900 —
+>    confirmé : ce sont les deux seules faces qu'il chargeait réellement.
+>
+> **Décision d'Hicham : entériner l'existant plutôt que réparer.** Servir Roboto en local aurait
+> coûté 283 Ko sur une cible 3G/4G pour *changer* l'apparence du site. Le corps de texte utilise
+> donc désormais une pile système explicite, et seule Yantramanav est hébergée.
+>
+> | Mesure                          | Avant                       | Après        |
+> | ------------------------------- | --------------------------- | ------------ |
+> | Requêtes vers un domaine tiers  | 1 (bloquante, en tête de CSS) | **0**        |
+> | Polices de texte téléchargées   | Yantramanav ×2 (via Google) | **33 Ko, en local** |
+> | `font-display`                  | `auto` (bloquant)           | **`swap`**   |
+>
+> **4 fichiers téléchargés depuis `fonts.gstatic.com`**, pour 51 Ko sur le disque :
+> `yantramanav-{700,900}-{latin,latin-ext}.woff2`. Seuls les deux `latin` sont réellement servis
+> (33 Ko) — grâce à `unicode-range`, un sous-ensemble n'est demandé que si un de ses caractères est
+> affiché. Les `latin-ext` ne coûtent donc rien aujourd'hui et couvrent un ajout de contenu futur.
+> Les deux faces `latin` sont préchargées, comme le sont déjà celles de Font Awesome.
+>
+> **⚠️ Écart à assumer sur le critère « rendu inchangé ».** La pile retenue commence par
+> `system-ui`, qui sur Windows résout vers **Segoe UI**, alors que l'ancien repli générique
+> `sans-serif` donnait **Arial**. Mesuré au canvas sur une même chaîne : 397,44 px contre
+> 399,72 px. Le rendu du corps de texte change donc légèrement sur Windows et iOS ; il est
+> identique sur Android. Pour un rendu rigoureusement identique partout, il suffit de remplacer la
+> valeur de `--body-font` par `sans-serif` seul, dans `assets/css/style.css`.
+>
+> **Nettoyage annexe.** Les deux `<link rel="dns-prefetch">` ont été retirés des 5 pages qui les
+> portaient : celui vers `fonts.googleapis.com` n'a plus d'objet, et celui vers `cdn.jsdelivr.net`
+> ne servait à rien — **aucune ressource du site n'a jamais été chargée depuis jsDelivr**.
+>
+> **Vérifié** sur les 6 pages : **zéro requête sortante**, zéro requête en échec, Yantramanav 700 et
+> 900 chargées depuis `assets/fonts/`.
+
 **Problème.** `assets/css/style.css` commence par un `@import url(https://fonts.googleapis.com/…)`
 chargeant Yantramanav et Roboto. Un `@import` en tête de feuille de style est **bloquant pour le
 rendu** et impose une résolution DNS + connexion vers un domaine tiers avant le premier pixel
