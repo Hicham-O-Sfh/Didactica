@@ -15,6 +15,30 @@ dans une session Claude Code séparée, sans relire tout le document.
 
 ---
 
+## Où en est-on — 17/08/2026
+
+**Phases 0 et 1 terminées**, à l'exception de `PERF-02` (suppression volontairement reportée) et
+de `PERF-07`.
+
+| Phase                              | État                                                 |
+| ---------------------------------- | ---------------------------------------------------- |
+| **0 — Critique SEO**               | ✅ `SEO-01` `SEO-02` `SEO-03` `SEO-04`               |
+| **1 — Performance**                | ✅ `PERF-01` `PERF-03` `PERF-04` `PERF-05` `PERF-06` |
+|                                    | 📋 `PERF-02` recensé, non supprimé — reste `PERF-07` |
+| **2 — Nettoyage du dépôt**         | ⬜ `CLEAN-01` … `CLEAN-04`                           |
+| **3 — Maintenabilité (migration)** | ⬜ `ARCH-01` … `ARCH-03`                             |
+| **4 — SEO avancé**                 | ⬜ `SEO-05` … `SEO-08`                               |
+| **5 — Conformité et formulaires**  | ⬜ `LEG-01` `FORM-01` `A11Y-01`                      |
+
+**Les trois prochaines**, par rapport effort/impact : `PERF-02` (une décision à prendre, 7,5 Mo à
+la clé), `LEG-01` (risque juridique, le seul point non technique du lot), puis `CLEAN-01`.
+
+**Ce qui attend une action hors code**, et bloque plusieurs fiches : l'achat du nom de domaine
+(voir `SEO-01`), et la création de la fiche Google Business (`SEO-06`), dont dépendent les
+coordonnées GPS manquantes du JSON-LD (`SEO-02`).
+
+---
+
 ## Contexte du projet
 
 - Site vitrine statique, école d'allemand **Didactica** à Oujda (Maroc).
@@ -303,26 +327,41 @@ est systématiquement servi en premier par le `@font-face`.
 > Décision d'Hicham : les images orphelines sont **recensées, pas supprimées**. La liste vit
 > dans [toDelete.md](toDelete.md), régénérable à tout moment.
 >
-> Détection refaite de zéro plutôt que reprise de l'Annexe A : **64 images orphelines** et non 65,
+> Détection refaite de zéro plutôt que reprise de l'ancienne Annexe A : **64 images orphelines** et non 65,
 > pour **3,9 Mo**. L'écart est `assets/img/error/01.png`, désormais utilisée par la page 404
 > créée en `SEO-03` — ce qui illustre pourquoi la liste doit être régénérée avant toute
 > suppression, et non recopiée.
 >
 > Contrôle effectué sur le point de vigilance de l'étape 2 : le site ne construit **aucun** chemin
-> d'image dynamiquement. Le seul mécanisme de ce type, `data-background`, est du code mort
-> (`PERF-05`) et plus aucun attribut de ce nom n'existe dans le HTML.
+> d'image dynamiquement. Le seul mécanisme de ce type, `data-background`, était du code mort et a
+> été supprimé depuis (`PERF-05`).
 >
-> **Reste à faire** : régénérer `toDelete.md`, puis supprimer — quand tu le décideras.
+> **⚠️ Angle mort de la détection, trouvé pendant `PERF-04`.** Trois images sont référencées dans
+> `style.css` par un sélecteur qui ne correspond à **aucune** page — la recherche textuelle du
+> chemin les compte donc à tort comme utilisées :
+>
+> | Sélecteur              | Image            | Poids  |
+> | ---------------------- | ---------------- | ------ |
+> | `.home-3 .footer-area` | `footer/01.webp` | 218 Ko |
+> | `.enroll-area`         | `enroll/01.webp` | 86 Ko  |
+> | `.choose-area::before` | `shape/01.webp`  | 28 Ko  |
+>
+> Aucune page ne porte ces classes : le navigateur ne demande jamais ces fichiers, mais **332 Ko**
+> sont versionnés et déployés pour rien. À intégrer à `toDelete.md` lors de la régénération, en
+> vérifiant au passage s'il existe d'autres sélecteurs morts du même genre.
+>
+> **Reste à faire** : régénérer `toDelete.md` (en tenant compte du point ci-dessus), puis
+> supprimer — quand tu le décideras.
 
 **Problème.** 65 des 114 images du repo ne sont référencées **nulle part** dans le HTML, le CSS ou
 le JS. Ce sont des reliquats du thème d'origine : blog, portfolio, recherche, campus, alumni…
 Autant de fichiers versionnés, clonés et déployés pour rien.
 
-La liste exacte figure en **Annexe A**.
+La liste exacte vit dans [toDelete.md](toDelete.md), régénérable à tout moment. L'ancienne Annexe A du présent document a été retirée pour éviter qu'on ne travaille à partir d'une copie périmée.
 
 **Étapes.**
 
-1. Reprendre la liste de l'Annexe A.
+1. Régénérer [toDelete.md](toDelete.md) — ne jamais partir d'une liste recopiée.
 2. **Re-vérifier avant suppression** : la détection s'appuie sur une recherche textuelle des chemins.
    Contrôler qu'aucune image n'est appelée via une construction dynamique en JS ou une règle CSS
    exotique. (`git` rend l'opération réversible de toute façon.)
@@ -413,11 +452,11 @@ seule** (`assets/img/footer/01.jpg`). Aucune version WebP. Sept fichiers dépass
 
 > ✅ **Fait le 16/08/2026.**
 >
-> | Mesure — `index.html`, 1280 × 800     | Avant       | Après      |
-> | ------------------------------------- | ----------- | ---------- |
-> | Requêtes d'images au chargement       | 43          | **8**      |
-> | Poids d'images au chargement          | 1 194 Ko    | **711 Ko** |
-> | Requêtes totales au chargement        | 61          | **33**     |
+> | Mesure — `index.html`, 1280 × 800 | Avant    | Après      |
+> | --------------------------------- | -------- | ---------- |
+> | Requêtes d'images au chargement   | 43       | **8**      |
+> | Poids d'images au chargement      | 1 194 Ko | **711 Ko** |
+> | Requêtes totales au chargement    | 61       | **33**     |
 >
 > **Correction au décompte de cette fiche : 90 balises `<img>` et non 68.** Le chiffre datait de
 > l'état initial, avant la page `404.html` (`SEO-03`). Réparties ainsi : **82** en `loading="lazy"`,
@@ -478,11 +517,11 @@ images se téléchargent au chargement initial, y compris celles situées trois 
 > ✅ **Fait le 16/08/2026.** Les trois constats de la fiche se sont vérifiés — mais aucun n'a été
 > pris pour argent comptant.
 >
-> | Supprimé                    | Brut       | Gzippé     |
-> | --------------------------- | ---------- | ---------- |
-> | `magnific-popup.min.css`    | 5,1 Ko     | 1,5 Ko     |
-> | `modernizr.min.js`          | 10,8 Ko    | 4,4 Ko     |
-> | **Total, sur chaque page**  | **15,9 Ko** | **5,9 Ko** |
+> | Supprimé                   | Brut        | Gzippé     |
+> | -------------------------- | ----------- | ---------- |
+> | `magnific-popup.min.css`   | 5,1 Ko      | 1,5 Ko     |
+> | `modernizr.min.js`         | 10,8 Ko     | 4,4 Ko     |
+> | **Total, sur chaque page** | **15,9 Ko** | **5,9 Ko** |
 >
 > Plus **2 requêtes HTTP en moins par page**, soit 12 sur l'ensemble du site — sur une connexion
 > mobile, la latence par requête compte souvent davantage que les kilo-octets.
@@ -505,7 +544,7 @@ images se téléchargent au chargement initial, y compris celles situées trois 
 > isolée en jQuery 3.7.1, `$(document).on("ready", fn)` **ne s'exécute pas** au chargement là où
 > `$(fn)` s'exécute.
 >
-> **Précision à apporter à la fiche** : ce n'est pas la *syntaxe* qui a été supprimée en jQuery 3.0
+> **Précision à apporter à la fiche** : ce n'est pas la _syntaxe_ qui a été supprimée en jQuery 3.0
 > — `"ready"` reste un nom d'événement valide et le gestionnaire se déclenche si on émet
 > l'événement à la main. Ce que jQuery 3.0 a supprimé, c'est le **déclenchement automatique** de cet
 > événement au DOM ready. Le gestionnaire était donc bien mort, mais parce que plus rien ne
@@ -561,14 +600,14 @@ images se téléchargent au chargement initial, y compris celles situées trois 
 >    confirmé : ce sont les deux seules faces qu'il chargeait réellement.
 >
 > **Décision d'Hicham : entériner l'existant plutôt que réparer.** Servir Roboto en local aurait
-> coûté 283 Ko sur une cible 3G/4G pour *changer* l'apparence du site. Le corps de texte utilise
+> coûté 283 Ko sur une cible 3G/4G pour _changer_ l'apparence du site. Le corps de texte utilise
 > donc désormais une pile système explicite, et seule Yantramanav est hébergée.
 >
-> | Mesure                          | Avant                       | Après        |
-> | ------------------------------- | --------------------------- | ------------ |
-> | Requêtes vers un domaine tiers  | 1 (bloquante, en tête de CSS) | **0**        |
-> | Polices de texte téléchargées   | Yantramanav ×2 (via Google) | **33 Ko, en local** |
-> | `font-display`                  | `auto` (bloquant)           | **`swap`**   |
+> | Mesure                         | Avant                         | Après               |
+> | ------------------------------ | ----------------------------- | ------------------- |
+> | Requêtes vers un domaine tiers | 1 (bloquante, en tête de CSS) | **0**               |
+> | Polices de texte téléchargées  | Yantramanav ×2 (via Google)   | **33 Ko, en local** |
+> | `font-display`                 | `auto` (bloquant)             | **`swap`**          |
 >
 > **4 fichiers téléchargés depuis `fonts.gstatic.com`**, pour 51 Ko sur le disque :
 > `yantramanav-{700,900}-{latin,latin-ext}.woff2`. Seuls les deux `latin` sont réellement servis
@@ -703,11 +742,16 @@ projet, et il est vide. `.gitignore` deviendra nécessaire dès la Phase 3 (`nod
 
 ### 🟡 CLEAN-03 — Sécuriser les liens externes ⏱️ 15 min
 
-**Problème.** Les **20 liens** `target="_blank"` du site n'ont pas d'attribut `rel`. Les navigateurs
+> ⚠️ **Décompte corrigé le 17/08/2026 : 86 liens, pas 20.** Le chiffre datait de l'état initial,
+> avant la page `404.html` et avant l'ajout des boutons WhatsApp. Recompté sur les 6 pages :
+> **86 liens `target="_blank"`, dont 86 sans `rel`.** L'effort est donc plus proche de 30 min que
+> de 15, et c'est un bon candidat à un script plutôt qu'à une édition manuelle.
+
+**Problème.** Les **86 liens** `target="_blank"` du site n'ont pas d'attribut `rel`. Les navigateurs
 modernes appliquent `noopener` implicitement, le risque réel est donc faible — mais l'attribut reste
 attendu par les audits Lighthouse et les vieux navigateurs.
 
-**Étapes.** Ajouter `rel="noopener noreferrer"` aux 20 liens (réseaux sociaux, WhatsApp, partenaires).
+**Étapes.** Ajouter `rel="noopener noreferrer"` aux 86 liens (réseaux sociaux, WhatsApp, partenaires).
 
 **Terminé quand.** L'audit Lighthouse ne signale plus de lien externe non sécurisé.
 
@@ -941,160 +985,71 @@ acquis. Reste à vérifier le reste.
 ## Ordre d'exécution recommandé
 
 ```
-SEO-01 ──► SEO-02 ──► SEO-03 ──► SEO-04          (Phase 0 : critique, ~2 h au total)
+✅ SEO-01 ──► SEO-02 ──► SEO-03 ──► SEO-04        (Phase 0 : terminée)
    │
    ▼
-PERF-01 ──► PERF-02 ──► PERF-03 ──► PERF-04       (Phase 1 : ~20 Mo de gain)
-   │        PERF-05, PERF-06 en parallèle
+✅ PERF-01 ──► PERF-03 ──► PERF-04 ──► PERF-05 ──► PERF-06
+   │   📋 PERF-02 : recensé, suppression en attente de ta décision
+   │   ⬜ PERF-07 : à faire après ARCH-01, sinon l'élagage se périme
    ▼
-CLEAN-01…04                                       (Phase 2 : nettoyage)
+⬜ LEG-01 ──► FORM-01                             (Phase 5 : risque juridique, à traiter tôt)
    │
    ▼
-LEG-01 ──► FORM-01                                (Phase 5 : à traiter tôt, risque juridique)
+⬜ CLEAN-01…04                                    (Phase 2 : nettoyage)
    │
    ▼
-ARCH-01 ──► ARCH-02 ──► ARCH-03                   (Phase 3 : migration)
+⬜ ARCH-01 ──► ARCH-02 ──► ARCH-03                (Phase 3 : migration)
    │
    ▼
-SEO-05…08, A11Y-01                                (Phase 4 : SEO avancé)
+⬜ SEO-05…08, A11Y-01, PERF-07                    (Phase 4 et finitions)
 ```
 
-**Si le temps est compté**, les cinq tâches à faire en priorité absolue :
-`SEO-01`, `SEO-03`, `PERF-01`, `PERF-04`, `LEG-01`.
+**Ordre revu le 17/08/2026** : `LEG-01` passe devant `CLEAN-01…04`. Le nettoyage est confortable
+mais sans urgence, alors que la collecte du CIN sans mention légale est le seul point du document
+qui porte un risque autre que technique.
 
 ---
 
-## Annexe A — Images inutilisées (65 fichiers, ~4,1 Mo)
+## Annexe A — Images et polices inutilisées
 
-> ⚠️ **Annexe périmée, conservée pour mémoire.** La liste à jour est [toDelete.md](toDelete.md),
-> régénérée le 16/08/2026 : **64 fichiers, 3,9 Mo**. `assets/img/error/01.png` en est sortie,
-> la page 404 l'utilise désormais. Ne pas travailler à partir de la liste ci-dessous.
-
-Détectées par recherche du chemin exact dans l'ensemble du HTML, du CSS et du JS.
-**À re-vérifier avant suppression.** Voir `PERF-02`.
-
-```
-assets/img/alumni/01.jpg
-assets/img/blog/01.jpg
-assets/img/blog/02.jpg
-assets/img/blog/03.jpg
-assets/img/blog/bs-1.jpg
-assets/img/blog/bs-2.jpg
-assets/img/blog/bs-3.jpg
-assets/img/blog/com-1.jpg
-assets/img/blog/com-2.jpg
-assets/img/blog/com-3.jpg
-assets/img/blog/single.jpg
-assets/img/campus-life/01.jpg
-assets/img/campus-tour/01.jpg
-assets/img/club/06.jpg
-assets/img/club/single.jpg
-assets/img/course/01.jpg
-assets/img/course/02.jpg
-assets/img/course/03.jpg
-assets/img/course/04.jpg
-assets/img/course/05.jpg
-assets/img/course/06.jpg
-assets/img/course/single.jpg
-assets/img/course/teacher.jpg
-assets/img/department/02.jpg
-assets/img/department/single.jpg
-assets/img/error/01.png
-assets/img/event/02.jpg
-assets/img/event/03.jpg
-assets/img/event/04.jpg
-assets/img/event/05.jpg
-assets/img/event/06.jpg
-assets/img/event/author.jpg
-assets/img/event/single.jpg
-assets/img/icon/acting.svg
-assets/img/icon/course.svg
-assets/img/icon/course-material.svg
-assets/img/icon/global-education.svg
-assets/img/icon/graduation.svg
-assets/img/icon/human.svg
-assets/img/icon/information.svg
-assets/img/icon/money.svg
-assets/img/icon/online-course.svg
-assets/img/icon/scholarship.svg
-assets/img/icon/scholarship-2.svg
-assets/img/portfolio/01.jpg
-assets/img/portfolio/02.jpg
-assets/img/portfolio/03.jpg
-assets/img/portfolio/04.jpg
-assets/img/portfolio/05.jpg
-assets/img/portfolio/06.jpg
-assets/img/portfolio/single.jpg
-assets/img/research/01.jpg
-assets/img/research/02.jpg
-assets/img/research/03.jpg
-assets/img/research/04.jpg
-assets/img/research/05.jpg
-assets/img/research/06.jpg
-assets/img/research/single.jpg
-assets/img/scholarship/01.jpg
-assets/img/slider/slider-3.jpg
-assets/img/team/05.jpg
-assets/img/team/06.jpg
-assets/img/team/07.jpg
-assets/img/team/08.jpg
-assets/img/video/01.jpg
-```
-
-`assets/img/error/01.png` fait exception : le conserver, il servira à la page 404 de `SEO-03`.
+> Les deux annexes qui figuraient ici ont été **retirées le 17/08/2026** : elles étaient périmées
+> et recopier une liste obsolète est précisément l'erreur contre laquelle `PERF-02` mettait en
+> garde.
+>
+> - **Images inutilisées** → la liste vivante est [toDelete.md](toDelete.md), régénérable à tout
+>   moment. Lire l'encadré de `PERF-02` avant de l'utiliser : la détection a un angle mort sur les
+>   sélecteurs CSS morts.
+> - **Polices à supprimer** → sans objet, `PERF-01` est fait. `assets/fonts/` ne contient plus que
+>   les 3 fichiers Font Awesome réellement utilisés, plus les 4 de Yantramanav ajoutés par
+>   `PERF-06`.
 
 ---
 
-## Annexe B — Polices à supprimer (~13 Mo)
+## Annexe B — Avancement mesuré
 
-Voir `PERF-01`.
+Colonne de gauche : l'état initial du 16/08/2026. Colonne de droite : mesure refaite le
+17/08/2026, après les Phases 0 et 1.
 
-**Tous les fichiers `.ttf`** (15 fichiers, aucun navigateur ciblé ne les demande) :
+| Indicateur                                 | 16/08 (départ)   | 17/08 (actuel)            |
+| ------------------------------------------ | ---------------- | ------------------------- |
+| Poids total du dépôt                       | 45 Mo            | **11,3 Mo**               |
+| `assets/fonts/`                            | 14 Mo            | **921 Ko**                |
+| `assets/img/`                              | 8 Mo             | 9,3 Mo ⚠️                 |
+| `assets/css/`                              | 880 Ko           | **529 Ko**                |
+| `assets/js/`                               | 244 Ko           | **223 Ko**                |
+| Images sur disque / inutilisées            | 114 / 65         | 151 / **100** ⚠️          |
+| Balises `<img>` sans `loading` ni priorité | 68 / 68          | **0 / 90** ✅             |
+| Balises `<img>` sans `alt`                 | 0 / 68 ✅        | **0 / 90** ✅             |
+| Liens `target="_blank"` sans `rel`         | 20 / 20          | 86 / 86 (`CLEAN-03`)      |
+| Pages HTML                                 | 5 (5 121 lignes) | 6 (6 105 lignes)          |
+| `robots.txt` / `sitemap.xml` / `404.html`  | absents          | **présents** ✅           |
+| Requêtes vers un domaine tiers             | 1 (Google Fonts) | **0** ✅                  |
+| Pied de page dupliqué                      | ×5, identique    | ×6, identique (`ARCH-01`) |
 
-```
-assets/fonts/*.ttf
-```
+⚠️ **Les deux lignes qui augmentent sont attendues, pas des régressions.** `assets/img/` contient
+à la fois les originaux JPEG/PNG **et** leurs conversions WebP : `PERF-03` a converti sans
+supprimer, conformément à ta consigne. Le nombre d'images « inutilisées » monte pour la même
+raison — les originaux sont désormais orphelins. Tout est recensé dans [toDelete.md](toDelete.md).
 
-**Familles jamais utilisées** (0 occurrence dans le HTML) :
-
-```
-assets/fonts/fa-duotone-900.woff2
-assets/fonts/fa-sharp-light-300.woff2
-assets/fonts/fa-sharp-regular-400.woff2
-assets/fonts/fa-sharp-solid-900.woff2
-assets/fonts/fa-sharp-thin-100.woff2
-assets/fonts/fa-thin-100.woff2
-assets/fonts/fa-v4compatibility.woff2
-```
-
-**À conserver** (1,3 Mo) :
-
-```
-assets/fonts/fa-solid-900.woff2      (127 usages)
-assets/fonts/fa-regular-400.woff2    (103 usages)
-assets/fonts/fa-brands-400.woff2     (47 usages)
-assets/fonts/fa-light-300.woff2      (7 usages — convertibles, voir PERF-01 étape 4)
-```
-
----
-
-## Annexe C — État initial mesuré (16 août 2026)
-
-Référence pour mesurer les progrès.
-
-| Indicateur                                | Valeur                                      |
-| ----------------------------------------- | ------------------------------------------- |
-| Poids total du dépôt                      | 45 Mo                                       |
-| `assets/fonts/`                           | 14 Mo                                       |
-| `assets/img/`                             | 8 Mo                                        |
-| `assets/css/`                             | 880 Ko                                      |
-| `assets/js/`                              | 244 Ko                                      |
-| Images totales / inutilisées              | 114 / **65**                                |
-| Balises `<img>` sans `loading="lazy"`     | **68 / 68**                                 |
-| Balises `<img>` sans `alt`                | 0 / 68 ✅                                   |
-| Liens `target="_blank"` sans `rel`        | 20 / 20                                     |
-| Pages HTML                                | 5 (5 121 lignes au total)                   |
-| `robots.txt` / `sitemap.xml` / `404.html` | absents                                     |
-| Empreinte du pied de page sur les 5 pages | identique (`d58410e9`) — duplication totale |
-
-**Cible après Phases 0-2 : dépôt sous 8 Mo**, soit une réduction de plus de 80 %.
+**Cible restante : dépôt sous 4 Mo.** Elle est atteinte mécaniquement le jour où `PERF-02` est
+exécuté (−7,5 Mo), sans autre travail. C'est de loin le meilleur rapport effort/gain du document.
