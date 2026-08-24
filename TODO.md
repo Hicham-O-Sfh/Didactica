@@ -25,16 +25,17 @@ de `PERF-07`.
 | **0 — Critique SEO**               | ✅ `SEO-01` `SEO-02` `SEO-03` `SEO-04`               |
 | **1 — Performance**                | ✅ `PERF-01` `PERF-03` `PERF-04` `PERF-05` `PERF-06` |
 |                                    | 📋 `PERF-02` recensé, non supprimé — reste `PERF-07` |
-| **2 — Nettoyage du dépôt**         | ⬜ `CLEAN-01` … `CLEAN-04`                           |
+| **2 — Nettoyage du dépôt**         | ✅ `CLEAN-05` — ⬜ `CLEAN-01` … `CLEAN-04` `CLEAN-06` |
 | **3 — Maintenabilité (migration)** | ⬜ `ARCH-01` … `ARCH-03`                             |
 | **4 — SEO avancé**                 | ⬜ `SEO-05` … `SEO-08`                               |
-| **5 — Conformité et formulaires**  | ⬜ `LEG-01` `FORM-01` `A11Y-01`                      |
+| **5 — Conformité et formulaires**  | ✅ `LEG-01` — ⬜ `FORM-01` `A11Y-01`                 |
 
 **Les trois prochaines**, par rapport effort/impact : `PERF-02` (une décision à prendre, 7,5 Mo à
-la clé), `LEG-01` (risque juridique, le seul point non technique du lot), puis `CLEAN-01`.
+la clé), `FORM-01` (ne plus perdre de prospects — et la politique de confidentialité qui vient
+d'être écrite en `LEG-01` couvre déjà l'envoi par email qu'il introduit), puis `CLEAN-01`.
 
 **Ce qui attend une action hors code**, et bloque plusieurs fiches : l'achat du nom de domaine
-(voir `SEO-01`), et la création de la fiche Google Business (`SEO-06`), dont dépendent les
+(voir `SEO-01`), la création de la fiche Google Business (`SEO-06`), dont dépendent les
 coordonnées GPS manquantes du JSON-LD (`SEO-02`).
 
 ---
@@ -839,6 +840,57 @@ effort/bénéfice y est nettement moins bon que sur les images et les polices.
 
 ---
 
+### 🟠 CLEAN-05 — Sortir tout le CSS des pages HTML ⏱️ 1 h
+
+> ✅ **Fait le 17/08/2026**, à la demande d'Hicham.
+>
+> | Mesure                        | Avant  | Après |
+> | ----------------------------- | ------ | ----- |
+> | Blocs `<style>` dans le HTML  | 2      | **0** |
+> | Attributs `style="…"` écrits  | 21     | **0** |
+>
+> Les 2 blocs `<style>` (`404.html`, `politique-de-confidentialite.html`) et les 21 styles inline
+> sont regroupés dans une section « Didactica » en fin de `assets/css/style.css`. Classes créées :
+> `.text-underline` (9 usages), `.hero-bg-1`, `.hero-bg-2`, `.breadcrumb-bg`, `.text-red`,
+> `.title-sm`, `.title-tight`, `.frame-borderless`, `.partner-logo-sm`, plus les sections
+> `.error-area` et `.legal-area`.
+>
+> **Les 67 attributs `style` qui restent au runtime ne sont pas du code du site** : Owl Carousel,
+> WOW.js et le préchargeur les posent en JavaScript. Les supprimer reviendrait à retirer les
+> bibliothèques — c'est le sujet de `ARCH-03`, pas celui-ci.
+>
+> **Commentaires** : 22 commentaires explicatifs multilignes retirés des 7 pages (ils renvoyaient à
+> des fiches de ce document, leur place est ici et non dans le HTML livré au navigateur). Les
+> repères courts de structure (`<!-- footer area end -->`) sont conservés.
+>
+> **Non-régression vérifiée** : le texte visible des 6 pages suivies a été comparé à `HEAD` — les
+> seuls écarts sont les ajouts voulus (lien Confidentialité, mention CIN, consentement, nouvelles
+> spécialités). Zéro requête en échec, fonds de slider et de fil d'Ariane rendus depuis le CSS,
+> page 404 et page légale correctement stylées.
+
+---
+
+### 🟡 CLEAN-06 — Uniformiser le formatage des fichiers HTML ⏱️ 30 min
+
+**Problème.** Prettier s'exécute à l'enregistrement dans VSCode, mais n'a pas été passé sur tous les
+fichiers : `contactez-nous.html` et `politique-de-confidentialite.html` ont une indentation de 2
+espaces en moins que les autres. Conséquence concrète : un même bloc partagé (header, formulaire)
+n'est plus détectable par simple comparaison de texte, et tout script de vérification doit
+normaliser les espaces avant de comparer — c'est exactement ce qu'il a fallu faire pour `LEG-01`.
+Autre effet visible : `git diff` affiche 1 225 lignes modifiées sur `contactez-nous.html` là où
+seules quelques lignes ont changé.
+
+**Étapes.**
+
+1. Passer Prettier sur les 7 `.html` en une fois, en commit séparé et **sans autre modification**,
+   pour que le bruit de formatage ne masque jamais un vrai changement.
+2. Ajouter un `.prettierrc` à la racine pour figer le style (indentation 2, largeur 80).
+
+**Terminé quand.** Les 7 pages ont le même style de formatage et un bloc partagé se compare
+octet à octet.
+
+---
+
 ## Phase 4 — SEO avancé et contenu
 
 ### 🟠 SEO-05 — Enrichir les données structurées locales ⏱️ 1 h
@@ -908,6 +960,105 @@ des données, pas avant.
 ## Phase 5 — Conformité et formulaires
 
 ### 🔴 LEG-01 — Encadrer la collecte du CIN et de la date de naissance ⏱️ 2 h
+
+> ✅ **Fait le 17/08/2026.** La fiche parlait de conformité ; l'échange avec Hicham a révélé que
+> le vrai enjeu était **aussi commercial**, et cela a changé la mise en œuvre.
+>
+> **Le « pourquoi » du CIN n'a pas été relégué dans la politique de confidentialité.** CIN et date
+> de naissance servent à établir une **pré-inscription**, laquelle ouvre droit à une **réduction
+> d'au moins 10 %** quand l'élève se présente à l'école. Enfermer cette information derrière un
+> lien que personne ne clique, c'était perdre un argument de vente sur le champ qui fait justement
+> abandonner les visiteurs. Elle est donc affichée **directement sous le champ CIN**, et reprise en
+> tête de la politique.
+>
+> **Un lien seul ne vaut pas consentement** (étape 2 de la fiche) : une case à cocher obligatoire,
+> non cochée par défaut, a été ajoutée avant le bouton d'envoi. **Aucune ligne de JavaScript n'a
+> été nécessaire** — `main.js:42` appelait déjà `form.reportValidity()`, qui prend nativement en
+> charge un `required` sur une case. Vérifié en navigateur : sans la case, `reportValidity()`
+> renvoie `false` et le premier champ invalide est bien `consentement` ; avec, l'envoi passe.
+>
+> **Correction de vocabulaire** : Hicham parlait de « TOS ». Des CGU encadrent un service en ligne
+> (compte, achat) ; ici il n'y a qu'une collecte de données. La page créée est donc une
+> **politique de confidentialité**, ce qu'attendent aussi les audits et Google.
+>
+> | Livrable                                        | Portée                            |
+> | ----------------------------------------------- | --------------------------------- |
+> | `politique-de-confidentialite.html`             | nouvelle page, 9 sections courtes |
+> | Mention explicative sous le champ CIN           | **5** pages portant le formulaire |
+> | Case de consentement obligatoire                | **5** pages portant le formulaire |
+> | Lien « Confidentialité » au **menu principal**  | **7** pages                       |
+> | Lien « Confidentialité » au **pied de page**    | **7** pages                       |
+> | Entrée sitemap (`priority` 0.3)                 | `sitemap.xml`                     |
+>
+> La page réutilise le header et le footer de `404.html` — pas de 8ᵉ variante à maintenir — et ne
+> contient **pas** le formulaire, pour la même raison qu'en `SEO-03` : ne pas créer un 5ᵉ endroit
+> collectant le CIN.
+>
+> **↺ Deuxième version, le 17/08/2026 — la première était trop longue.** Hicham a demandé « simple
+> et droit au but », en donnant <https://didactica.ma/avis-legal/> comme référence — l'autre site
+> du groupe. Cette page fait ~250 mots, sept sections, des puces plutôt que des paragraphes. La
+> page a donc été **réécrite de zéro sur ce gabarit** : de ~1 100 à **372 mots**, tableau des
+> données remplacé par une liste à puces, encadré mis en avant fondu dans le texte, CSS local
+> réduit de 60 à 25 lignes. Ce qui a été **conservé malgré la coupe** : la section « Pourquoi la
+> CIN et la date de naissance » (c'est l'argument commercial, pas du remplissage) et la
+> transparence sur le circuit WhatsApp.
+>
+> **Points de fond tranchés dans la page** :
+>
+> - **Conservation : 2 ans après le dernier contact** (décision d'Hicham).
+> - **Transparence sur le circuit réel** : le site n'a aucune base de données ; tant que le
+>   visiteur n'a pas appuyé sur « envoyer » dans WhatsApp, rien ne parvient à l'école et rien
+>   n'est stocké. C'est dit explicitement — c'est rassurant, et c'est vrai.
+> - **Mineurs** : le formulaire demande une date de naissance et les classes peuvent accueillir des
+>   mineurs ; l'accord du représentant légal est prévu (fondu dans « Consentement » à la réécriture).
+> - **Cookies** : la page peut affirmer qu'il n'y en a **aucun** et qu'aucune ressource tierce n'est
+>   chargée — acquis de `PERF-06`, vérifié. À rouvrir si `SEO-07` (mesure d'audience) est mis en place.
+>
+> **✅ Forme juridique tranchée le 17/08/2026 : SARL**, après vérification d'Hicham. La page porte
+> donc **Int and Inc SARL**. Conséquences : c'est la **loi 09-08** seule qui s'applique, l'autorité
+> de recours est la **CNDP**, et les identifiants attendus sont **RC** et **ICE** — le doute RGPD /
+> AEPD de la première version est levé et a été retiré de la page.
+>
+> ⚠️ **À signaler à Hicham** : <https://didactica.ma/avis-legal/> affiche encore « Int and Inc
+> **SL** ». Si la SARL est la bonne forme, cette page de l'autre site est à corriger aussi.
+>
+> **L'étape 4 (déclaration CNDP) n'a pas été traitée** : démarche administrative hors code.
+>
+> **Vérifié en navigateur** sur les 7 pages : toutes en 200, zéro erreur console, zéro requête
+> sortante, liens présents au menu **et** au pied de page partout, blocage du formulaire effectif.
+> Menu contrôlé après ajout du 6ᵉ item : une seule ligne à 1280 et à 1000 px, aucun débordement
+> horizontal, repli en burger correct à 375 px.
+>
+> **Retours d'Hicham traités le 17/08/2026** (hors énoncé de la fiche, mais issus de la relecture) :
+>
+> - **Puces invisibles dans la page.** `style.css` pose `li{list-style:none}` **sur la balise `li`
+>   elle-même** : une règle `list-style: disc` posée sur le `<ul>` ne peut pas la contrer, la valeur
+>   héritée perdant face à une déclaration directe sur l'élément. Corrigé en visant le `li`.
+> - **Options « Spécialité » revues** : 8 → **13**, sur les 4 pages du formulaire. « Médecine » et
+>   « Infirmier/Infirmière » fusionnés en **Santé**, ajout de métiers techniques, informatique,
+>   hôtellerie, droit, éducation et « lycéen / étudiant sans spécialité ». Ordre calé sur les
+>   débouchés Ausbildung : santé et métiers techniques en tête.
+>   Au passage, les `&` des libellés sont désormais **échappés en `&amp;`** — ils ne l'étaient pas
+>   dans le thème d'origine, et c'est le même oubli qui avait cassé l'URL Google Fonts en `PERF-06`.
+> - **Header élargi** : `style.css` plafonnait `.container` à 1200 px (Bootstrap prévoit 1320), ce
+>   qui tassait logo, menu et bouton au centre des grands écrans. Une règle en fin de `style.css`
+>   porte le conteneur **de la seule barre de navigation** à 1600 px au-delà de 1400 px de large :
+>   le logo gagne 200 px vers la gauche, le bouton autant vers la droite. Le reste du site garde sa
+>   grille à 1200 px. Vérifié : inchangé en dessous de 1400 px, menu sur une ligne, pas de
+>   défilement horizontal.
+>
+> **↺ Troisième passage, le 17/08/2026 — une erreur de ma part corrigée.**
+> `tarifs-et-prix.html` **portait aussi le formulaire d'inscription**, avec le champ CIN, et je
+> l'avais manqué : ma recherche initiale des pages concernées avait été tronquée à 40 résultats et
+> j'en avais conclu qu'il n'y avait que 4 pages. Cette page a donc vécu deux passages sans case de
+> consentement, sans mention explicative et avec les 8 anciennes spécialités. Corrigé : le bloc du
+> formulaire est désormais **strictement identique sur les 5 pages** (empreinte `979c48e6`).
+> Leçon pour les fiches suivantes : ne jamais conclure « N pages » à partir d'une recherche dont la
+> sortie est tronquée.
+>
+> Défaut de conformité corrigé au passage dans ce même bloc : le libellé du groupe de niveaux
+> portait `for="specialite"`, déjà pris par le `<select>` des spécialités — deux libellés pointaient
+> donc la même commande, et le groupe de radios n'en avait aucun. Remplacé par un `<span>`.
 
 **Problème.** Le formulaire d'inscription collecte **CIN et date de naissance** et les transmet dans
 une URL `wa.me`, sans consentement explicite, sans mention légale, et sans politique de
