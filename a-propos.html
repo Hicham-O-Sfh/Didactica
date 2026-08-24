@@ -77,8 +77,6 @@
     <!-- Preloading important resources -->
     <link rel="preload" href="assets/css/style.css" as="style" />
     <link rel="preload" href="assets/js/main.js" as="script" />
-    <!-- Banniere de haut de page : element LCP. Declaree en style inline, elle
-         ne serait decouverte qu'apres le calcul des styles. -->
     <link
       rel="preload"
       href="assets/img/breadcrumb/01.webp"
@@ -107,8 +105,6 @@
       type="font/woff2"
       crossorigin
     />
-    <!-- Titres : Yantramanav servie en local depuis PERF-06. Seules 700 et 900
-         existent dans cette famille, le CSS demandant 600 et 800. -->
     <link
       rel="preload"
       href="assets/fonts/yantramanav-700-latin.woff2"
@@ -127,14 +123,10 @@
     <!-- SEO Friendly URLs -->
     <link rel="canonical" href="https://www.didactica-oujda.ma/a-propos.html" />
 
-
     <!-- Accessibility -->
     <meta name="theme-color" content="#ffffff" />
 
     <!-- Structured Data JSON-LD -->
-    <!-- Même entité que la page d'accueil (@id identique) : la cohérence du nom,
-         de l'adresse et du téléphone entre les pages est ce qui porte le
-         référencement local. -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",

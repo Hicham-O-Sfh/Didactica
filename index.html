@@ -60,10 +60,6 @@
       }
     </script>
 
-    <!-- Open Graph pour un meilleur partage sur les réseaux sociaux -->
-    <!-- Note : les propriétés og:instagram, og:facebook, og:whatsapp, og:map,
-         og:email et og:phone n'existent pas dans la spécification Open Graph et
-         étaient ignorées. Les profils sociaux sont déclarés via sameAs (JSON-LD). -->
     <meta property="og:site_name" content="Didactica" />
     <meta property="og:locale" content="fr_FR" />
     <meta property="og:type" content="website" />
@@ -118,8 +114,6 @@
     <!-- Preloading important resources -->
     <link rel="preload" href="assets/css/style.css" as="style" />
     <link rel="preload" href="assets/js/main.js" as="script" />
-    <!-- Fond du premier slide : element LCP de la page. Declare en style inline,
-         il ne serait decouvert qu'apres le calcul des styles. -->
     <link
       rel="preload"
       href="assets/img/slider/slider-1.webp"
@@ -148,8 +142,6 @@
       type="font/woff2"
       crossorigin
     />
-    <!-- Titres : Yantramanav servie en local depuis PERF-06. Seules 700 et 900
-         existent dans cette famille, le CSS demandant 600 et 800. -->
     <link
       rel="preload"
       href="assets/fonts/yantramanav-700-latin.woff2"
@@ -167,7 +159,6 @@
 
     <!-- SEO Friendly URLs -->
     <link rel="canonical" href="https://www.didactica-oujda.ma/" />
-
 
     <!-- Accessibility -->
     <meta name="theme-color" content="#ffffff" />
