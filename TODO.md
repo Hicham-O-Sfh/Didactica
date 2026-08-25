@@ -932,16 +932,58 @@ visibilité sur les requêtes, l'indexation ou les erreurs de crawl — on trava
 
 ### 🟡 SEO-07 — Ajouter une mesure d'audience respectueuse de la vie privée ⏱️ 45 min
 
+> 📌 **Orientation prise le 17/08/2026 — à implémenter plus tard, choix non définitif.**
+>
+> **Option retenue par défaut : Umami** (offre Cloud gratuite, sans cookies, événements
+> personnalisés). Raison du choix : la seule fonction de Plausible qui manquerait vraiment est son
+> intégration Search Console — or la même information est **gratuite dans Search Console
+> elle-même**, qu'il faut ouvrir de toute façon (`SEO-06`). Payer ~108 €/an pour éviter un second
+> onglet ne se justifie pas à ce stade.
+>
+> **La porte reste ouverte**, à trancher au moment de l'implémentation :
+>
+> | Candidat | Ce qui le ferait gagner | Ce qu'il coûte |
+> | --- | --- | --- |
+> | **Umami** | gratuit à ce volume, rapport de parcours page à page, auto-hébergeable simplement | pas de rapport hebdo par email, pas d'alerte de pic |
+> | **Plausible** | rapport hebdomadaire par email, alerte de pic de trafic, clics sortants suivis sans code, Search Console intégrée | ~9 €/mois, pas d'offre gratuite |
+> | **Google Analytics 4** | gratuit, très complet, familier | **cookies → bandeau de consentement obligatoire**, plus lourd, données envoyées à Google — contredirait la politique de confidentialité écrite en `LEG-01` |
+>
+> Ce que **ni** Umami **ni** Plausible ne donneront : identité des visiteurs, enregistrement de
+> session, carte de chaleur, suivi d'une même personne d'un appareil à l'autre. C'est le prix de
+> l'absence de cookies, et c'est ce qui évite le bandeau.
+>
+> **⚠️ Piège technique valable pour les trois.** Le suivi automatique des clics sortants (extension
+> de script de Plausible) ne fonctionne que sur de vrais liens `<a href>`. Or `main.js` ouvre
+> WhatsApp par `window.open()` : **aucun outil ne verrait ces clics** sans événement écrit à la
+> main. À traiter avec `FORM-01`, qui prévoit justement de remplacer `window.open()` par un vrai
+> lien — l'ordre logique est donc `FORM-01` puis `SEO-07`.
+>
+> **⚠️ Conséquence obligatoire sur `LEG-01`, quel que soit l'outil retenu.** La politique de
+> confidentialité affirme aujourd'hui qu'aucun cookie n'est déposé **et qu'aucune ressource tierce
+> n'est chargée**. La seconde moitié devient fausse dès l'ajout du script : deux phrases à
+> reprendre dans la section « Cookies ». Avec Google Analytics, il faudrait en plus un vrai bandeau
+> de consentement, donc une refonte de la section.
+>
+> **Rappel de séquencement** : `SEO-06` (Search Console) est gratuit, ne demande aucun code et
+> apporte plus à un référencement local que n'importe lequel de ces trois outils. À faire avant.
+
 **Problème.** Aucun outil de mesure. Impossible de savoir combien de visiteurs cliquent sur les
 boutons WhatsApp — donc impossible de mesurer la conversion réelle du site.
 
 **Étapes.**
 
-1. Choisir un outil sans cookies (Plausible, Umami, ou Cloudflare Web Analytics — gratuit) pour
-   éviter le bandeau de consentement qu'imposerait Google Analytics.
-2. Suivre en événements les clics sur les boutons WhatsApp : c'est **la** métrique qui compte ici.
+1. Confirmer le choix de l'outil (voir l'encadré ci-dessus) et créer le compte.
+2. Poser le script de mesure sur les 7 pages.
+3. Suivre en événements les clics sur les boutons WhatsApp : c'est **la** métrique qui compte ici.
+   Les **trois** points d'envoi doivent porter un nom d'événement distinct — `#send-whatsapp-form`
+   (formulaire), `#whatsapp-button` (bouton flottant), `#send-footer-whatsapp-message` (pied de
+   page) — sans quoi on saura combien de clics, mais pas lesquels convertissent.
+4. Envisager d'attacher au clic le niveau et l'objectif choisis dans le formulaire (propriétés
+   d'événement) : cela dirait quel public le site attire réellement.
+5. Mettre à jour la section « Cookies » de `politique-de-confidentialite.html`.
 
-**Terminé quand.** Le tableau de bord affiche les visites et les clics WhatsApp.
+**Terminé quand.** Le tableau de bord affiche les visites et distingue les clics WhatsApp des
+trois boutons, et la politique de confidentialité est à jour.
 
 ---
 
