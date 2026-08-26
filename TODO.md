@@ -15,7 +15,7 @@ dans une session Claude Code séparée, sans relire tout le document.
 
 ---
 
-## Où en est-on — 17/08/2026
+## Où en est-on — 26/08/2026
 
 **Phases 0 et 1 terminées**, à l'exception de `PERF-02` (suppression volontairement reportée) et
 de `PERF-07`.
@@ -25,14 +25,17 @@ de `PERF-07`.
 | **0 — Critique SEO**               | ✅ `SEO-01` `SEO-02` `SEO-03` `SEO-04`               |
 | **1 — Performance**                | ✅ `PERF-01` `PERF-03` `PERF-04` `PERF-05` `PERF-06` |
 |                                    | 📋 `PERF-02` recensé, non supprimé — reste `PERF-07` |
-| **2 — Nettoyage du dépôt**         | ✅ `CLEAN-05` — ⬜ `CLEAN-01` … `CLEAN-04` `CLEAN-06` |
+| **2 — Nettoyage du dépôt**         | ✅ `CLEAN-05` `CLEAN-06` — ⬜ `CLEAN-01` … `CLEAN-04` |
 | **3 — Maintenabilité (migration)** | ⬜ `ARCH-01` … `ARCH-03`                             |
 | **4 — SEO avancé**                 | ⬜ `SEO-05` … `SEO-08`                               |
 | **5 — Conformité et formulaires**  | ✅ `LEG-01` — ⬜ `FORM-01` `A11Y-01`                 |
 
-**Les trois prochaines**, par rapport effort/impact : `PERF-02` (une décision à prendre, 7,5 Mo à
-la clé), `FORM-01` (ne plus perdre de prospects — et la politique de confidentialité qui vient
-d'être écrite en `LEG-01` couvre déjà l'envoi par email qu'il introduit), puis `CLEAN-01`.
+**Les trois prochaines**, par rapport effort/impact : `CLEAN-03` (30 min, scriptable), puis
+`CLEAN-01` — dont l'étape 3 factorise les trois gestionnaires WhatsApp, c'est-à-dire exactement le
+code que `FORM-01` doit réécrire ensuite. Dans cet ordre le refactor s'écrit une fois, dans l'autre
+deux fois. `FORM-01` reste la fiche à plus fort impact métier (ne plus perdre de prospects), et la
+politique de confidentialité écrite en `LEG-01` couvre déjà l'envoi par email qu'elle introduit.
+Reste `PERF-02` en embuscade : une décision à prendre, 3,9 Mo à la clé.
 
 **Ce qui attend une action hors code**, et bloque plusieurs fiches : l'achat du nom de domaine
 (voir `SEO-01`), la création de la fiche Google Business (`SEO-06`), dont dépendent les
@@ -872,6 +875,41 @@ effort/bénéfice y est nettement moins bon que sur les images et les polices.
 
 ### 🟡 CLEAN-06 — Uniformiser le formatage des fichiers HTML ⏱️ 30 min
 
+> ✅ **Fait le 26/08/2026** — commits `16016a3` (configuration) et `f9101f6` (formatage).
+>
+> Deux commits plutôt qu'un, pour que le second ne contienne **rien d'autre** que du formatage.
+>
+> **Largeur mesurée, pas supposée.** Le formatage a été rejoué à 80, 100, 120 et 160 colonnes sur
+> les pages déjà propres : 80 est de loin la valeur qui les touche le moins. C'est bien la largeur
+> d'origine du projet.
+>
+> **`endOfLine` laissé sur `auto`.** Le dépôt est en `core.autocrlf=true` — CRLF sur disque, LF
+> dans le dépôt. Forcer `lf` aurait réécrit les fins de ligne de tous les fichiers pour rien,
+> soit exactement le bruit que cette fiche cherche à supprimer.
+>
+> **Version alignée sur l'éditeur.** L'extension VSCode installée embarque Prettier **3.7.4** ;
+> c'est cette version qui a été utilisée, pour que le dépôt et un simple `Ctrl+S` produisent le
+> même résultat. Effet visible : le doctype passe en minuscules, comportement de Prettier 3.
+>
+> **`.prettierignore` ajouté en plus de la fiche.** Tous les fichiers d'`assets/` sont minifiés,
+> `style.css` compris. Le formatage se déclenchant à la sauvegarde, ouvrir puis enregistrer
+> `bootstrap.min.css` suffisait à produire un diff de plusieurs dizaines de milliers de lignes.
+>
+> **Contenu vérifié avant écriture** en comparant le DOM rendu nœud par nœud : identique partout,
+> à onze libellés d'`<option>` près qui gagnent un blanc en tête. Sans conséquence — la spec HTML
+> rogne le libellé à l'affichage, et `main.js` lit `$("#specialite").val()`, donc l'attribut
+> `value` et non le texte.
+>
+> **Résultat au-delà du critère de fin** : le bloc `<footer>` est désormais identique **octet à
+> octet** sur les 7 pages (183 lignes, même empreinte), et le header ne diffère plus que par la
+> classe `active` du lien courant. Les partiels d'`ARCH-01` pourront être extraits sans
+> réconciliation manuelle. Sur les 2 001 lignes du diff, `git diff -w` n'en retient que 1 229 :
+> le reste est de la pure ré-indentation.
+>
+> **Constat au passage, non traité ici** : `404.html` (135 lignes de header) et
+> `politique-de-confidentialite.html` (138) n'ont pas le même menu que les 5 pages principales
+> (141). À trancher lors de l'extraction des partiels.
+
 **Problème.** Prettier s'exécute à l'enregistrement dans VSCode, mais n'a pas été passé sur tous les
 fichiers : `contactez-nous.html` et `politique-de-confidentialite.html` ont une indentation de 2
 espaces en moins que les autres. Conséquence concrète : un même bloc partagé (header, formulaire)
@@ -1185,10 +1223,16 @@ acquis. Reste à vérifier le reste.
    │   📋 PERF-02 : recensé, suppression en attente de ta décision
    │   ⬜ PERF-07 : à faire après ARCH-01, sinon l'élagage se périme
    ▼
-⬜ LEG-01 ──► FORM-01                             (Phase 5 : risque juridique, à traiter tôt)
+✅ LEG-01 ──► ⬜ FORM-01                          (Phase 5 : risque juridique, traité tôt)
    │
    ▼
-⬜ CLEAN-01…04                                    (Phase 2 : nettoyage)
+✅ CLEAN-05 ──► ✅ CLEAN-06                       (Phase 2 : formatage et CSS, faits)
+   │
+   ▼
+⬜ CLEAN-03 ──► CLEAN-01 ──► FORM-01              (Phase 2 puis 5 : voir l'ordre revu ci-dessous)
+   │
+   ▼
+⬜ CLEAN-02, CLEAN-04                             (Phase 2 : reste du nettoyage)
    │
    ▼
 ⬜ ARCH-01 ──► ARCH-02 ──► ARCH-03                (Phase 3 : migration)
@@ -1200,6 +1244,13 @@ acquis. Reste à vérifier le reste.
 **Ordre revu le 17/08/2026** : `LEG-01` passe devant `CLEAN-01…04`. Le nettoyage est confortable
 mais sans urgence, alors que la collecte du CIN sans mention légale est le seul point du document
 qui porte un risque autre que technique.
+
+**Ordre revu le 26/08/2026**, une fois `LEG-01` faite : `CLEAN-06` est passée en premier parce
+qu'elle devait précéder toute retouche de `contactez-nous.html` — sans elle, le diff de `FORM-01`
+aurait été noyé dans du bruit d'indentation. Vient ensuite `CLEAN-03`, tant qu'on est dans les
+mêmes fichiers, puis `CLEAN-01` : son étape 3 factorise les trois gestionnaires WhatsApp, soit
+exactement le code que `FORM-01` doit réécrire. Dans cet ordre le refactor s'écrit une fois ;
+dans l'ordre inverse, deux fois.
 
 ---
 
