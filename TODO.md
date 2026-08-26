@@ -25,13 +25,12 @@ de `PERF-07`.
 | **0 — Critique SEO**               | ✅ `SEO-01` `SEO-02` `SEO-03` `SEO-04`               |
 | **1 — Performance**                | ✅ `PERF-01` `PERF-03` `PERF-04` `PERF-05` `PERF-06` |
 |                                    | 📋 `PERF-02` recensé, non supprimé — reste `PERF-07` |
-| **2 — Nettoyage du dépôt**         | ✅ `CLEAN-05` `CLEAN-06` — ⬜ `CLEAN-01` … `CLEAN-04` |
+| **2 — Nettoyage du dépôt**         | ✅ `CLEAN-03` `CLEAN-05` `CLEAN-06` — ⬜ le reste     |
 | **3 — Maintenabilité (migration)** | ⬜ `ARCH-01` … `ARCH-03`                             |
 | **4 — SEO avancé**                 | ⬜ `SEO-05` … `SEO-08`                               |
 | **5 — Conformité et formulaires**  | ✅ `LEG-01` — ⬜ `FORM-01` `A11Y-01`                 |
 
-**Les trois prochaines**, par rapport effort/impact : `CLEAN-03` (30 min, scriptable), puis
-`CLEAN-01` — dont l'étape 3 factorise les trois gestionnaires WhatsApp, c'est-à-dire exactement le
+**Les trois prochaines**, par rapport effort/impact : `CLEAN-01` — dont l'étape 3 factorise les trois gestionnaires WhatsApp, c'est-à-dire exactement le
 code que `FORM-01` doit réécrire ensuite. Dans cet ordre le refactor s'écrit une fois, dans l'autre
 deux fois. `FORM-01` reste la fiche à plus fort impact métier (ne plus perdre de prospects), et la
 politique de confidentialité écrite en `LEG-01` couvre déjà l'envoi par email qu'elle introduit.
@@ -746,6 +745,31 @@ projet, et il est vide. `.gitignore` deviendra nécessaire dès la Phase 3 (`nod
 
 ### 🟡 CLEAN-03 — Sécuriser les liens externes ⏱️ 15 min
 
+> ✅ **Fait le 26/08/2026** — commit `ed4ae0b`. 86 liens sécurisés, 86 vérifiés.
+>
+> **Le décompte de 86 était juste, mais pour une raison qu'il fallait établir.** Le site porte
+> en réalité **105** attributs `target="_blank"`, répartis en trois familles que la fiche ne
+> distinguait pas :
+>
+> | Famille | Nombre | Traitement |
+> | --- | --- | --- |
+> | Liens externes `http(s)` — Maps, Facebook, Instagram, YouTube, WhatsApp, LinkedIn | **86** | `rel="noopener noreferrer"` ajouté |
+> | Liens `mailto:` | 14 | laissés tels quels — voir `CLEAN-07` ci-dessous |
+> | Liens internes vers `politique-de-confidentialite.html` | 5 | déjà pourvus d'un `rel` depuis `LEG-01` |
+>
+> Sur `mailto:`, `rel` n'a **aucun effet** et l'audit Lighthouse ne les examine pas : il ne
+> couvre que les destinations `http(s)` d'origine différente. Les y ajouter aurait été du bruit.
+>
+> **Fait par script**, comme la fiche le suggérait, en filtrant sur le schéma de l'`href` — les
+> attributs étant éclatés sur plusieurs lignes depuis `CLEAN-06`, une recherche-remplacement
+> textuelle n'aurait pas suffi. Prettier a été repassé ensuite : la ligne YouTube dépassait
+> 80 colonnes une fois l'attribut ajouté.
+>
+> **Contrôlé après coup** : 86 liens externes sur 86 portent l'attribut, aucun ne manque, et le
+> contenu des 7 pages est identique à l'état précédent une fois les `rel` neutralisés de part et
+> d'autre. `main.js` ne construit aucun lien — rien à traiter côté JavaScript, ce qui confirme
+> au passage le diagnostic de `FORM-01` : tout passe par `window.open()`.
+
 > ⚠️ **Décompte corrigé le 17/08/2026 : 86 liens, pas 20.** Le chiffre datait de l'état initial,
 > avant la page `404.html` et avant l'ajout des boutons WhatsApp. Recompté sur les 6 pages :
 > **86 liens `target="_blank"`, dont 86 sans `rel`.** L'effort est donc plus proche de 30 min que
@@ -758,6 +782,31 @@ attendu par les audits Lighthouse et les vieux navigateurs.
 **Étapes.** Ajouter `rel="noopener noreferrer"` aux 86 liens (réseaux sociaux, WhatsApp, partenaires).
 
 **Terminé quand.** L'audit Lighthouse ne signale plus de lien externe non sécurisé.
+
+---
+
+### 🟡 CLEAN-07 — Retirer `target="_blank"` des 14 liens `mailto:` ⏱️ 15 min
+
+**Constat, relevé pendant `CLEAN-03` le 26/08/2026.** Les 14 liens `mailto:Didactica.Oujda@gmail.com`
+du pied de page portent `target="_blank"`. Sur un lien `mailto:`, cet attribut n'a pas de sens :
+le navigateur ouvre un onglet vide, passe la main au client mail, et l'onglet reste souvent là,
+blanc, jusqu'à ce que le visiteur le referme. C'est une verrue d'ergonomie, pas un défaut de
+sécurité — d'où une fiche séparée plutôt qu'une correction glissée dans `CLEAN-03`, qui ne
+faisait que de la mise en conformité.
+
+**Fichiers.** Les 7 `.html` (bloc `<footer>`, identique octet à octet sur les 7 depuis `CLEAN-06`).
+
+**Étapes.**
+
+1. Retirer `target="_blank"` des seuls liens dont l'`href` commence par `mailto:`.
+2. Vérifier sur une page que le clic ouvre bien le client mail sans laisser d'onglet.
+3. Repasser Prettier.
+
+**Attention.** C'est un **changement de comportement**, contrairement à `CLEAN-03`. À valider
+avant de l'appliquer.
+
+**Terminé quand.** Plus aucun `mailto:` ne porte `target="_blank"`, et le clic ne laisse pas
+d'onglet vide.
 
 ---
 
@@ -996,6 +1045,13 @@ visibilité sur les requêtes, l'indexation ou les erreurs de crawl — on trava
 > main. À traiter avec `FORM-01`, qui prévoit justement de remplacer `window.open()` par un vrai
 > lien — l'ordre logique est donc `FORM-01` puis `SEO-07`.
 >
+> **⚠️ Second piège, ajouté le 26/08/2026 après `CLEAN-03`.** Les 5 liens internes vers
+> `politique-de-confidentialite.html` portent `rel="noopener noreferrer"` depuis `LEG-01`. Le
+> `noreferrer` vide `document.referrer` : quel que soit l'outil, ces visites apparaîtront en
+> **trafic direct** et non comme une navigation interne. Ce n'est pas grave, mais il faut le savoir
+> avant de s'étonner du chiffre. Si l'on veut voir le parcours réel, il suffira de ramener ces
+> 5 liens à `rel="noopener"` seul — le `noreferrer` n'apporte rien sur un lien vers soi-même.
+>
 > **⚠️ Conséquence obligatoire sur `LEG-01`, quel que soit l'outil retenu.** La politique de
 > confidentialité affirme aujourd'hui qu'aucun cookie n'est déposé **et qu'aucune ressource tierce
 > n'est chargée**. La seconde moitié devient fausse dès l'ajout du script : deux phrases à
@@ -1229,10 +1285,10 @@ acquis. Reste à vérifier le reste.
 ✅ CLEAN-05 ──► ✅ CLEAN-06                       (Phase 2 : formatage et CSS, faits)
    │
    ▼
-⬜ CLEAN-03 ──► CLEAN-01 ──► FORM-01              (Phase 2 puis 5 : voir l'ordre revu ci-dessous)
+✅ CLEAN-03 ──► ⬜ CLEAN-01 ──► FORM-01           (Phase 2 puis 5 : voir l'ordre revu ci-dessous)
    │
    ▼
-⬜ CLEAN-02, CLEAN-04                             (Phase 2 : reste du nettoyage)
+⬜ CLEAN-02, CLEAN-04, CLEAN-07                   (Phase 2 : reste du nettoyage)
    │
    ▼
 ⬜ ARCH-01 ──► ARCH-02 ──► ARCH-03                (Phase 3 : migration)
@@ -1284,7 +1340,7 @@ Colonne de gauche : l'état initial du 16/08/2026. Colonne de droite : mesure re
 | Images sur disque / inutilisées            | 114 / 65         | 151 / **100** ⚠️          |
 | Balises `<img>` sans `loading` ni priorité | 68 / 68          | **0 / 90** ✅             |
 | Balises `<img>` sans `alt`                 | 0 / 68 ✅        | **0 / 90** ✅             |
-| Liens `target="_blank"` sans `rel`         | 20 / 20          | 86 / 86 (`CLEAN-03`)      |
+| Liens `target="_blank"` sans `rel`         | 20 / 20          | **0 / 86** ✅             |
 | Pages HTML                                 | 5 (5 121 lignes) | 6 (6 105 lignes)          |
 | `robots.txt` / `sitemap.xml` / `404.html`  | absents          | **présents** ✅           |
 | Requêtes vers un domaine tiers             | 1 (Google Fonts) | **0** ✅                  |
