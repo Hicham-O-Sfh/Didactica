@@ -1,6 +1,25 @@
 (function ($) {
   "use strict";
 
+  // Coordonnées de contact — source unique pour tout le JavaScript.
+  // Le numéro est au format international sans « + » ni séparateur : c'est la
+  // forme attendue par wa.me. Il était jusqu'ici écrit trois fois, dont une
+  // avec le « + » et deux sans.
+  // Le HTML garde ses propres copies en dur ; les rassembler ici aussi
+  // suppose le fichier de configuration prévu par ARCH-01.
+  const CONTACT = {
+    whatsapp: "212666201740",
+  };
+
+  // Ouvre WhatsApp avec un message pré-rempli, dans un nouvel onglet.
+  // Seul endroit du fichier qui construit une URL wa.me : FORM-01, qui prévoit
+  // de remplacer window.open() par un vrai lien <a>, n'aura que cette fonction
+  // à reprendre.
+  function ouvrirWhatsApp(message) {
+    const url = `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(message)}`;
+    window.open(url, "_blank");
+  }
+
   // multi level dropdown menu
   $(".dropdown-menu a.dropdown-toggle").on("click", function (e) {
     if (!$(this).next().hasClass("show")) {
@@ -37,33 +56,22 @@
     $("body").removeClass("search-active");
   });
 
+  // formulaire d'inscription complet
   $("#send-whatsapp-form").click(function () {
-    const form = this.closest("form");
-    if (form.reportValidity()) {
-      // Get form values
-      const nomComplet = $("#nom-complet").val();
-      const dateDeNaissance = $("#date-de-naissance").val();
-      const cin = $("#cin").val();
-      const specialite = $("#specialite").val() ?? "";
-      const objectif = $("#objectif").val();
-      const niveau = $('input[name="niveau"]:checked').val();
-      const message = $("#message").val();
-
-      // Construct the WhatsApp message
-      const whatsappMessage = `*_Formulaire d'inscription._*\n\n*Nom complet:* ${nomComplet}\n*Date de naissance:* ${dateDeNaissance}\n*CIN:* ${cin}\n*Spécialité:* ${specialite}\n*Objectif:* ${objectif}\n*Niveau de langue souhaité:* ${niveau}\n\n${message}`;
-
-      // Encode the message
-      const encodedMessage = encodeURIComponent(whatsappMessage);
-
-      // WhatsApp number
-      const whatsappNumber = "+212666201740";
-
-      // Construct the WhatsApp URL
-      const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-
-      // Open WhatsApp URL
-      window.open(whatsappURL, "_blank");
+    if (!this.closest("form").reportValidity()) {
+      return;
     }
+    const nomComplet = $("#nom-complet").val();
+    const dateDeNaissance = $("#date-de-naissance").val();
+    const cin = $("#cin").val();
+    const specialite = $("#specialite").val() ?? "";
+    const objectif = $("#objectif").val();
+    const niveau = $('input[name="niveau"]:checked').val();
+    const message = $("#message").val();
+
+    ouvrirWhatsApp(
+      `*_Formulaire d'inscription._*\n\n*Nom complet:* ${nomComplet}\n*Date de naissance:* ${dateDeNaissance}\n*CIN:* ${cin}\n*Spécialité:* ${specialite}\n*Objectif:* ${objectif}\n*Niveau de langue souhaité:* ${niveau}\n\n${message}`,
+    );
   });
 
   // wow init
@@ -243,7 +251,7 @@
   let date = new Date().getFullYear();
   $("#date").html(date);
 
-  // WhatsApp Buttons
+  // demande de rappel
   $("#whatsapp-button").click(function () {
     if (!$("#nomComplet").get(0).reportValidity()) {
       return;
@@ -251,20 +259,18 @@
     const nomComplet = $("#nomComplet").val();
     const numPhone = $("#numPhone").val();
     const message = $("#quick-message").val();
-    const messageWhatsApp = `Bonjour, je suis ${nomComplet}.\nVoici mon numéro de téléphone pour m'appeler concernant ma demande/inscription: ${numPhone} \n\n${message}`;
-    const encodedMessage = encodeURIComponent(messageWhatsApp);
-    const whatsappURL = "https://wa.me/212666201740";
-    window.open(`${whatsappURL}?text=${encodedMessage}`, "_blank");
+
+    ouvrirWhatsApp(
+      `Bonjour, je suis ${nomComplet}.\nVoici mon numéro de téléphone pour m'appeler concernant ma demande/inscription: ${numPhone} \n\n${message}`,
+    );
   });
 
+  // message libre depuis le pied de page
   $("#send-footer-whatsapp-message").click(function () {
     if (!$("#whatsapp-message").get(0).reportValidity()) {
       return;
     }
-    const messageWhatsApp = $("#whatsapp-message").val();
-    const encodedMessage = encodeURIComponent(messageWhatsApp);
-    const whatsappURL = "https://wa.me/212666201740";
-    window.open(`${whatsappURL}?text=${encodedMessage}`, "_blank");
+    ouvrirWhatsApp($("#whatsapp-message").val());
   });
 
   $("#other-questions-link").click(function (e) {
