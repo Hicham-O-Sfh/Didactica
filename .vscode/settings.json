@@ -1,0 +1,23 @@
+{
+  // Ces réglages ne valent que pour Didactica et priment sur les réglages
+  // personnels. Ils existent pour une raison précise : les réglages globaux
+  // confient le HTML à "vscode.html-language-features", dont le style diffère
+  // de Prettier. Un formatage manuel sur une page déferait alors le travail de
+  // CLEAN-06 et le .prettierrc du dépôt ne serait même pas consulté.
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+
+  // editor.formatOnSave n'est volontairement pas défini : c'est une préférence
+  // personnelle, pas une contrainte du projet. Les fichiers minifiés d'assets/
+  // sont de toute façon protégés par .prettierignore.
+}

@@ -1025,13 +1025,11 @@ effort/bénéfice y est nettement moins bon que sur les images et les polices.
 > sur une page **défera** le travail de cette fiche, et le `.prettierrc` versionné ne sera même
 > pas consulté.
 >
-> **À trancher**, sinon `CLEAN-06` se dégradera au premier formatage manuel :
->
-> 1. basculer `[html]` sur `esbenp.prettier-vscode` dans les réglages personnels ; ou
-> 2. poser un `.vscode/settings.json` dans le dépôt — ne vaut que pour Didactica, suit le projet
->    et profite à toute autre machine.
->
-> Les réglages personnels n'ont volontairement pas été modifiés.
+> **Tranché le 26/08/2026** : un `.vscode/settings.json` a été ajouté au dépôt, qui route
+> `[html]`, `[css]`, `[javascript]` et `[json]` vers `esbenp.prettier-vscode`. Il ne vaut que
+> pour Didactica, prime sur les réglages personnels — laissés intacts — et suit le projet sur
+> toute autre machine. `editor.formatOnSave` n'y est volontairement pas défini : c'est une
+> préférence personnelle, pas une contrainte du projet.
 >
 > **Version : à jour, l'écart est sans effet.** L'extension `esbenp.prettier-vscode 12.4.0`
 > embarque Prettier **3.7.4**, la dernière publiée sur npm est **3.9.6**. Les deux produisent une
