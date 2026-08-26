@@ -25,16 +25,22 @@ de `PERF-07`.
 | **0 — Critique SEO**               | ✅ `SEO-01` `SEO-02` `SEO-03` `SEO-04`               |
 | **1 — Performance**                | ✅ `PERF-01` `PERF-03` `PERF-04` `PERF-05` `PERF-06` |
 |                                    | 📋 `PERF-02` recensé, non supprimé — reste `PERF-07` |
-| **2 — Nettoyage du dépôt**         | ✅ `CLEAN-03` `CLEAN-05` `CLEAN-06` — ⬜ le reste     |
+| **2 — Nettoyage du dépôt**         | ✅ `CLEAN-01` `CLEAN-03` `CLEAN-05` `CLEAN-06`       |
+|                                    | ⬜ `CLEAN-02` `CLEAN-04` `CLEAN-07`                  |
 | **3 — Maintenabilité (migration)** | ⬜ `ARCH-01` … `ARCH-03`                             |
 | **4 — SEO avancé**                 | ⬜ `SEO-05` … `SEO-08`                               |
 | **5 — Conformité et formulaires**  | ✅ `LEG-01` — ⬜ `FORM-01` `A11Y-01`                 |
 
-**Les trois prochaines**, par rapport effort/impact : `CLEAN-01` — dont l'étape 3 factorise les trois gestionnaires WhatsApp, c'est-à-dire exactement le
-code que `FORM-01` doit réécrire ensuite. Dans cet ordre le refactor s'écrit une fois, dans l'autre
-deux fois. `FORM-01` reste la fiche à plus fort impact métier (ne plus perdre de prospects), et la
+**La prochaine**, sans hésitation : `FORM-01`. Le terrain est déblayé — `CLEAN-01` vient de
+réduire le fichier à un seul `window.open()`, `CLEAN-06` a rendu les diffs HTML lisibles, et la
 politique de confidentialité écrite en `LEG-01` couvre déjà l'envoi par email qu'elle introduit.
-Reste `PERF-02` en embuscade : une décision à prendre, 3,9 Mo à la clé.
+C'est aussi la fiche à plus fort impact métier : ne plus perdre de prospects.
+
+**Une décision t'attend avant de la lancer** : le choix du service de formulaire (Web3Forms,
+Formspree ou Netlify Forms), et la création du compte, qui te revient.
+
+Ensuite, par effort croissant : `CLEAN-02` et `CLEAN-04` (30 min à deux), `CLEAN-07`, puis
+`PERF-02` — une décision à prendre, 3,9 Mo à la clé.
 
 **Ce qui attend une action hors code**, et bloque plusieurs fiches : l'achat du nom de domaine
 (voir `SEO-01`), la création de la fiche Google Business (`SEO-06`), dont dépendent les
@@ -727,6 +733,30 @@ régression visuelle.
 
 ### 🟠 CLEAN-01 — Centraliser le numéro de téléphone et les informations de contact ⏱️ 1 h
 
+> ✅ **Fait le 26/08/2026** — commit `8a8ecda`.
+>
+> Le numéro n'existe plus qu'une fois dans `main.js`, dans un objet `CONTACT` en tête de fichier.
+> Les trois gestionnaires passent par une fonction `ouvrirWhatsApp()` unique : le fichier ne
+> contient plus qu'**un seul `window.open()`**, contre trois auparavant.
+>
+> **Conséquence directe sur `FORM-01`** : remplacer `window.open()` par un vrai lien `<a>` ne
+> touchera qu'un seul endroit. C'était la raison d'ordonnancer cette fiche avant.
+>
+> **Écart assumé avec l'énoncé.** La fiche proposait `CONTACT = { whatsapp, tel, email }`. Or
+> `tel` et `email` ne sont lus **nulle part** en JavaScript : ils seraient restés de la
+> configuration morte, et auraient surtout donné l'illusion d'une centralisation que le HTML
+> dément — il conserve **41 copies** du numéro et **33 de l'adresse email**. Seul `whatsapp` est
+> donc centralisé. Le critère de fin est bien atteint, il porte explicitement sur le JavaScript.
+> Le HTML attend le fichier de configuration d'`ARCH-01`, comme l'étape 4 le prévoyait.
+>
+> **Seul changement de comportement** : l'URL du formulaire d'inscription perd son « + ». Les deux
+> formes fonctionnent — l'incohérence relevée par la fiche a disparu d'elle-même.
+>
+> **Fidélité des messages vérifiée** : les deux gabarits n'ont pas été retapés mais extraits mot
+> pour mot de l'ancien code et réinsérés tels quels, puis les deux versions ont été évaluées avec
+> les mêmes valeurs — messages identiques. Les 14 identifiants visés par le fichier existent tous
+> dans les pages.
+
 > ⚠️ **Mise à jour du 16/08/2026** (commit `93213c3`). Le site n'a plus qu'un seul numéro, `+212666201740` (voir
 > `SEO-02`) : la divergence fixe / mobile a disparu. En revanche **la dispersion reste entière** —
 > le numéro est toujours codé en dur 3 fois dans `main.js` et une vingtaine de fois dans les 6
@@ -1337,7 +1367,7 @@ acquis. Reste à vérifier le reste.
 ✅ CLEAN-05 ──► ✅ CLEAN-06                       (Phase 2 : formatage et CSS, faits)
    │
    ▼
-✅ CLEAN-03 ──► ⬜ CLEAN-01 ──► FORM-01           (Phase 2 puis 5 : voir l'ordre revu ci-dessous)
+✅ CLEAN-03 ──► ✅ CLEAN-01 ──► ⬜ FORM-01        (Phase 2 puis 5 : voir l'ordre revu ci-dessous)
    │
    ▼
 ⬜ CLEAN-02, CLEAN-04, CLEAN-07                   (Phase 2 : reste du nettoyage)
