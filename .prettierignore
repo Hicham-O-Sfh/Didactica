@@ -1,0 +1,8 @@
+# Bibliothèques tierces minifiées : ne jamais les reformater, le diff serait
+# ingérable et le fichier n'est pas maintenu ici.
+*.min.css
+*.min.js
+
+# Feuille de style du site, volontairement compactée (voir PERF-06 / CLEAN-05).
+# À retirer d'ici le jour où l'on décide de la remettre en forme lisible.
+assets/css/style.css
