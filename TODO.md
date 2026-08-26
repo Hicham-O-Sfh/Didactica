@@ -670,6 +670,34 @@ qu'une fraction. État mesuré le 16/08/2026, **après** `PERF-01` :
 `PERF-05` ne traite que les dépendances **entièrement** mortes. Cette fiche vise l'étage
 au-dessus : le code mort **à l'intérieur** des fichiers conservés.
 
+> 📏 **Code mort mesuré le 26/08/2026**, par comparaison des classes déclarées dans chaque
+> feuille avec celles réellement présentes dans les 7 pages et dans `main.js` :
+>
+> | Feuille | Classes déclarées | Utilisées | Part morte | Gzippé |
+> | --- | ---: | ---: | ---: | ---: |
+> | `all-fontawesome.min.css` | 4 877 | 52 | **99 %** | 41,9 Ko |
+> | `bootstrap.min.css` | 2 029 | 72 | **96 %** | 30,3 Ko |
+> | `animate.min.css` | 64 | 4 | **94 %** | 4,0 Ko |
+> | `owl.carousel.min.css` | 34 | 2 | 94 % | 1,1 Ko |
+> | `style.css` | 454 | 179 | **61 %** | 13,8 Ko |
+>
+> Cas le plus net : `animate.css` déclare **61 animations**, le site en utilise **3** —
+> `fadeInUp`, `fadeInRight`, `fadeInLeft`. Aucune classe `animate__*` n'est employée : c'est
+> la v3 de Daniel Eden, aux noms non préfixés.
+>
+> **Réserve d'honnêteté** : Bootstrap et Owl fabriquent des classes à l'exécution
+> (`show`, `collapsing`, `owl-item`, `owl-stage`…) qu'un comptage statique classe à tort comme
+> mortes. Les pourcentages de ces deux lignes sont un **plafond**, pas une mesure. Font Awesome
+> et `style.css` ne souffrent pas de ce biais : leurs classes sont toutes écrites à la main.
+>
+> Total actuel : **159,8 Ko gzippés** pour `assets/css/` + `assets/js/`. L'objectif de la fiche
+> — diviser par deux — suppose donc de descendre sous 80 Ko.
+>
+> **Toutes les bibliothèques chargées servent** à quelque chose : grille Bootstrap (195 usages),
+> `data-bs-toggle` pour le menu et l'accordéon, Owl (10), WOW (12), jQuery requis par Owl et
+> `main.js`. Il n'y a donc rien à supprimer en bloc — tout le gain est *à l'intérieur* des
+> fichiers, ce qui est bien l'objet de cette fiche.
+
 **Étapes.**
 
 1. Relever la couverture réelle avec l'onglet _Coverage_ de Chrome DevTools, sur les 6 pages,
@@ -954,6 +982,30 @@ effort/bénéfice y est nettement moins bon que sur les images et les polices.
 > classe `active` du lien courant. Les partiels d'`ARCH-01` pourront être extraits sans
 > réconciliation manuelle. Sur les 2 001 lignes du diff, `git diff -w` n'en retient que 1 229 :
 > le reste est de la pure ré-indentation.
+>
+> **⚠️ La prémisse de la fiche était fausse — vérifié le 26/08/2026.** L'énoncé affirmait que
+> « Prettier s'exécute à l'enregistrement dans VSCode ». Ni l'un ni l'autre n'est vrai :
+>
+> ```json
+> "[html]": { "editor.defaultFormatter": "vscode.html-language-features" }
+> ```
+>
+> Le HTML est confié au **formateur natif de VSCode, pas à Prettier**, et `editor.formatOnSave`
+> n'est défini nulle part — rien ne se formate automatiquement. Conséquence : un `Shift+Alt+F`
+> sur une page **défera** le travail de cette fiche, et le `.prettierrc` versionné ne sera même
+> pas consulté.
+>
+> **À trancher**, sinon `CLEAN-06` se dégradera au premier formatage manuel :
+>
+> 1. basculer `[html]` sur `esbenp.prettier-vscode` dans les réglages personnels ; ou
+> 2. poser un `.vscode/settings.json` dans le dépôt — ne vaut que pour Didactica, suit le projet
+>    et profite à toute autre machine.
+>
+> Les réglages personnels n'ont volontairement pas été modifiés.
+>
+> **Version : à jour, l'écart est sans effet.** L'extension `esbenp.prettier-vscode 12.4.0`
+> embarque Prettier **3.7.4**, la dernière publiée sur npm est **3.9.6**. Les deux produisent une
+> sortie identique octet pour octet sur les 7 pages — la mise à jour n'est pas urgente.
 >
 > **Constat au passage, non traité ici** : `404.html` (135 lignes de header) et
 > `politique-de-confidentialite.html` (138) n'ont pas le même menu que les 5 pages principales
