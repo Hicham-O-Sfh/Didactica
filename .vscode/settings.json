@@ -15,7 +15,8 @@
   },
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "WhiteSource Advise.Diff.BaseBranch": "master"
 
   // editor.formatOnSave n'est volontairement pas défini : c'est une préférence
   // personnelle, pas une contrainte du projet. Les fichiers minifiés d'assets/

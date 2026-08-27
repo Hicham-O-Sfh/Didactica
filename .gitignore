@@ -1,0 +1,19 @@
+# Artefacts d'extensions VSCode. « diff/ » est écrit par WhiteSource/Mend Advise
+# à chaque analyse ; il n'a rien à faire dans l'historique. Le settings.json du
+# dossier reste versionné, lui : il porte le routage vers Prettier (CLEAN-06).
+.vscode/diff/
+
+# Systèmes de fichiers
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Dépendances et sorties de build — à partir d'ARCH-01
+node_modules/
+dist/
+.astro/
+
+# Secrets
+.env
+.env.*
+!.env.example
