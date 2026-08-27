@@ -48,6 +48,31 @@ Ensuite, par effort croissant : `CLEAN-02` et `CLEAN-04` (30 min à deux), `CLEA
 > supprimer les originaux. Depuis, chaque original converti est devenu orphelin à son tour. Mesure
 > du 26/08 : **98 images jamais référencées, 7,4 Mo**. C'est ce dernier chiffre qui vaut.
 
+### Point de reprise — à lire en début de session
+
+**Jamais vérifié en navigateur.** La session du 26/08 a modifié les 7 pages et `main.js` sans
+qu'aucun rendu n'ait pu être contrôlé. À faire en premier, dans Live Server :
+
+1. Les **trois formulaires WhatsApp** — inscription, demande de rappel, message libre du pied de
+   page. Ils viennent d'être refactorisés en `CLEAN-01` : vérifier que le message pré-rempli
+   arrive complet et correctement retourné à la ligne.
+2. Les pages **`contactez-nous.html`** et **`politique-de-confidentialite.html`**, entièrement
+   réécrites par le formateur en `CLEAN-06`.
+
+**Une action à faire dans VSCode** : recharger la fenêtre (`Ctrl+Shift+P` → _Reload Window_) pour
+que le `.vscode/settings.json` ajouté le 26/08 prenne effet. Sans cela, un formatage manuel d'une
+page HTML passera encore par le formateur natif et défera `CLEAN-06`.
+
+**Décisions en attente**, qui bloquent chacune une fiche :
+
+| Fiche      | Décision attendue                                                                                                                             |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `FORM-01`  | Choix du service de formulaire (Web3Forms, Formspree, Netlify) **et création du compte** — je ne crée pas de compte ni ne saisis de clé d'API |
+| `PERF-02`  | Feu vert pour supprimer les 98 images orphelines (7,4 Mo)                                                                                     |
+| `CLEAN-04` | Acter l'abandon définitif de l'obfuscation du JavaScript                                                                                      |
+| `CLEAN-07` | Valider le retrait de `target="_blank"` sur les 14 liens `mailto:` — c'est un changement de comportement                                      |
+| `SEO-08`   | Opportunité d'une version allemande ou arabe                                                                                                  |
+
 **Ce qui attend une action hors code**, et bloque plusieurs fiches : l'achat du nom de domaine
 (voir `SEO-01`), la création de la fiche Google Business (`SEO-06`), dont dépendent les
 coordonnées GPS manquantes du JSON-LD (`SEO-02`).
@@ -340,7 +365,7 @@ est systématiquement servi en premier par le `@font-face`.
 
 ---
 
-### 🟠 PERF-02 — Supprimer les 65 images inutilisées ⏱️ 45 min — **gain ~4,1 Mo**
+### 🟠 PERF-02 — Supprimer les images inutilisées ⏱️ 45 min — **gain ~7,4 Mo**
 
 > 📋 **Inventaire fait le 16/08/2026, suppression volontairement reportée.**
 > Décision d'Hicham : les images orphelines sont **recensées, pas supprimées**. La liste vit
@@ -911,6 +936,9 @@ résiduel s'il en existe un.
 ---
 
 ## Phase 3 — Maintenabilité (migration)
+
+> 📍 `CLEAN-05` et `CLEAN-06` sont rédigées **à la fin de cette section**, pour des raisons
+> d'historique, alors qu'elles relèvent de la Phase 2. Le tableau d'état les compte en Phase 2.
 
 > Prérequis : Phases 0 à 2 terminées. Inutile de migrer ce qui doit être supprimé.
 
