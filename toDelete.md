@@ -5,6 +5,12 @@
 
 Généré le 16/08/2026. Voir `PERF-02` dans [TODO.md](TODO.md).
 
+> ⚠️ **Liste vérifiée le 26/08/2026, non régénérée — elle a déjà dérivé.** Un recomptage de
+> contrôle donne **98 images jamais référencées pour 7,4 Mo**, contre 100 et 7,5 Mo ci-dessous.
+> L'écart tient à `error/01.png`, désormais utilisée par `404.html`, et au fichier
+> `assets/css/owl.video.play.html` supprimé depuis. Deux images en dix jours : la mise en garde
+> ci-dessus n'est pas théorique. **Régénérer avant de supprimer quoi que ce soit.**
+
 ## Résumé
 
 | Indicateur                   | Valeur     |

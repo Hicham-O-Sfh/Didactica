@@ -40,7 +40,13 @@ C'est aussi la fiche à plus fort impact métier : ne plus perdre de prospects.
 Formspree ou Netlify Forms), et la création du compte, qui te revient.
 
 Ensuite, par effort croissant : `CLEAN-02` et `CLEAN-04` (30 min à deux), `CLEAN-07`, puis
-`PERF-02` — une décision à prendre, 3,9 Mo à la clé.
+`PERF-02` — une décision à prendre, **7,4 Mo** à la clé.
+
+> ✏️ **Correction du 26/08/2026.** Ce paragraphe a un temps annoncé « 3,9 Mo », par confusion
+> entre deux relevés. Les deux chiffres sont justes, mais pas à la même date : **3,9 Mo** était le
+> poids des 64 images orphelines au 16/08, **avant** que `PERF-03` ne convertisse en WebP sans
+> supprimer les originaux. Depuis, chaque original converti est devenu orphelin à son tour. Mesure
+> du 26/08 : **98 images jamais référencées, 7,4 Mo**. C'est ce dernier chiffre qui vaut.
 
 **Ce qui attend une action hors code**, et bloque plusieurs fiches : l'achat du nom de domaine
 (voir `SEO-01`), la création de la fiche Google Business (`SEO-06`), dont dépendent les
@@ -51,7 +57,11 @@ coordonnées GPS manquantes du JSON-LD (`SEO-02`).
 ## Contexte du projet
 
 - Site vitrine statique, école d'allemand **Didactica** à Oujda (Maroc).
-- 5 pages HTML : `index.html`, `a-propos.html`, `tarifs-et-prix.html`, `faq.html`, `contactez-nous.html`.
+- **7 pages HTML** : `index.html`, `a-propos.html`, `tarifs-et-prix.html`, `faq.html`,
+  `contactez-nous.html`, plus `404.html` (ajoutée en `SEO-03`) et
+  `politique-de-confidentialite.html` (ajoutée en `LEG-01`).
+  ⚠️ Beaucoup de fiches antérieures parlent encore de « 5 pages » ou « 6 pages » : c'est l'état
+  du site au moment où elles ont été écrites, pas une erreur. Le compte actuel est 7.
 - Stack actuelle : HTML/CSS/JS pur, jQuery 3.7.1 + Bootstrap 5 + Owl Carousel + WOW.js. Aucun build.
 - Hébergement : **GitHub Pages** (`github.com/Hicham-O-Sfh/Didactica`). Nom de domaine à acheter ultérieurement.
 - Objectif métier prioritaire : **référencement naturel local** (« cours d'allemand Oujda ») et
@@ -359,7 +369,22 @@ est systématiquement servi en premier par le `@font-face`.
 > sont versionnés et déployés pour rien. À intégrer à `toDelete.md` lors de la régénération, en
 > vérifiant au passage s'il existe d'autres sélecteurs morts du même genre.
 >
-> **Reste à faire** : régénérer `toDelete.md` (en tenant compte du point ci-dessus), puis
+> **⚠️ Les deux chiffres de cette fiche ne se contredisent pas, ils datent d'instants différents.**
+> Les **3,9 Mo** ci-dessus valaient au 16/08, pour 64 images orphelines, **avant** `PERF-03`.
+> Cette fiche-là a converti en WebP **sans supprimer les originaux**, conformément à ta consigne :
+> chaque original converti est donc devenu orphelin à son tour. D'où la progression :
+>
+> | Date | Images sur disque | Jamais référencées | Poids récupérable |
+> | --- | ---: | ---: | ---: |
+> | 16/08, avant `PERF-03` | 114 | 64 | 3,9 Mo |
+> | 16/08, après `PERF-03` ([toDelete.md](toDelete.md)) | 151 | 100 | 7,5 Mo |
+> | **26/08, mesure de contrôle** | **151** | **98** | **7,4 Mo** |
+>
+> L'écart de deux images entre le 16 et le 26 tient à `error/01.png`, reprise par la page 404, et
+> à une méthode de détection légèrement différente. Il illustre exactement pourquoi la fiche
+> impose de régénérer la liste avant toute suppression.
+>
+> **Reste à faire** : régénérer `toDelete.md` (en tenant compte de l'angle mort ci-dessus), puis
 > supprimer — quand tu le décideras.
 
 **Problème.** 65 des 114 images du repo ne sont référencées **nulle part** dans le HTML, le CSS ou
@@ -706,9 +731,9 @@ au-dessus : le code mort **à l'intérieur** des fichiers conservés.
 
 **Étapes.**
 
-1. Relever la couverture réelle avec l'onglet _Coverage_ de Chrome DevTools, sur les 6 pages,
+1. Relever la couverture réelle avec l'onglet _Coverage_ de Chrome DevTools, sur les 7 pages,
    en interagissant (menu mobile, carrousel, modale d'inscription, défilement complet).
-2. CSS : passer PurgeCSS en lui donnant les 6 `.html` **et** `main.js` comme sources.
+2. CSS : passer PurgeCSS en lui donnant les 7 `.html` **et** `main.js` comme sources.
 3. JS : décider bibliothèque par bibliothèque. Bootstrap n'est peut-être utilisé que pour le
    `collapse` du menu — auquel cas 20 lignes de JS natif remplacent 79 Ko.
 4. Font Awesome : ne conserver que les 37 icônes réellement utilisées (~10 Ko gzippés au lieu
@@ -724,7 +749,7 @@ au-dessus : le code mort **à l'intérieur** des fichiers conservés.
   aujourd'hui, le résultat se périme dès qu'une icône ou une classe est ajoutée.
 
 **Terminé quand.** Le poids gzippé de `assets/css/` + `assets/js/` est réduit d'au moins moitié,
-et les 6 pages sont vérifiées en interaction (menu mobile, carrousel, modale, animations) sans
+et les 7 pages sont vérifiées en interaction (menu mobile, carrousel, modale, animations) sans
 régression visuelle.
 
 ---
@@ -891,7 +916,7 @@ résiduel s'il en existe un.
 
 ### 🟠 ARCH-01 — Migrer vers Astro ⏱️ 1 à 2 jours
 
-**Problème.** Le `<nav>` et le `<footer>` sont copiés-collés à l'identique dans les 5 pages — le
+**Problème.** Le `<nav>` et le `<footer>` sont copiés-collés à l'identique dans les 7 pages — le
 pied de page est strictement identique partout (empreinte `d58410e9` sur les cinq fichiers).
 Toute modification, si minime soit-elle, exige cinq éditions manuelles, avec un risque d'oubli
 proportionnel. C'est la dette qui coûtera le plus cher dans la durée.
@@ -905,7 +930,7 @@ proportionnel. C'est la dette qui coûtera le plus cher dans la durée.
 3. Extraire `src/components/Header.astro` et `Footer.astro` depuis le HTML existant.
 4. Créer `src/config.ts` : téléphone, WhatsApp, email, adresse, horaires, réseaux sociaux, URL de base.
    Toutes les pages et le JSON-LD y puisent — cela clôt définitivement `CLEAN-01`.
-5. Convertir les 5 pages en `src/pages/*.astro`, chacune ne portant que son contenu propre.
+5. Convertir les 7 pages en `src/pages/*.astro`, chacune ne portant que son contenu propre.
 6. Basculer les images sur le composant `<Image />` d'Astro : WebP, `srcset`, dimensions et
    lazy-loading deviennent automatiques.
 7. Intégrer `@astrojs/sitemap` — la tâche `SEO-03` devient auto-maintenue.
@@ -1345,7 +1370,7 @@ acquis. Reste à vérifier le reste.
 4. Hiérarchie des titres : un seul `<h1>` par page, pas de niveau sauté.
 5. Vérifier que les `alt` existants sont **pertinents** et non de simples reliquats du thème.
 
-**Terminé quand.** Score Lighthouse Accessibilité ≥ 95 sur les 5 pages.
+**Terminé quand.** Score Lighthouse Accessibilité ≥ 95 sur les 7 pages.
 
 ---
 
@@ -1407,24 +1432,28 @@ dans l'ordre inverse, deux fois.
 
 ## Annexe B — Avancement mesuré
 
-Colonne de gauche : l'état initial du 16/08/2026. Colonne de droite : mesure refaite le
-17/08/2026, après les Phases 0 et 1.
+Colonne de gauche : l'état initial du 16/08/2026. Colonne de droite : **mesure refaite le
+26/08/2026**, après les Phases 0, 1 et l'essentiel de la 2.
 
-| Indicateur                                 | 16/08 (départ)   | 17/08 (actuel)            |
-| ------------------------------------------ | ---------------- | ------------------------- |
-| Poids total du dépôt                       | 45 Mo            | **11,3 Mo**               |
-| `assets/fonts/`                            | 14 Mo            | **921 Ko**                |
-| `assets/img/`                              | 8 Mo             | 9,3 Mo ⚠️                 |
-| `assets/css/`                              | 880 Ko           | **529 Ko**                |
-| `assets/js/`                               | 244 Ko           | **223 Ko**                |
-| Images sur disque / inutilisées            | 114 / 65         | 151 / **100** ⚠️          |
-| Balises `<img>` sans `loading` ni priorité | 68 / 68          | **0 / 90** ✅             |
-| Balises `<img>` sans `alt`                 | 0 / 68 ✅        | **0 / 90** ✅             |
-| Liens `target="_blank"` sans `rel`         | 20 / 20          | **0 / 86** ✅             |
-| Pages HTML                                 | 5 (5 121 lignes) | 6 (6 105 lignes)          |
-| `robots.txt` / `sitemap.xml` / `404.html`  | absents          | **présents** ✅           |
-| Requêtes vers un domaine tiers             | 1 (Google Fonts) | **0** ✅                  |
-| Pied de page dupliqué                      | ×5, identique    | ×6, identique (`ARCH-01`) |
+| Indicateur                                 | 16/08 (départ)   | 26/08 (actuel)             |
+| ------------------------------------------ | ---------------- | -------------------------- |
+| Poids total du dépôt                       | 45 Mo            | **11,3 Mo**                |
+| `assets/fonts/`                            | 14 Mo            | **921 Ko**                 |
+| `assets/img/`                              | 8 Mo             | 9,3 Mo ⚠️                  |
+| `assets/css/`                              | 880 Ko           | **530 Ko**                 |
+| `assets/js/`                               | 244 Ko           | **223 Ko**                 |
+| `assets/css/` + `assets/js/` gzippés       | non mesuré       | 159,8 Ko (`PERF-07`)       |
+| Images sur disque / jamais référencées     | 114 / 65         | 151 / **98** (7,4 Mo) ⚠️   |
+| Balises `<img>` sans `loading` ni priorité | 68 / 68          | **0 / 93** ✅              |
+| Balises `<img>` sans `alt`                 | 0 / 68 ✅        | **0 / 93** ✅              |
+| Liens externes `_blank` sans `rel`         | 20 / 20          | **0 / 86** ✅              |
+| Numéro WhatsApp codé en dur dans le JS     | 4 fois           | **1 fois** ✅              |
+| `window.open()` dans `main.js`             | 3                | **1** ✅                   |
+| Pages HTML                                 | 5 (5 121 lignes) | 7 (7 543 lignes)           |
+| `robots.txt` / `sitemap.xml` / `404.html`  | absents          | **présents** ✅            |
+| Requêtes vers un domaine tiers             | 1 (Google Fonts) | **0** ✅                   |
+| Pied de page : empreintes distinctes       | ×5, identique    | **1 pour 7 pages** ✅      |
+| Formatage des pages                        | hétérogène       | **Prettier, uniforme** ✅  |
 
 ⚠️ **Les deux lignes qui augmentent sont attendues, pas des régressions.** `assets/img/` contient
 à la fois les originaux JPEG/PNG **et** leurs conversions WebP : `PERF-03` a converti sans
@@ -1432,4 +1461,4 @@ supprimer, conformément à ta consigne. Le nombre d'images « inutilisées » m
 raison — les originaux sont désormais orphelins. Tout est recensé dans [toDelete.md](toDelete.md).
 
 **Cible restante : dépôt sous 4 Mo.** Elle est atteinte mécaniquement le jour où `PERF-02` est
-exécuté (−7,5 Mo), sans autre travail. C'est de loin le meilleur rapport effort/gain du document.
+exécuté (−7,4 Mo mesurés le 26/08), sans autre travail. C'est de loin le meilleur rapport effort/gain du document.
