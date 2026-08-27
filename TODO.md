@@ -12,6 +12,7 @@ dans une session Claude Code séparée, sans relire tout le document.
 | 🟠      | Important — gain élevé                       |
 | 🟡      | Confort — à faire quand le reste est fait    |
 | ⏱️      | Effort estimé pour une session               |
+| ◑       | Partiellement fait — voir la fiche           |
 
 ---
 
@@ -26,7 +27,7 @@ de `PERF-07`.
 | **1 — Performance**                | ✅ `PERF-01` `PERF-03` `PERF-04` `PERF-05` `PERF-06` |
 |                                    | 📋 `PERF-02` recensé, non supprimé — reste `PERF-07` |
 | **2 — Nettoyage du dépôt**         | ✅ `CLEAN-01` `CLEAN-03` `CLEAN-05` `CLEAN-06`       |
-|                                    | ⬜ `CLEAN-02` `CLEAN-04` `CLEAN-07`                  |
+|                                    | ◑ `CLEAN-02` — ⬜ `CLEAN-04` `CLEAN-07`              |
 | **3 — Maintenabilité (migration)** | ⬜ `ARCH-01` … `ARCH-03`                             |
 | **4 — SEO avancé**                 | ⬜ `SEO-05` … `SEO-08`                               |
 | **5 — Conformité et formulaires**  | ✅ `LEG-01` — ⬜ `FORM-01` `A11Y-01`                 |
@@ -837,6 +838,21 @@ S'y ajoute la divergence relevée en `SEO-02` entre le fixe et le mobile.
 ---
 
 ### 🟡 CLEAN-02 — Ajouter `.gitignore` et `README.md` ⏱️ 20 min
+
+> ◑ **Moitié faite le 26/08/2026** — commit `db4d8c1`. `.gitignore` existe, **`README.md` reste
+> à écrire.**
+>
+> Le `.gitignore` n'a pas été créé par anticipation mais par nécessité : en fin de session,
+> l'extension VSCode **WhiteSource/Mend Advise** a déposé `.vscode/diff/vulsCount.txt` dans le
+> dépôt et ajouté une clé `WhiteSource Advise.Diff.BaseBranch` à `.vscode/settings.json`.
+> Sans `.gitignore`, l'artefact partait dans l'historique. Il couvre aussi `node_modules/`,
+> `dist/` et `.astro/` pour `ARCH-01`, ainsi que `.env`.
+>
+> La clé de l'extension a été **conservée** plutôt que retirée : elle vaut `master`, ce qui est
+> correct pour ce dépôt, et l'extension la réécrirait de toute façon à chaque analyse.
+>
+> **Reste à faire** : le `README.md`, qui est le vrai enjeu de la fiche — la page GitHub du
+> projet est toujours vide.
 
 **Problème.** Ni l'un ni l'autre n'existe. Le README est le premier écran de la page GitHub du
 projet, et il est vide. `.gitignore` deviendra nécessaire dès la Phase 3 (`node_modules/`, `dist/`).
