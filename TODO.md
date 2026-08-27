@@ -374,11 +374,11 @@ est systématiquement servi en premier par le `@font-face`.
 > Cette fiche-là a converti en WebP **sans supprimer les originaux**, conformément à ta consigne :
 > chaque original converti est donc devenu orphelin à son tour. D'où la progression :
 >
-> | Date | Images sur disque | Jamais référencées | Poids récupérable |
-> | --- | ---: | ---: | ---: |
-> | 16/08, avant `PERF-03` | 114 | 64 | 3,9 Mo |
-> | 16/08, après `PERF-03` ([toDelete.md](toDelete.md)) | 151 | 100 | 7,5 Mo |
-> | **26/08, mesure de contrôle** | **151** | **98** | **7,4 Mo** |
+> | Date                                                | Images sur disque | Jamais référencées | Poids récupérable |
+> | --------------------------------------------------- | ----------------: | -----------------: | ----------------: |
+> | 16/08, avant `PERF-03`                              |               114 |                 64 |            3,9 Mo |
+> | 16/08, après `PERF-03` ([toDelete.md](toDelete.md)) |               151 |                100 |            7,5 Mo |
+> | **26/08, mesure de contrôle**                       |           **151** |             **98** |        **7,4 Mo** |
 >
 > L'écart de deux images entre le 16 et le 26 tient à `error/01.png`, reprise par la page 404, et
 > à une méthode de détection légèrement différente. Il illustre exactement pourquoi la fiche
@@ -704,13 +704,13 @@ au-dessus : le code mort **à l'intérieur** des fichiers conservés.
 > 📏 **Code mort mesuré le 26/08/2026**, par comparaison des classes déclarées dans chaque
 > feuille avec celles réellement présentes dans les 7 pages et dans `main.js` :
 >
-> | Feuille | Classes déclarées | Utilisées | Part morte | Gzippé |
-> | --- | ---: | ---: | ---: | ---: |
-> | `all-fontawesome.min.css` | 4 877 | 52 | **99 %** | 41,9 Ko |
-> | `bootstrap.min.css` | 2 029 | 72 | **96 %** | 30,3 Ko |
-> | `animate.min.css` | 64 | 4 | **94 %** | 4,0 Ko |
-> | `owl.carousel.min.css` | 34 | 2 | 94 % | 1,1 Ko |
-> | `style.css` | 454 | 179 | **61 %** | 13,8 Ko |
+> | Feuille                   | Classes déclarées | Utilisées | Part morte |  Gzippé |
+> | ------------------------- | ----------------: | --------: | ---------: | ------: |
+> | `all-fontawesome.min.css` |             4 877 |        52 |   **99 %** | 41,9 Ko |
+> | `bootstrap.min.css`       |             2 029 |        72 |   **96 %** | 30,3 Ko |
+> | `animate.min.css`         |                64 |         4 |   **94 %** |  4,0 Ko |
+> | `owl.carousel.min.css`    |                34 |         2 |       94 % |  1,1 Ko |
+> | `style.css`               |               454 |       179 |   **61 %** | 13,8 Ko |
 >
 > Cas le plus net : `animate.css` déclare **61 animations**, le site en utilise **3** —
 > `fadeInUp`, `fadeInRight`, `fadeInLeft`. Aucune classe `animate__*` n'est employée : c'est
@@ -726,7 +726,7 @@ au-dessus : le code mort **à l'intérieur** des fichiers conservés.
 >
 > **Toutes les bibliothèques chargées servent** à quelque chose : grille Bootstrap (195 usages),
 > `data-bs-toggle` pour le menu et l'accordéon, Owl (10), WOW (12), jQuery requis par Owl et
-> `main.js`. Il n'y a donc rien à supprimer en bloc — tout le gain est *à l'intérieur* des
+> `main.js`. Il n'y a donc rien à supprimer en bloc — tout le gain est _à l'intérieur_ des
 > fichiers, ce qui est bien l'objet de cette fiche.
 
 **Étapes.**
@@ -834,11 +834,11 @@ projet, et il est vide. `.gitignore` deviendra nécessaire dès la Phase 3 (`nod
 > en réalité **105** attributs `target="_blank"`, répartis en trois familles que la fiche ne
 > distinguait pas :
 >
-> | Famille | Nombre | Traitement |
-> | --- | --- | --- |
-> | Liens externes `http(s)` — Maps, Facebook, Instagram, YouTube, WhatsApp, LinkedIn | **86** | `rel="noopener noreferrer"` ajouté |
-> | Liens `mailto:` | 14 | laissés tels quels — voir `CLEAN-07` ci-dessous |
-> | Liens internes vers `politique-de-confidentialite.html` | 5 | déjà pourvus d'un `rel` depuis `LEG-01` |
+> | Famille                                                                           | Nombre | Traitement                                      |
+> | --------------------------------------------------------------------------------- | ------ | ----------------------------------------------- |
+> | Liens externes `http(s)` — Maps, Facebook, Instagram, YouTube, WhatsApp, LinkedIn | **86** | `rel="noopener noreferrer"` ajouté              |
+> | Liens `mailto:`                                                                   | 14     | laissés tels quels — voir `CLEAN-07` ci-dessous |
+> | Liens internes vers `politique-de-confidentialite.html`                           | 5      | déjà pourvus d'un `rel` depuis `LEG-01`         |
 >
 > Sur `mailto:`, `rel` n'a **aucun effet** et l'audit Lighthouse ne les examine pas : il ne
 > couvre que les destinations `http(s)` d'origine différente. Les y ajouter aurait été du bruit.
@@ -979,10 +979,10 @@ effort/bénéfice y est nettement moins bon que sur les images et les polices.
 
 > ✅ **Fait le 17/08/2026**, à la demande d'Hicham.
 >
-> | Mesure                        | Avant  | Après |
-> | ----------------------------- | ------ | ----- |
-> | Blocs `<style>` dans le HTML  | 2      | **0** |
-> | Attributs `style="…"` écrits  | 21     | **0** |
+> | Mesure                       | Avant | Après |
+> | ---------------------------- | ----- | ----- |
+> | Blocs `<style>` dans le HTML | 2     | **0** |
+> | Attributs `style="…"` écrits | 21    | **0** |
 >
 > Les 2 blocs `<style>` (`404.html`, `politique-de-confidentialite.html`) et les 21 styles inline
 > sont regroupés dans une section « Didactica » en fin de `assets/css/style.css`. Classes créées :
@@ -1134,11 +1134,11 @@ visibilité sur les requêtes, l'indexation ou les erreurs de crawl — on trava
 >
 > **La porte reste ouverte**, à trancher au moment de l'implémentation :
 >
-> | Candidat | Ce qui le ferait gagner | Ce qu'il coûte |
-> | --- | --- | --- |
-> | **Umami** | gratuit à ce volume, rapport de parcours page à page, auto-hébergeable simplement | pas de rapport hebdo par email, pas d'alerte de pic |
-> | **Plausible** | rapport hebdomadaire par email, alerte de pic de trafic, clics sortants suivis sans code, Search Console intégrée | ~9 €/mois, pas d'offre gratuite |
-> | **Google Analytics 4** | gratuit, très complet, familier | **cookies → bandeau de consentement obligatoire**, plus lourd, données envoyées à Google — contredirait la politique de confidentialité écrite en `LEG-01` |
+> | Candidat               | Ce qui le ferait gagner                                                                                           | Ce qu'il coûte                                                                                                                                             |
+> | ---------------------- | ----------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+> | **Umami**              | gratuit à ce volume, rapport de parcours page à page, auto-hébergeable simplement                                 | pas de rapport hebdo par email, pas d'alerte de pic                                                                                                        |
+> | **Plausible**          | rapport hebdomadaire par email, alerte de pic de trafic, clics sortants suivis sans code, Search Console intégrée | ~9 €/mois, pas d'offre gratuite                                                                                                                            |
+> | **Google Analytics 4** | gratuit, très complet, familier                                                                                   | **cookies → bandeau de consentement obligatoire**, plus lourd, données envoyées à Google — contredirait la politique de confidentialité écrite en `LEG-01` |
 >
 > Ce que **ni** Umami **ni** Plausible ne donneront : identité des visiteurs, enregistrement de
 > session, carte de chaleur, suivi d'une même personne d'un appareil à l'autre. C'est le prix de
@@ -1222,14 +1222,14 @@ des données, pas avant.
 > (compte, achat) ; ici il n'y a qu'une collecte de données. La page créée est donc une
 > **politique de confidentialité**, ce qu'attendent aussi les audits et Google.
 >
-> | Livrable                                        | Portée                            |
-> | ----------------------------------------------- | --------------------------------- |
-> | `politique-de-confidentialite.html`             | nouvelle page, 9 sections courtes |
-> | Mention explicative sous le champ CIN           | **5** pages portant le formulaire |
-> | Case de consentement obligatoire                | **5** pages portant le formulaire |
-> | Lien « Confidentialité » au **menu principal**  | **7** pages                       |
-> | Lien « Confidentialité » au **pied de page**    | **7** pages                       |
-> | Entrée sitemap (`priority` 0.3)                 | `sitemap.xml`                     |
+> | Livrable                                       | Portée                            |
+> | ---------------------------------------------- | --------------------------------- |
+> | `politique-de-confidentialite.html`            | nouvelle page, 9 sections courtes |
+> | Mention explicative sous le champ CIN          | **5** pages portant le formulaire |
+> | Case de consentement obligatoire               | **5** pages portant le formulaire |
+> | Lien « Confidentialité » au **menu principal** | **7** pages                       |
+> | Lien « Confidentialité » au **pied de page**   | **7** pages                       |
+> | Entrée sitemap (`priority` 0.3)                | `sitemap.xml`                     |
 >
 > La page réutilise le header et le footer de `404.html` — pas de 8ᵉ variante à maintenir — et ne
 > contient **pas** le formulaire, pour la même raison qu'en `SEO-03` : ne pas créer un 5ᵉ endroit
@@ -1435,25 +1435,25 @@ dans l'ordre inverse, deux fois.
 Colonne de gauche : l'état initial du 16/08/2026. Colonne de droite : **mesure refaite le
 26/08/2026**, après les Phases 0, 1 et l'essentiel de la 2.
 
-| Indicateur                                 | 16/08 (départ)   | 26/08 (actuel)             |
-| ------------------------------------------ | ---------------- | -------------------------- |
-| Poids total du dépôt                       | 45 Mo            | **11,3 Mo**                |
-| `assets/fonts/`                            | 14 Mo            | **921 Ko**                 |
-| `assets/img/`                              | 8 Mo             | 9,3 Mo ⚠️                  |
-| `assets/css/`                              | 880 Ko           | **530 Ko**                 |
-| `assets/js/`                               | 244 Ko           | **223 Ko**                 |
-| `assets/css/` + `assets/js/` gzippés       | non mesuré       | 159,8 Ko (`PERF-07`)       |
-| Images sur disque / jamais référencées     | 114 / 65         | 151 / **98** (7,4 Mo) ⚠️   |
-| Balises `<img>` sans `loading` ni priorité | 68 / 68          | **0 / 93** ✅              |
-| Balises `<img>` sans `alt`                 | 0 / 68 ✅        | **0 / 93** ✅              |
-| Liens externes `_blank` sans `rel`         | 20 / 20          | **0 / 86** ✅              |
-| Numéro WhatsApp codé en dur dans le JS     | 4 fois           | **1 fois** ✅              |
-| `window.open()` dans `main.js`             | 3                | **1** ✅                   |
-| Pages HTML                                 | 5 (5 121 lignes) | 7 (7 543 lignes)           |
-| `robots.txt` / `sitemap.xml` / `404.html`  | absents          | **présents** ✅            |
-| Requêtes vers un domaine tiers             | 1 (Google Fonts) | **0** ✅                   |
-| Pied de page : empreintes distinctes       | ×5, identique    | **1 pour 7 pages** ✅      |
-| Formatage des pages                        | hétérogène       | **Prettier, uniforme** ✅  |
+| Indicateur                                 | 16/08 (départ)   | 26/08 (actuel)            |
+| ------------------------------------------ | ---------------- | ------------------------- |
+| Poids total du dépôt                       | 45 Mo            | **11,3 Mo**               |
+| `assets/fonts/`                            | 14 Mo            | **921 Ko**                |
+| `assets/img/`                              | 8 Mo             | 9,3 Mo ⚠️                 |
+| `assets/css/`                              | 880 Ko           | **530 Ko**                |
+| `assets/js/`                               | 244 Ko           | **223 Ko**                |
+| `assets/css/` + `assets/js/` gzippés       | non mesuré       | 159,8 Ko (`PERF-07`)      |
+| Images sur disque / jamais référencées     | 114 / 65         | 151 / **98** (7,4 Mo) ⚠️  |
+| Balises `<img>` sans `loading` ni priorité | 68 / 68          | **0 / 93** ✅             |
+| Balises `<img>` sans `alt`                 | 0 / 68 ✅        | **0 / 93** ✅             |
+| Liens externes `_blank` sans `rel`         | 20 / 20          | **0 / 86** ✅             |
+| Numéro WhatsApp codé en dur dans le JS     | 4 fois           | **1 fois** ✅             |
+| `window.open()` dans `main.js`             | 3                | **1** ✅                  |
+| Pages HTML                                 | 5 (5 121 lignes) | 7 (7 543 lignes)          |
+| `robots.txt` / `sitemap.xml` / `404.html`  | absents          | **présents** ✅           |
+| Requêtes vers un domaine tiers             | 1 (Google Fonts) | **0** ✅                  |
+| Pied de page : empreintes distinctes       | ×5, identique    | **1 pour 7 pages** ✅     |
+| Formatage des pages                        | hétérogène       | **Prettier, uniforme** ✅ |
 
 ⚠️ **Les deux lignes qui augmentent sont attendues, pas des régressions.** `assets/img/` contient
 à la fois les originaux JPEG/PNG **et** leurs conversions WebP : `PERF-03` a converti sans
