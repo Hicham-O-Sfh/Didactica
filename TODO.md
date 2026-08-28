@@ -21,16 +21,16 @@ dans une session Claude Code séparée, sans relire tout le document.
 **Phases 0 et 1 terminées**, à l'exception de `PERF-02` (suppression volontairement reportée) et
 de `PERF-07`.
 
-| Phase                              | État                                                 |
-| ---------------------------------- | ---------------------------------------------------- |
-| **0 — Critique SEO**               | ✅ `SEO-01` `SEO-02` `SEO-03` `SEO-04`               |
-| **1 — Performance**                | ✅ `PERF-01` `PERF-03` `PERF-04` `PERF-05` `PERF-06` |
-|                                    | 📋 `PERF-02` recensé, non supprimé — reste `PERF-07` |
-| **2 — Nettoyage du dépôt**         | ✅ `CLEAN-01` `CLEAN-03` `CLEAN-05` `CLEAN-06`       |
-|                                    | ◑ `CLEAN-02` — ⬜ `CLEAN-04` `CLEAN-07`              |
-| **3 — Maintenabilité (migration)** | ⬜ `ARCH-01` … `ARCH-03`                             |
-| **4 — SEO avancé**                 | ⬜ `SEO-05` … `SEO-08`                               |
-| **5 — Conformité et formulaires**  | ✅ `LEG-01` — ⬜ `FORM-01` `A11Y-01`                 |
+| Phase                              | État                                                      |
+| ---------------------------------- | --------------------------------------------------------- |
+| **0 — Critique SEO**               | ✅ `SEO-01` `SEO-02` `SEO-03` `SEO-04`                    |
+| **1 — Performance**                | ✅ `PERF-01` `PERF-03` `PERF-04` `PERF-05` `PERF-06`      |
+|                                    | 📋 `PERF-02` recensé, non supprimé — reste `PERF-07`      |
+| **2 — Nettoyage du dépôt**         | ✅ `CLEAN-01` `CLEAN-02` `CLEAN-03` `CLEAN-05` `CLEAN-06` |
+|                                    | ✅ `CLEAN-02` — ⬜ `CLEAN-04` `CLEAN-07`                  |
+| **3 — Maintenabilité (migration)** | ⬜ `ARCH-01` … `ARCH-03`                                  |
+| **4 — SEO avancé**                 | ⬜ `SEO-05` … `SEO-08`                                    |
+| **5 — Conformité et formulaires**  | ✅ `LEG-01` — ⬜ `FORM-01` `A11Y-01`                      |
 
 **La prochaine**, sans hésitation : `FORM-01`. Le terrain est déblayé — `CLEAN-01` vient de
 réduire le fichier à un seul `window.open()`, `CLEAN-06` a rendu les diffs HTML lisibles, et la
@@ -40,7 +40,7 @@ C'est aussi la fiche à plus fort impact métier : ne plus perdre de prospects.
 **Une décision t'attend avant de la lancer** : le choix du service de formulaire (Web3Forms,
 Formspree ou Netlify Forms), et la création du compte, qui te revient.
 
-Ensuite, par effort croissant : `CLEAN-02` et `CLEAN-04` (30 min à deux), `CLEAN-07`, puis
+Ensuite, par effort croissant : `CLEAN-04` et `CLEAN-07` (deux décisions, 25 min à deux), puis
 `PERF-02` — une décision à prendre, **7,4 Mo** à la clé.
 
 > ✏️ **Correction du 26/08/2026.** Ce paragraphe a un temps annoncé « 3,9 Mo », par confusion
@@ -839,8 +839,25 @@ S'y ajoute la divergence relevée en `SEO-02` entre le fixe et le mobile.
 
 ### 🟡 CLEAN-02 — Ajouter `.gitignore` et `README.md` ⏱️ 20 min
 
-> ◑ **Moitié faite le 26/08/2026** — commit `db4d8c1`. `.gitignore` existe, **`README.md` reste
-> à écrire.**
+> ✅ **Terminée le 28/08/2026** — commits `db4d8c1` (`.gitignore`) et `722e973` (`README.md`).
+>
+> **Le README documente trois choses qu'on redécouvrait à chaque session** : que `file://` ne
+> permet pas de prévisualiser correctement (chemins et lazy loading faussés), qu'un `git push`
+> sur `master` publie directement le site sans étape de compilation, et surtout **où sont les
+> coordonnées de contact** — 18 liens `tel:`, 15 liens `mailto:`, et quatre blocs JSON-LD qu'on
+> oublie facilement de mettre à jour en même temps, au risque d'afficher un ancien numéro dans
+> Google. Seul le numéro WhatsApp des formulaires est centralisé, dans la constante `CONTACT`
+> de `main.js` (`CLEAN-01`).
+>
+> Il porte aussi l'avertissement sur **Prettier 3.7.4** : une version npm plus récente
+> reformaterait les 7 pages et rendrait le diff suivant illisible.
+>
+> **Reste hors périmètre** : le README parle du domaine `www.didactica-oujda.ma` comme prévu
+> mais non acheté. À reprendre quand `SEO-01` aboutira.
+>
+> ---
+>
+> _Historique._ **Moitié faite le 26/08/2026** — commit `db4d8c1`.
 >
 > Le `.gitignore` n'a pas été créé par anticipation mais par nécessité : en fin de session,
 > l'extension VSCode **WhiteSource/Mend Advise** a déposé `.vscode/diff/vulsCount.txt` dans le
@@ -851,11 +868,8 @@ S'y ajoute la divergence relevée en `SEO-02` entre le fixe et le mobile.
 > La clé de l'extension a été **conservée** plutôt que retirée : elle vaut `master`, ce qui est
 > correct pour ce dépôt, et l'extension la réécrirait de toute façon à chaque analyse.
 >
-> **Reste à faire** : le `README.md`, qui est le vrai enjeu de la fiche — la page GitHub du
-> projet est toujours vide.
-
-**Problème.** Ni l'un ni l'autre n'existe. Le README est le premier écran de la page GitHub du
-projet, et il est vide. `.gitignore` deviendra nécessaire dès la Phase 3 (`node_modules/`, `dist/`).
+> **Problème.** Ni l'un ni l'autre n'existe. Le README est le premier écran de la page GitHub du
+> projet, et il est vide. `.gitignore` deviendra nécessaire dès la Phase 3 (`node_modules/`, `dist/`).
 
 **Étapes.**
 
@@ -1437,7 +1451,7 @@ acquis. Reste à vérifier le reste.
 ✅ CLEAN-03 ──► ✅ CLEAN-01 ──► ⬜ FORM-01        (Phase 2 puis 5 : voir l'ordre revu ci-dessous)
    │
    ▼
-⬜ CLEAN-02, CLEAN-04, CLEAN-07                   (Phase 2 : reste du nettoyage)
+⬜ CLEAN-04, CLEAN-07                             (Phase 2 : reste du nettoyage)
    │
    ▼
 ⬜ ARCH-01 ──► ARCH-02 ──► ARCH-03                (Phase 3 : migration)
